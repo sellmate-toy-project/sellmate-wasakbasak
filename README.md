@@ -15,10 +15,18 @@ pip 설치
 ```
 
 ## 프론트엔드 환경구성
-1. react 설치
-2. mui 설치(react UI framework)
+1. react v17.0.2 설치
 ```
 > cd frontend
-> yarn add @mui/material @emotion/react @emotion/styled
+> git clone 현재프로젝트git코드.git
+> npm install
+> npm start // react 실행
 ```
-react >= 17.0.0 및 react-dom >= 17.0.0 에서 적용
+
+2. mui(SVG 아이콘 포함) 설치(react UI framework)
+- react >= 17.0.0 및 react-dom >= 17.0.0 에서 적용 가능
+```
+> cd frontend
+> npm install @mui/material @mui/styled-engine-sc styled-components // mui 설치
+> npm install @mui/icons-material // mui 관련 icon 추가 설치
+```
