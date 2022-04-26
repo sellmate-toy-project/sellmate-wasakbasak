@@ -4,9 +4,19 @@ from sqlalchemy.schema import ForeignKey
 from ..db.database import Base
 
 
-class Likes(Base):
+class ProductLike(Base):
+    __tablename__ = "product_likes"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     product_id = Column(Integer, ForeignKey("products.id"))
 
-    user = relationship("User", back_populate="likes")
+    users = relationship("User", back_populate="product_likes")
+
+
+class ReviewLike(Base):
+    __tablename__ = "review_likes"
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    review_id = Column(Integer, ForeignKey("reviews.id"))
+
+    users = relationship("User", back_populate="review_likes")

@@ -4,7 +4,8 @@ from sqlalchemy.orm import relationship
 from ..db.database import Base
 
 
-class Users(Base):
+class User(Base):
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
@@ -13,5 +14,6 @@ class Users(Base):
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now())
 
-    product_reviews = relationship("ProductReview", back_populates="users")
-    likes = relationship("Like", back_populates="users")
+    reviews = relationship("Review", back_populates="users")
+    product_likes = relationship("ProductLike", back_populates="users")
+    review_likes = relationship("ReviewLike", back_populates="users")
