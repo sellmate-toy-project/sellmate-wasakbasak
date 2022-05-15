@@ -16,14 +16,16 @@ pip 설치
 ```
 
 ## 프론트엔드 환경구성
+
 1. react & typescript 설치
 
 ```
 > npx-create-react-app@latest frontend --template typescript
 // create-react-app 버전 문제로 @latest 붙은 최신 버전 받아야 정상 동작
 
-> npm i --save react react-dom typescript
+> npm i --save react react-dom styled-components typescript
 > npm i --save-dev @types/react @types/react-dom @types/node
+> npm i -D @types/styled-components
 ```
 
 2. mui 설치(react UI framework)
@@ -31,4 +33,5 @@ pip 설치
 ```
 > npm install @mui/material @emotion/react @emotion/styled
 ```
+
 react >= 17.0.0 및 react-dom >= 17.0.0 에서 적용
