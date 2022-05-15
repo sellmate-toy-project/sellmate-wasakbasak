@@ -1,27 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
+import styled from "styled-components"
+import Header from "./components/Header";
+import Main from "./components/Main";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          WasakbasaK
-        </p>
-        <Button
-          variant="contained"
-          onClick={() => {
-            alert('here');
-          }}
-        >
-          GO WASAK
-        </Button>
-      </header>
-    </div>
+    <Div className="App">
+      <Header />
+      <Main />
+      <Button
+        variant="contained"
+        onClick={() => {
+          alert('here');
+        }}
+      >
+        GO WASAK
+      </Button>
+    </Div>
   );
-}
+};
 
 export default App;
+
+const Div = styled.div`
+  text-align: center;
+`;
