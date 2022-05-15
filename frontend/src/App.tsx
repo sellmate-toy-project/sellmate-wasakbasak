@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from '@mui/material/Button';
@@ -7,9 +8,16 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>wasakbasak</p>
-        <Button variant="contained">
-          Hello World
+        <p>
+          WasakbasaK
+        </p>
+        <Button
+          variant="contained"
+          onClick={() => {
+            alert('here');
+          }}
+        >
+          GO WASAK
         </Button>
       </header>
     </div>
