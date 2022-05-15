@@ -16,7 +16,6 @@ pip 설치
 ```
 
 ## 프론트엔드 환경구성
-
 1. react & typescript 설치
 
 ```
@@ -25,7 +24,6 @@ pip 설치
 
 > npm i --save react react-dom typescript
 > npm i --save-dev @types/react @types/react-dom @types/node
-
 ```
 
 2. mui 설치(react UI framework)
@@ -33,5 +31,4 @@ pip 설치
 ```
 > npm install @mui/material @emotion/react @emotion/styled
 ```
-
 react >= 17.0.0 및 react-dom >= 17.0.0 에서 적용
