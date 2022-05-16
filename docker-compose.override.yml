@@ -9,6 +9,7 @@ services:
             - 8000:8000
         volumes: 
             - ./backend:/var/www
+
     frontend:
         container_name: frontend-dev
         build:
@@ -17,4 +18,3 @@ services:
             - 3000:3000
         volumes:
             - ./frontend:/app
-            - /app/node_modules

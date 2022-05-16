@@ -1,22 +1,14 @@
 version: "3.7"
 
 services:
-    frontend:
-        container_name: frontend
-        build:
-            target: production-stage
-
     backend:
         container_name: backend
         build:
             target: production-stage
 
-    nginx:
-        container_name: nginx
+    frontend:
+        container_name: frontend
         build:
-            context: ./nginx
-            dockerfile: Dockerfile
+            target: production-stage
         ports:
-            - 8000:8000
-        depends_on:
-            - backend
+            - 801:80

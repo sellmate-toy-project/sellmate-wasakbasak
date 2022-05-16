@@ -6,8 +6,8 @@ services:
             context: ./backend
             dockerfile: Dockerfile
         working_dir: /var/www
+
     frontend:
         build:
             context: ./frontend
             dockerfile: Dockerfile
-        working_dir: /app
