@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+    backend:
+        container_name: backend
+        build:
+            target: production-stage
+
+    frontend:
+        container_name: frontend
+        build:
+            target: production-stage
+        ports:
+            - 805:80

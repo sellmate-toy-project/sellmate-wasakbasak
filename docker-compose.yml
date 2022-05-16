@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        working_dir: /var/www
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
