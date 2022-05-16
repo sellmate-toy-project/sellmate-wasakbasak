@@ -11,4 +11,4 @@ services:
         build:
             target: production-stage
         ports:
-            - 801:80
+            - 80:80
