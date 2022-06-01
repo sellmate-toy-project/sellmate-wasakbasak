@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey
-from ..db.database import Base
+from ..db.base_class import Base
 
 
 class ProductLike(Base):
@@ -9,5 +9,5 @@ class ProductLike(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     product_id = Column(Integer, ForeignKey("products.id"))
-
+    
     users = relationship("User", back_populate="product_likes")

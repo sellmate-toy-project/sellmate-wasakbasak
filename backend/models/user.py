@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Enum
 from sqlalchemy.sql.functions import func
 from sqlalchemy.orm import relationship
-from ..db.database import Base
+from ..db.base_class import Base
 
 
 class User(Base):

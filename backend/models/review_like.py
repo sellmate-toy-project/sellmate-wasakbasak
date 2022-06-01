@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey
-from ..db.database import Base
+from ..db.base_class import Base
+
 
 class ReviewLike(Base):
     __tablename__ = "review_likes"
