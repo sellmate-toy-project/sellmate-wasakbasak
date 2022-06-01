@@ -11,12 +11,3 @@ class ProductLike(Base):
     product_id = Column(Integer, ForeignKey("products.id"))
 
     users = relationship("User", back_populate="product_likes")
-
-
-class ReviewLike(Base):
-    __tablename__ = "review_likes"
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    review_id = Column(Integer, ForeignKey("reviews.id"))
-
-    users = relationship("User", back_populate="review_likes")
