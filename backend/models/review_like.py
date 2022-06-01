@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey
-from ..db.base_class import Base
+from db.base_class import Base
 
 
 class ReviewLike(Base):
@@ -10,4 +10,4 @@ class ReviewLike(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     review_id = Column(Integer, ForeignKey("reviews.id"))
 
-    users = relationship("User", back_populate="review_likes")
+    users = relationship("User", back_populates="review_likes")
