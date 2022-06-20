@@ -1,11 +1,8 @@
-from typing import Optional
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
+from routes import api
 
 app = FastAPI()
-
 
 # CORS enabled
 app.add_middleware(
@@ -16,25 +13,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# test code
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: Optional[bool] = None
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/a")
-async def root():
-    return {
-        "a": "b"
-    }
-
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
+# include route
+app.include_router(api.api_router, prefix="/api")
