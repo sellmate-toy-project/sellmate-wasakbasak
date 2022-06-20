@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
-const Header = () => {
+const Main = () => {
 	return (
-		<Container>
-			<p>Main</p>
-		</Container>
+		<div>
+			<MainContainer>DashBoard</MainContainer>
+		</div>
 	);
 };
-export default Header;
+export default Main;
 
-const Container = styled.div`
-width: 800px;
-height: 400px;
-background-color: grey;
-margin: 0 auto;
+const MainContainer = styled.div`
+	width: 830PX;
+	height: 962px;
+	margin: 0 20px;
+	background-color: grey;
 `;
