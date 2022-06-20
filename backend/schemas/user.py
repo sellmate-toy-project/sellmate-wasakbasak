@@ -1,29 +1,30 @@
 from typing import Optional
-from pydantic import BaseModel
-from pydantic.networks import EmailStr
+from pydantic import BaseModel, EmailStr
+from models.user import FloorType
 
 
 class UserBase(BaseModel):
-  id: Optional[int] = None
-  email: Optional[EmailStr] = None
-  nick_name: Optional[str] = None
-  floor: Optional[int] = None
+    email: Optional[EmailStr] = None
+    nick_name: Optional[str] = None
+    floor: FloorType = None
 
 
 class UserCreate(UserBase):
-  email: EmailStr
-  name: str
-  password: str
+    email: EmailStr
+    nick_name: str
+    floor: FloorType
+    password: str
 
 
 class UserUpdate(UserBase):
-  password: Optional[str] = None
+    password: Optional[str] = None
 
 
 class UserInDBBase(UserBase):
     id: int
-    email: str
-    floor: int
+    email: EmailStr
+    nick_name: str
+    floor: FloorType
 
     class Config:
         orm_mode = True
@@ -36,5 +37,3 @@ class User(UserInDBBase):
 
 class UserInDB(UserInDBBase):
     hashed_password: str
-
-

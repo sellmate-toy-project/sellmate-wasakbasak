@@ -5,6 +5,7 @@ from db.base_class import Base
 
 
 class Posts(Base):
+    __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     body = Column(String(1000), nullable=True)

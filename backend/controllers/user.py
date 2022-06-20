@@ -1,4 +1,9 @@
-from fastapi import APIRouter
+from typing import Any
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from . import deps
+import schemas
+import crud
 
 router = APIRouter()
 
@@ -8,6 +13,10 @@ def read_users():
     return {"message": "Hello World"}
 
 
-@router.get("/{user_id}")
-def read_user_by_id():
-    return {'user'}
+@router.get("/{user_id}", response_model=schemas.User)
+def read_user_by_id(
+    user_id: int,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    user = crud.user.get(db, id=user_id)
+    return user
