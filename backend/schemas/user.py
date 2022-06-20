@@ -10,13 +10,13 @@ class UserBase(BaseModel):
   floor: Optional[int] = None
 
 
-class UserCreate(BaseModel):
+class UserCreate(UserBase):
   email: EmailStr
   name: str
   password: str
 
 
-class UserUpdate(BaseModel):
+class UserUpdate(UserBase):
   password: Optional[str] = None
 
 
