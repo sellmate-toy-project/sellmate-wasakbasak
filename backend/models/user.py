@@ -20,6 +20,10 @@ class User(Base):
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, server_default=func.now())
 
-    reviews = relationship("Review", back_populates="users")
-    product_likes = relationship("ProductLike", back_populates="users")
-    review_likes = relationship("ReviewLike", back_populates="users")
+    reviews = relationship("Review", back_populates="user")
+    product_likes = relationship("ProductLike", back_populates="user")
+    review_likes = relationship("ReviewLike", back_populates="user")
+    orders = relationship("Order", back_populates="user")
+    posts = relationship("Post", back_populates="user")
+    post_comments = relationship("PostComment", back_populates="user")
+    review_comments = relationship("ReviewComment", back_populates="user")

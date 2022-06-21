@@ -10,4 +10,5 @@ class ProductLike(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     product_id = Column(Integer, ForeignKey("products.id"))
     
-    users = relationship("User", back_populates="product_likes")
+    user = relationship("User", back_populates="product_likes")
+    product = relationship("Product", back_populates="product_likes")

@@ -10,4 +10,4 @@ class ReviewLike(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     review_id = Column(Integer, ForeignKey("reviews.id"))
 
-    users = relationship("User", back_populates="review_likes")
+    user = relationship("User", back_populates="review_likes")

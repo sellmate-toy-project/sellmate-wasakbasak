@@ -9,8 +9,10 @@ class Review(Base):
     __tablename__ = "reviews"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     body = Column(String(1000), nullable=False)
-    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"))
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
 
-    users = relationship("User", back_populates="reviews")
+    user = relationship("User", back_populates="reviews")
+    product = relationship("Product", back_populates="reviews")
+    review_comments = relationship("ReviewComment", back_populates="review_comments")

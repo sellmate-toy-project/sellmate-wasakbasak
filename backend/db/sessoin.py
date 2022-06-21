@@ -2,5 +2,5 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-engine = create_engine("mysql+pymysql://root:tofhdnstlwkr1!@db:3306/wasakbasak", pool_pre_ping=True)
+engine = create_engine("mysql+pymysql://root:passsword1!@db:3306/wasakbasak", pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
