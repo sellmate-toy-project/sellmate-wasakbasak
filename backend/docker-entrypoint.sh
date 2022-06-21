@@ -14,8 +14,8 @@ done
 # alembic revision --autogenerate -m "init system db autogenerate migrations"
 
 # Apply database migrations
-# echo "Apply system database migrations"
-# alembic upgrade head
+echo "Apply system database migrations"
+alembic upgrade head
 
 # Start fastapi server
 echo "Start server"
