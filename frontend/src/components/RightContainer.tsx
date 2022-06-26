@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import RankingWrapper from './Ranking';
+import RecentOrder from './RecentOrder';
 import User from './User';
 
 const RightContainer = () => {
 	return (
 		<RightList>
 			<User />
-			<RankingWrapper />
+			<RecentOrder />
 		</RightList>
 	);
 };
