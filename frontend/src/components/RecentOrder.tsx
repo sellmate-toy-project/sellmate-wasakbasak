@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		display: 'flex',
 		justifyContent: 'space-between',
-    marginBottom: '20px'
+		marginBottom: '20px',
 	},
 }));
 
-export default function RankingList() {
+const RecentOrder = () => {
 	const classes = useStyles();
 	const recentOrderData = [
 		{
@@ -64,8 +64,15 @@ export default function RankingList() {
 				</Button>
 			</div>
 			{recentOrderData.map((items) => (
-        <Item name={items.name} img={items.img} text={items.text} />
+				<Item
+					name={items.name}
+					img={items.img}
+					text={items.text}
+					badge={{ display: false }}
+          key={items.name}
+				/>
 			))}
 		</List>
 	);
 }
+export default RecentOrder;
