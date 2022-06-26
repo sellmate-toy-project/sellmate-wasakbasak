@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import Ranking from './Ranking';
 
 const Main = () => {
 	return (
 		<div>
-			<MainContainer>DashBoard</MainContainer>
+			<MainContainer><Ranking /></MainContainer>
 		</div>
 	);
 };

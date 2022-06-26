@@ -6,7 +6,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@mui/material/Badge';
 import React from 'react';
-
+interface PropsData {
+	name: string;
+	img: string;
+	text: string;
+	badge: {
+		display: boolean;
+    content?: number;
+	};
+}
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
@@ -36,30 +44,32 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'space-between',
 		marginBottom: '20px',
 	},
-	badge: {},
-}));
-interface PropsData {
-	name: string;
-	img: string;
-	text: string;
 	badge: {
-		display: boolean;
-    content?: number;
-	};
-}
+    // width: '36px',
+    // height: '36px'
+  },
+  listItem:{
+    height: '80px',
+    marginBottom: '12px',
+    '&:last-of-type': {
+      marginBottom: 0
+    }
+  },
+}));
 
 const Item = ({ name, img, text, badge }: PropsData) => {
-	const classes = useStyles();
+  const classes = useStyles();
 	return (
 		<ListItem
 			key={name}
 			disableGutters={true}
-			className={classes.paddingNone}
-			style={{ marginBottom: '12px' }}>
+			className={[classes.paddingNone, classes.listItem].join(' ')}
+      >
 			{badge.display ? (
 				<Badge
 					badgeContent={badge.content}
 					color='success'
+          className={classes.badge}
 					anchorOrigin={{
 						vertical: 'top',
 						horizontal: 'left',
@@ -74,13 +84,14 @@ const Item = ({ name, img, text, badge }: PropsData) => {
 				</ListItemAvatar>
 			)}
 			<ListItemText
-				primary={name}
+			  style={{ marginBottom: 0 }}
 				secondary={
 					<React.Fragment>
 						<Typography
 							component='span'
-							variant='body2'
-							className={classes.inline}
+              variant='body2'
+							className={classes.inline + 'MuiTypography-gutterBottom'}
+              gutterBottom={false}
 							color='textPrimary'>
 							{text}
 						</Typography>
