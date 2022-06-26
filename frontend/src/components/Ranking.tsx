@@ -1,23 +1,24 @@
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import React from 'react';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import Tab from '@mui/material/Tab';
+import Item from './Item';
+
+import { useState } from 'react';
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
 		backgroundColor: theme.palette.background.paper,
-		padding: '0 20px',
+		padding: ' 20px',
 		boxSizing: 'border-box',
 	},
 	inline: {
 		display: 'inline',
 	},
-	listItems: {},
 	listImg: {
 		width: '80px',
 		height: '80px',
@@ -34,69 +35,124 @@ const useStyles = makeStyles((theme) => ({
 	},
 	title: {
 		display: 'flex',
-		justifyContent: 'space-between',
+		alignItems: 'center',
+		// marginBottom: '20px',
 	},
 }));
 
-export default function RankingList() {
+export default function Ranking() {
 	const classes = useStyles();
-	const rankingData = [
-		{
-			img: '/static/images/avatar/1.jpg',
-			name: 'Ali Connors',
-			text: "I'll be in your neighborhood doing errands this…",
-		},
-		{
-			img: '/static/images/avatar/2.jpg',
-			name: 'Jennifer',
-			text: "Wish I could come, but I'm out of town this…",
-		},
-		{
-			img: '/static/images/avatar/3.jpg',
-			name: 'Alex',
-			text: 'Do you have Paris recommendations? Have you ever…',
-		},
-	];
+	const floorsRankingData = {
+		floor3: [
+			{
+				img: '/static/images/avatar/1.jpg',
+				name: 'floor3',
+				text: "I'll be in your neighborhood doing errands this…",
+			},
+			{
+				img: '/static/images/avatar/2.jpg',
+				name: 'floor3',
+				text: "Wish I could come, but I'm out of town this…",
+			},
+			{
+				img: '/static/images/avatar/3.jpg',
+				name: 'floor3',
+				text: 'Do you have Paris recommendations? Have you ever…',
+			},
+		],
+    floor5: [
+			{
+				img: '/static/images/avatar/1.jpg',
+				name: 'floor5',
+				text: "I'll be in your neighborhood doing errands this…",
+			},
+			{
+				img: '/static/images/avatar/2.jpg',
+				name: 'floor5',
+				text: "Wish I could come, but I'm out of town this…",
+			},
+			{
+				img: '/static/images/avatar/3.jpg',
+				name: 'floor5',
+				text: 'Do you have Paris recommendations? Have you ever…',
+			},
+		],
+    floor11: [
+			{
+				img: '/static/images/avatar/1.jpg',
+				name: 'floor11',
+				text: "I'll be in your neighborhood doing errands this…",
+			},
+			{
+				img: '/static/images/avatar/2.jpg',
+				name: 'floor11',
+				text: "Wish I could come, but I'm out of town this…",
+			},
+			{
+				img: '/static/images/avatar/3.jpg',
+				name: 'floor11',
+				text: 'Do you have Paris recommendations? Have you ever…',
+			},
+		],
+	};
 
+	const [tabValue, setTabValue] = useState('snack');
+
+	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+		setTabValue(newValue);
+	};
 	return (
-		<List className={classes.list} disablePadding={true}>
-			<div className={classes.title}>
-				<Button variant='text' size='small' className={classes.paddingNone}>
-					Recent Order
-				</Button>
+		<TabContext value={tabValue}>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+				}}>
+				<div className={classes.title}>
+					Ranking
+					<TabList
+						value={tabValue}
+						onChange={handleChange}
+						variant='scrollable'>
+						<Tab label='snack' value='snack' />
+						<Tab label='drink' value='drink' />
+					</TabList>
+				</div>
 				<Button variant='text' size='small' className={classes.paddingNone}>
 					View all
 				</Button>
-			</div>
-			{rankingData.map((items) => (
-				<ListItem
-					alignItems='flex-start'
-					key={items.name}
-          disableGutters={true}
-					className={classes.paddingNone + classes.listItems}>
-					<ListItemAvatar className={classes.listImg}>
-						<Avatar
-							alt={items.name}
-							src={items.img}
-							className={classes.itemImg}
-						/>
-					</ListItemAvatar>
-					<ListItemText
-						primary={items.name}
-						secondary={
-							<React.Fragment>
-								<Typography
-									component='span'
-									variant='body2'
-									className={classes.inline}
-									color='textPrimary'>
-									{items.text}
-								</Typography>
-							</React.Fragment>
-						}
-					/>
-				</ListItem>
-			))}
-		</List>
+			</Box>
+			<TabPanel value='snack' sx={{ padding: 0, display: 'flex' }}>
+				{Object.values(floorsRankingData).map((floor, index) => (
+					<List className={classes.list} disablePadding={true} key={index}>
+						{floor.map((items, idx) => (
+							<Item
+								name={items.name}
+								img={items.img}
+								text={items.text}
+								badge={{ display: true, content: idx + 1}}
+								key={idx}
+							/>
+						))}
+					</List>
+				))}
+			</TabPanel>
+			<TabPanel value='drink' sx={{ padding: 0, display: 'flex' }}>
+				{Object.values(floorsRankingData).map((floor, idx) => (
+					<List className={classes.list} disablePadding={true} key={idx}>
+						{floor.map((items, idx) => (
+							<Item
+								name={items.name}
+								img={items.img}
+								text={items.text}
+								badge={{ display: false }}
+								key={idx}
+							/>
+						))}
+					</List>
+				))}
+			</TabPanel>
+		</TabContext>
 	);
 }

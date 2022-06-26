@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Header from './components/Header';
-import LeftContainer from './components/LeftContainer';
+import RightContainer from './components/LeftContainer';
 import Main from './components/Main';
-import RightContainer from './components/RightContainer';
+import LeftContainer from './components/RightContainer';
 
 
 const App = () => {
