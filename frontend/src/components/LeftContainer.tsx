@@ -1,18 +1,24 @@
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@mui/material/Container';
 import RecentOrder from './RecentOrder';
 import User from './User';
+const useStyles = makeStyles((theme) => ({
+  padding: {
+    padding: '0 !important',
+  },
+  size: {
+    width: '405px !important',
+  },
+}));
 
 const LeftContainer = () => {
+	const classes = useStyles();
+
 	return (
-		<LeftList>
-			<User />
-			<RecentOrder />
-		</LeftList>
+			<Container disableGutters={false} className={[classes.padding, classes.size].join(' ')}>
+				<User />
+				<RecentOrder />
+			</Container>
 	);
 };
 export default LeftContainer;
-
-const LeftList = styled.div`
-	width: 405px;
-	margin: 0 auto;
-`;

@@ -45,8 +45,13 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '20px',
 	},
 	badge: {
-    // width: '36px',
-    // height: '36px'
+    '& .MuiBadge-badge' : {
+      width: '36px',
+      height: '36px',
+      borderRadius: '100%',
+      top: '10px',
+      left: '10px',
+    }
   },
   listItem:{
     height: '80px',
