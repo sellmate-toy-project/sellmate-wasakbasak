@@ -14,5 +14,4 @@ const MainContainer = styled.div`
 	width: 830PX;
 	height: 100vh;
 	margin: 0 20px;
-	background-color: grey;
 `;

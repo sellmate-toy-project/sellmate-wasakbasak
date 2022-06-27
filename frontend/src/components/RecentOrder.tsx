@@ -5,7 +5,6 @@ import Item from './Item';
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
-		backgroundColor: theme.palette.background.paper,
 		padding: ' 20px',
 		boxSizing: 'border-box',
 	},

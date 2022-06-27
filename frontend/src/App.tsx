@@ -27,7 +27,6 @@ const Werapper = styled.div`
 	margin: 0 auto;
 	width: 1680px;
   padding: 22px 0 40px 0;
-  border: 1px solid black;
   display: flex;
   justify-contant: center
 `;
