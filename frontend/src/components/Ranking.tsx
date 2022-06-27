@@ -5,17 +5,14 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import { createTheme } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import { useState } from 'react';
 import Item from './Item';
-const themes = createTheme({
-	spacing: 5,
-});
+
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
-		padding: ' 20px',
+		padding: '20px',
 		boxSizing: 'border-box',
 	},
 	inline: {
@@ -41,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 		// marginBottom: '20px',
 	},
   spacing: {
-    padding: themes.spacing(4),
+    padding: '0 20px 20px',
   }
 }));
 
