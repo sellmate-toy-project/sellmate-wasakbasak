@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@mui/material/Container';
+import Alert from './Alert';
 import Board from './Board';
+import NewArrival from './NewArrival';
+
 
 const useStyles = makeStyles((theme) => ({
   padding: {
@@ -16,6 +19,8 @@ const RightContainer = () => {
 
 	return (
 			<Container disableGutters={false} className={[classes.padding, classes.size].join(' ')}>
+        <Alert />
+        <NewArrival />
         <Board />
       </Container>
 	);

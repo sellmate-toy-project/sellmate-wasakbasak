@@ -1,10 +1,16 @@
 import styled from 'styled-components';
+import AllSnack from './AllSnack';
+import BestReview from './BestReview';
 import Ranking from './Ranking';
 
 const Main = () => {
 	return (
 		<div>
-			<MainContainer><Ranking /></MainContainer>
+			<MainContainer>
+        <Ranking />
+        <BestReview />
+        <AllSnack />
+      </MainContainer>
 		</div>
 	);
 };
