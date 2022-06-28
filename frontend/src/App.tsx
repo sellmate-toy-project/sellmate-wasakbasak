@@ -2,18 +2,20 @@ import Button from "@mui/material/Button";
 import styled from "styled-components"
 import Header from "./components/Header";
 import Main from "./components/Main";
+import RightContainer from "./components/RightContainer";
+import LeftContainer from "./components/LeftContainer";
 
 const App = () => {
-	return (
-		<DashBoard className='App'>
-			<Header />
-			<Werapper>
-				<RightContainer />
-				<Main />
-        <LeftContainer />
-			</Werapper>
-		</DashBoard>
-	);
+    return (
+        <DashBoard className='App'>
+            <Header/>
+            <Werapper>
+                <RightContainer/>
+                <Main/>
+                <LeftContainer/>
+            </Werapper>
+        </DashBoard>
+    );
 };
 
 export default App;
