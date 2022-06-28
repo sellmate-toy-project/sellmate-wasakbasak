@@ -1,17 +1,23 @@
 import styled from 'styled-components';
+import AllSnack from './AllSnack';
+import BestReview from './BestReview';
+import Ranking from './Ranking';
 
-const Header = () => {
+const Main = () => {
 	return (
-		<Container>
-			<p>Main</p>
-		</Container>
+		<div>
+			<MainContainer>
+        <Ranking />
+        <BestReview />
+        <AllSnack />
+      </MainContainer>
+		</div>
 	);
 };
-export default Header;
+export default Main;
 
-const Container = styled.div`
-width: 800px;
-height: 400px;
-background-color: grey;
-margin: 0 auto;
+const MainContainer = styled.div`
+	width: 830PX;
+	height: 100vh;
+	margin: 0 20px;
 `;

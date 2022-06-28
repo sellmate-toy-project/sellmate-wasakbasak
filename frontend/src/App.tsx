@@ -2,31 +2,29 @@ import Button from "@mui/material/Button";
 import styled from "styled-components"
 import Header from "./components/Header";
 import Main from "./components/Main";
-import FlipCard from "./components/FlipCard";
 
 const App = () => {
-  return (
-    <Div className="App">
-      <Header />
-      <FlipCard
-        frontLeftImage="https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260"
-        frontRightImage="https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228"
-      />
-      <Main />
-      <Button
-        variant="contained"
-        onClick={() => {
-          alert('here');
-        }}
-      >
-        GO WASAK
-      </Button>
-    </Div>
-  );
+	return (
+		<DashBoard className='App'>
+			<Header />
+			<Werapper>
+				<RightContainer />
+				<Main />
+        <LeftContainer />
+			</Werapper>
+		</DashBoard>
+	);
 };
 
 export default App;
-
-const Div = styled.div`
-  text-align: center;
+<style lang='scss'></style>;
+const DashBoard = styled.div`
+	text-align: center;
+`;
+const Werapper = styled.div`
+	margin: 0 auto;
+	width: 1680px;
+  padding: 22px 0 40px 0;
+  display: flex;
+  justify-contant: center
 `;
