@@ -16,15 +16,17 @@ code {
   position: relative;
   width: 220px;
   height: 346px;
-  margin: 100px auto;
+  display: inline-grid;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c4c4c4;
+  margin-right: 20px;
 }
 
 .card {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
-  height: 100%;
   transition: all .5s;
   backface-visibility: hidden;
   background: white;
