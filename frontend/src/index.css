@@ -11,3 +11,42 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.flip-panel {
+  position: relative;
+  width: 220px;
+  height: 346px;
+  display: inline-grid;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c4c4c4;
+  margin-right: 20px;
+}
+
+.card {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: all .5s;
+  backface-visibility: hidden;
+  background: white;
+}
+
+.front {
+  z-index: 2;
+}
+
+.back {
+  z-index: 1;
+  transform: rotateY(-180deg);
+}
+
+.panel:hover .front {
+  z-index: 1;
+  transform: rotateY(180deg);
+}
+
+.flip-panel:hover .back {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
