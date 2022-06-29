@@ -1,10 +1,21 @@
 import styled from 'styled-components';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 const Header = () => {
 	return (
 		<Container>
 			<b>WASAKBASAK</b>
-			<b>user</b>
+			<Stack direction="row" spacing={2}>
+				<Avatar variant="square">
+				</Avatar>
+				<Avatar variant="square">
+				</Avatar>
+				<Typography gutterBottom variant="body2" component="div">
+					floor
+				</Typography>
+			</Stack>
 		</Container>
 	);
 };
