@@ -63,7 +63,7 @@ const BestReview = () => {
 				{...other}>
 				{value === index && (
 					<Box sx={{ p: 3 }}>
-						<Typography variant="body1">{children}</Typography>
+						<Typography variant="body1" component="span">{children}</Typography>
 					</Box>
 				)}
 			</div>
