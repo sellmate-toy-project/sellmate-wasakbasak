@@ -1,7 +1,6 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import styled from 'styled-components';
 
 type FlipCardProps = {
 	frontLeftImage: string;
@@ -21,7 +20,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
 	return (
 		<Card className='flip-panel'>
 			<CardContent className='front card'>
-				<view style={imageContainer}>
+				<div style={imageContainer}>
 					<CardMedia
 						component='img'
 						sx={{ width: 60, height: 60, display: 'unset' }}
@@ -37,7 +36,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
 						alt='Image Not found'
 						style={rightImage}
 					/>
-				</view>
+				</div>
 				<span style={textStyle}>{frontContentText}</span>
 			</CardContent>
 			<CardContent className='back card'>
@@ -53,12 +52,6 @@ const FlipCard: React.FC<FlipCardProps> = ({
 	);
 };
 export default FlipCard;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Container = styled.div`
-	font-size: 20px;
-	font-weight: 700;
-`;
 
 const textStyle = {
 	size: 14,
