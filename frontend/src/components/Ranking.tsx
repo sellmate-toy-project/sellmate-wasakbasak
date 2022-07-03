@@ -1,7 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, List, Tab } from '@mui/material/';
-import { Fragment, useState } from 'react';
+import { Box, List, Paper, Tab } from '@mui/material';
+import { useState } from 'react';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
 
@@ -107,6 +107,9 @@ export default function Ranking() {
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
+  const clickFloorBtn = (floor:string) => {
+    console.log(floor)
+  }
 	return (
 		<TabContext value={tabValue}>
 			<div className={classes.spacing}>
@@ -126,28 +129,34 @@ export default function Ranking() {
 							<Tab label='drink' value='drink' />
 						</TabList>
 					</div>
-					<Button variant='text' size='small' className={classes.paddingNone}>
+					<Button
+						variant='text'
+						size='small'
+						className={classes.paddingNone}
+						onClick={handleClickOpen}>
 						View all
 					</Button>
+					<ModalLayout
+						onClose={handleClose}
+						open={open}
+            changeFloor={clickFloorBtn}
+						title={tabValue === 'snack' ? 'Ranking Snack' : 'Ranking Drink'}
+             
+          >
+						{tabValue === 'snack' ? <Paper elevation={0}>snack</Paper> : <Paper elevation={0}>drink</Paper>}
+					</ModalLayout>
 				</Box>
 				<TabPanel value='snack' sx={{ padding: 0, display: 'flex' }}>
 					{Object.values(floorsRankingData).map((floor, index) => (
 						<List className={classes.list} disablePadding={true} key={index}>
 							{floor.map((items, idx) => (
-								<Fragment key={idx}>
-									<Item
-										name={items.name}
-										img={items.img}
-										text={items.text}
-										badge={{ display: true, content: idx + 1 }}
-										onClick={handleClickOpen}
-									/>
-									<ModalLayout
-										onClose={handleClose}
-										open={open}
-										title='Ranking'
-										key={`${items.name}_modal`}></ModalLayout>
-								</Fragment>
+								<Item
+									name={items.name}
+									img={items.img}
+									text={items.text}
+									badge={{ display: true, content: idx + 1 }}
+									key={idx}
+								/>
 							))}
 						</List>
 					))}
@@ -156,21 +165,13 @@ export default function Ranking() {
 					{Object.values(floorsRankingData).map((floor, idx) => (
 						<List className={classes.list} disablePadding={true} key={idx}>
 							{floor.map((items, idx) => (
-								<Fragment key={idx}>
-									<Item
-										name={items.name}
-										img={items.img}
-										text={items.text}
-										badge={{ display: false }}
-										key={idx}
-										onClick={handleClickOpen}
-									/>
-									<ModalLayout
-										onClose={handleClose}
-										open={open}
-										title='Ranking'
-										key={`${items.name}_modal`}></ModalLayout>
-								</Fragment>
+								<Item
+									name={items.name}
+									img={items.img}
+									text={items.text}
+									badge={{ display: false }}
+									key={idx}
+								/>
 							))}
 						</List>
 					))}
