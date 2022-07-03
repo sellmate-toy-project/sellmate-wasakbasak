@@ -1,15 +1,6 @@
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import FiberNewSharpIcon from '@mui/icons-material/FiberNewSharp';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import Stack from '@mui/material/Stack';
+import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, Stack } from '@mui/material';
 const useStyles = makeStyles((theme) => ({
 	paddingNone: {
 		padding: 0,

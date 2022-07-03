@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Close from '@mui/icons-material/Close';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
+import { Dialog, DialogTitle, IconButton } from '@mui/material';
 
 interface DialogProps {
 	open: boolean;

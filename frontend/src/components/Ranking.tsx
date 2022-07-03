@@ -1,11 +1,6 @@
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import Tab from '@mui/material/Tab';
+import { Button, makeStyles } from '@material-ui/core';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, List, Tab } from '@mui/material/';
 import { Fragment, useState } from 'react';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
