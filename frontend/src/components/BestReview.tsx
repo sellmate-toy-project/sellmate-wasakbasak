@@ -63,8 +63,7 @@ const BestReview = () => {
 				{...other}>
 				{value === index && (
 					<Box sx={{ p: 3 }}>
-            {/* TODO: Warning: validateDOMNesting(...): <div> cannot appear as a descendant of <p>. */}
-						<Typography>{children}</Typography>
+						<Typography variant="body1">{children}</Typography>
 					</Box>
 				)}
 			</div>
