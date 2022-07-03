@@ -1,7 +1,15 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, List, Paper, Tab } from '@mui/material';
-import { useState } from 'react';
+import {
+  Box,
+  List,
+  Paper,
+  Tab,
+  ToggleButton,
+  ToggleButtonGroup
+} from '@mui/material';
+import { Fragment, MouseEvent, SyntheticEvent, useState } from 'react';
+import Dropdown from './Dropdown';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
 
@@ -35,6 +43,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	spacing: {
 		padding: '0 20px 20px',
+	},
+  toggleBtn: {
+		'& .Mui-selected': {
+			backgroundColor: 'transparent !important',
+		},
+		'& .MuiToggleButton-root:hover': {
+			backgroundColor: 'transparent !important',
+		},
 	},
 }));
 
@@ -95,8 +111,9 @@ export default function Ranking() {
 	};
 
 	const [tabValue, setTabValue] = useState('snack');
+	const [rangeValue, setRangeValue] = useState('all');
 
-	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+	const handleChange = (event: SyntheticEvent, newValue: string) => {
 		setTabValue(newValue);
 	};
 	const [open, setOpen] = useState(false);
@@ -107,8 +124,13 @@ export default function Ranking() {
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-  const clickFloorBtn = (floor:string) => {
-    console.log(floor)
+	const clickFloorBtn = (floor: string) => {
+		console.log(floor);
+	};
+  const handleRangeChange = (event: MouseEvent<HTMLElement>, newValue: string) =>{
+    if (newValue !== null) {
+			setRangeValue(newValue);
+		}
   }
 	return (
 		<TabContext value={tabValue}>
@@ -139,11 +161,48 @@ export default function Ranking() {
 					<ModalLayout
 						onClose={handleClose}
 						open={open}
-            changeFloor={clickFloorBtn}
+						changeFloor={clickFloorBtn}
 						title={tabValue === 'snack' ? 'Ranking Snack' : 'Ranking Drink'}
-             
-          >
-						{tabValue === 'snack' ? <Paper elevation={0}>snack</Paper> : <Paper elevation={0}>drink</Paper>}
+						actionChildren={
+							<Fragment>
+                {/* TODO: 컴포넌트로 빼는 작업 필요 */}
+								<ToggleButtonGroup
+									value={rangeValue}
+									onChange={handleRangeChange}
+									exclusive={true}
+									className={classes.toggleBtn}
+									color='primary'
+									sx={{ border: 'none' }}>
+									<ToggleButton
+										sx={{ border: 'none', backgroundColor: 'transparent' }}
+										value='all'
+										disableFocusRipple
+										disableRipple>
+										all
+									</ToggleButton>
+									<ToggleButton
+										sx={{ border: 'none', backgroundColor: 'transparent' }}
+										value='this month'
+										disableFocusRipple
+										disableRipple>
+										this month
+									</ToggleButton>
+									<ToggleButton
+										sx={{ border: 'none', backgroundColor: 'transparent' }}
+										value='last month'
+										disableFocusRipple
+										disableRipple>
+										last month
+									</ToggleButton>
+								</ToggleButtonGroup>
+								<Dropdown options={['주문 수량 순', '공감 순']} />
+							</Fragment>
+						}>
+						{tabValue === 'snack' ? (
+							<Paper elevation={0}>snack</Paper>
+						) : (
+							<Paper elevation={0}>drink</Paper>
+						)}
 					</ModalLayout>
 				</Box>
 				<TabPanel value='snack' sx={{ padding: 0, display: 'flex' }}>
