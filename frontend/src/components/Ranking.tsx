@@ -6,8 +6,9 @@ import TabPanel from '@mui/lab/TabPanel';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Tab from '@mui/material/Tab';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Item from './Item';
+import ModalLayout from './ModalLayout';
 
 const useStyles = makeStyles((theme) => ({
 	list: {
@@ -37,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		// marginBottom: '20px',
 	},
-  spacing: {
-    padding: '0 20px 20px',
-  }
+	spacing: {
+		padding: '0 20px 20px',
+	},
 }));
 
 export default function Ranking() {
@@ -103,6 +104,14 @@ export default function Ranking() {
 	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
 		setTabValue(newValue);
 	};
+	const [open, setOpen] = useState(false);
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 	return (
 		<TabContext value={tabValue}>
 			<div className={classes.spacing}>
@@ -130,13 +139,20 @@ export default function Ranking() {
 					{Object.values(floorsRankingData).map((floor, index) => (
 						<List className={classes.list} disablePadding={true} key={index}>
 							{floor.map((items, idx) => (
-								<Item
-									name={items.name}
-									img={items.img}
-									text={items.text}
-									badge={{ display: true, content: idx + 1 }}
-									key={idx}
-								/>
+								<Fragment key={idx}>
+									<Item
+										name={items.name}
+										img={items.img}
+										text={items.text}
+										badge={{ display: true, content: idx + 1 }}
+										onClick={handleClickOpen}
+									/>
+									<ModalLayout
+										onClose={handleClose}
+										open={open}
+										title='Ranking'
+										key={`${items.name}_modal`}></ModalLayout>
+								</Fragment>
 							))}
 						</List>
 					))}
@@ -145,13 +161,21 @@ export default function Ranking() {
 					{Object.values(floorsRankingData).map((floor, idx) => (
 						<List className={classes.list} disablePadding={true} key={idx}>
 							{floor.map((items, idx) => (
-								<Item
-									name={items.name}
-									img={items.img}
-									text={items.text}
-									badge={{ display: false }}
-									key={idx}
-								/>
+								<Fragment key={idx}>
+									<Item
+										name={items.name}
+										img={items.img}
+										text={items.text}
+										badge={{ display: false }}
+										key={idx}
+										onClick={handleClickOpen}
+									/>
+									<ModalLayout
+										onClose={handleClose}
+										open={open}
+										title='Ranking'
+										key={`${items.name}_modal`}></ModalLayout>
+								</Fragment>
 							))}
 						</List>
 					))}

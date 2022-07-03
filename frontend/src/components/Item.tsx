@@ -5,14 +5,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@mui/material/Badge';
-import React from 'react';
+import { Fragment } from 'react';
 interface PropsData {
 	name: string;
 	img: string;
 	text: string;
+  onClick?: () => void;
 	badge: {
 		display: boolean;
-    content?: number;
+		content?: number;
 	};
 }
 const useStyles = makeStyles((theme) => ({
@@ -44,36 +45,37 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '20px',
 	},
 	badge: {
-    '& .MuiBadge-badge' : {
-      width: '36px',
-      height: '36px',
-      borderRadius: '100%',
-      top: '10px',
-      left: '10px',
-    }
-  },
-  listItem:{
-    height: '80px',
-    marginBottom: '12px',
-    '&:last-of-type': {
-      marginBottom: 0
-    }
-  },
+		'& .MuiBadge-badge': {
+			width: '36px',
+			height: '36px',
+			borderRadius: '100%',
+			top: '10px',
+			left: '10px',
+		},
+	},
+	listItem: {
+		height: '80px',
+		marginBottom: '12px',
+		'&:last-of-type': {
+			marginBottom: 0,
+		},
+	},
 }));
 
-const Item = ({ name, img, text, badge }: PropsData) => {
-  const classes = useStyles();
+const Item = ({ name, img, text, badge, onClick }: PropsData) => {
+	const classes = useStyles();
+
 	return (
 		<ListItem
 			key={name}
 			disableGutters={true}
-			className={[classes.paddingNone, classes.listItem].join(' ')}
-      >
+      onClick={onClick}
+			className={[classes.paddingNone, classes.listItem].join(' ')}>
 			{badge.display ? (
 				<Badge
 					badgeContent={badge.content}
 					color='success'
-          className={classes.badge}
+					className={classes.badge}
 					anchorOrigin={{
 						vertical: 'top',
 						horizontal: 'left',
@@ -88,18 +90,18 @@ const Item = ({ name, img, text, badge }: PropsData) => {
 				</ListItemAvatar>
 			)}
 			<ListItemText
-			  style={{ marginBottom: 0 }}
+				style={{ marginBottom: 0 }}
 				secondary={
-					<React.Fragment>
+					<Fragment>
 						<Typography
 							component='span'
-              variant='body2'
+							variant='body2'
 							className={classes.inline + 'MuiTypography-gutterBottom'}
-              gutterBottom={false}
+							gutterBottom={false}
 							color='textPrimary'>
 							{text}
 						</Typography>
-					</React.Fragment>
+					</Fragment>
 				}
 			/>
 		</ListItem>
