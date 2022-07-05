@@ -13,6 +13,6 @@ class Post(Base):
     body = Column(String(1000), nullable=True)
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(TIMESTAMP, onupdate=func.now())
-    is_Deleted = Column(Boolean(), nullable=True, default=False)
+    is_deleted = Column(Boolean(), nullable=True, default=False)
     user = relationship("User", back_populates="posts")
     post_comments = relationship("PostComment", back_populates="post")
