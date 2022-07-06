@@ -5,7 +5,8 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Button from "@material-ui/core/Button";
 import {TabPanel} from "@mui/lab";
-import {Tabs, Typography} from "@mui/material";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Typography} from "@mui/material";
+import Review from "./Review";
 
 const BestReview = () => {
     const CardData = [
@@ -65,6 +66,16 @@ const BestReview = () => {
         };
     }
 
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -80,6 +91,22 @@ const BestReview = () => {
                         <Tab label="Drink" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
+                <Button variant='text' size='small' onClick={handleClickOpen}>
+                    View all
+                </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Best review"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <Review/>
+                    </DialogContent>
+                </Dialog>
                 <TabPanel value={value} index={0}>
                 {
                     CardData.map((data, index) => (
