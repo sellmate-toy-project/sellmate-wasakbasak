@@ -5,8 +5,19 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Button from "@material-ui/core/Button";
 import {TabPanel} from "@mui/lab";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Typography} from "@mui/material";
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    makeStyles,
+    Tabs,
+    Typography
+} from "@mui/material";
 import Review from "./Review";
+import ReviewItem from "./ReviewItem";
+import classes from "*.module.css";
 
 const BestReview = () => {
     const CardData = [
@@ -95,6 +106,7 @@ const BestReview = () => {
                     View all
                 </Button>
                 <Dialog
+                    PaperProps={{ sx: { width: "800px", height: "940px" } }}
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
@@ -104,7 +116,7 @@ const BestReview = () => {
                         {"Best review"}
                     </DialogTitle>
                     <DialogContent>
-                        <Review/>
+                        <ReviewItem/>
                     </DialogContent>
                 </Dialog>
                 <TabPanel value={value} index={0}>
