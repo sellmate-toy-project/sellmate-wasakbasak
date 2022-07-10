@@ -1,5 +1,4 @@
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
+import { Button, List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Item from './Item';
 const useStyles = makeStyles((theme) => ({
