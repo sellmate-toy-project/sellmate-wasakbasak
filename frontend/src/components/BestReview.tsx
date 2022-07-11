@@ -106,6 +106,7 @@ const BestReview = () => {
                     View all
                 </Button>
                 <Dialog
+                    maxWidth={'md'}
                     PaperProps={{ sx: { width: "800px", height: "940px" } }}
                     open={open}
                     onClose={handleClose}
@@ -113,8 +114,17 @@ const BestReview = () => {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        {"Best review"}
+                            <b>{"Best review"}</b>
+
+                            <span>snack</span>
+                            /
+                            <span>drink</span>
                     </DialogTitle>
+                    <div>
+                        <span style={dateRange}>all</span>
+                        <span style={dateRange}>this month</span>
+                        <span style={dateRange}>last month</span>
+                    </div>
                     <DialogContent>
                         <ReviewItem/>
                     </DialogContent>
@@ -144,3 +154,7 @@ const BestReviewWrapper = styled.div`
 	height: 423px;
 	margin-bottom: 20px;
 `;
+
+const dateRange = {
+    marginLeft: '24px'
+}
