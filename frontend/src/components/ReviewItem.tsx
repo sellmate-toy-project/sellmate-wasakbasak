@@ -1,18 +1,24 @@
 import React from "react";
 
-const ReviewItem = () => {
+type ReviewItemProp = {
+    image: string,
+    title: string,
+    content: string,
+    like: string,
+}
+
+const ReviewItem: React.FC<ReviewItemProp> = ({image, title, content, like}) => {
     return (
         <div style={itemStyle}>
             <div>
                 <img style={imageStyle}/>
                 <p style={likeStyle}>
-                    Like 4
+                    Like {like}
                 </p>
             </div>
             <div style={contents}>
-                <p style={contentTitleStyle}> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Est eu eu morbi curabitur.</p>
-                <p style={contentDescStyle}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor, ac phasellus vitae metus, risus in urna, faucibus amet. Viverra amet a tristique augue quis gravida ipsum. Netus arcu risus eu est suspendisse dapibus nisi scelerisque.</p>
+                <p style={contentTitleStyle}>{title}</p>
+                <p style={contentDescStyle}>{content}</p>
             </div>
         </div>
     );
@@ -24,7 +30,8 @@ const itemStyle = {
     height: "179px",
     border: "1px solid #e1e1e1",
     borderRadius: '10px',
-    display: "flex"
+    display: "flex",
+    marginTop: "20px"
 }
 
 const imageStyle = {
