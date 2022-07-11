@@ -44,6 +44,21 @@ const BestReview = () => {
         },
     ];
 
+    const ReviewData = [
+        {
+            image: '',
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est eu eu morbi curabitur.',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor, ac phasellus vitae metus, risus in urna, faucibus amet. Viverra amet a tristique augue quis gravida ipsum. Netus arcu risus eu est suspendisse dapibus nisi scelerisque.',
+            like: '4',
+        },
+        {
+            image: '',
+            title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est eu eu morbi curabitur.',
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolor, ac phasellus vitae metus, risus in urna, faucibus amet. Viverra amet a tristique augue quis gravida ipsum. Netus arcu risus eu est suspendisse dapibus nisi scelerisque.',
+            like: '3',
+        }
+    ];
+
     interface TabPanelProps {
         children?: React.ReactNode;
         index: number;
@@ -126,7 +141,17 @@ const BestReview = () => {
                         <span style={dateRange}>last month</span>
                     </div>
                     <DialogContent>
-                        <ReviewItem/>
+                        {
+                            ReviewData.map((data, index) => (
+                                    <ReviewItem
+                                        image={data.image}
+                                        title={data.title}
+                                        content={data.content}
+                                        like={data.like}
+                                    />
+                                )
+                            )
+                        }
                     </DialogContent>
                 </Dialog>
                 <TabPanel value={value} index={0}>
