@@ -1,27 +1,31 @@
-import Button from "@mui/material/Button";
-import styled from "styled-components"
+import styled from "styled-components";
 import Header from "./components/Header";
+import LeftContainer from "./components/LeftContainer";
 import Main from "./components/Main";
+import RightContainer from "./components/RightContainer";
 
 const App = () => {
-  return (
-    <Div className="App">
-      <Header />
-      <Main />
-      <Button
-        variant="contained"
-        onClick={() => {
-          alert('here');
-        }}
-      >
-        GO WASAK
-      </Button>
-    </Div>
-  );
+    return (
+        <DashBoard className='App'>
+            <Header/>
+            <Werapper>
+                <LeftContainer/>
+                <Main/>
+                <RightContainer/>
+            </Werapper>
+        </DashBoard>
+    );
 };
 
 export default App;
-
-const Div = styled.div`
-  text-align: center;
+<style lang='scss'></style>;
+const DashBoard = styled.div`
+	text-align: center;
+`;
+const Werapper = styled.div`
+	margin: 0 auto;
+	width: 1680px;
+  padding: 22px 0 40px 0;
+  display: flex;
+  justify-contant: center
 `;

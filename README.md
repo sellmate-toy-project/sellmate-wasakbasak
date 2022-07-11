@@ -20,7 +20,7 @@ pip 설치
 1. react & typescript 설치
 
 ```
-> npx-create-react-app@latest frontend --template typescript
+> npx create-react-app@latest frontend --template typescript
 // create-react-app 버전 문제로 @latest 붙은 최신 버전 받아야 정상 동작
 
 > npm i --save react react-dom styled-components typescript

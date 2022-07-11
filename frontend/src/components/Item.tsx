@@ -1,0 +1,105 @@
+import { Avatar, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from '@material-ui/core';
+import Badge from '@mui/material/Badge';
+import { Fragment } from 'react';
+interface PropsData {
+	name: string;
+	img: string;
+	text: string;
+  onClick?: () => void;
+	badge: {
+		display: boolean;
+		content?: number;
+	};
+}
+const useStyles = makeStyles((theme) => ({
+	list: {
+		width: '100%',
+		padding: ' 20px',
+		boxSizing: 'border-box',
+	},
+	inline: {
+		display: 'inline',
+	},
+	listImg: {
+		width: '80px',
+		height: '80px',
+		marginTop: 0,
+		marginRight: '16px',
+	},
+	itemImg: {
+		width: '100%',
+		height: '100%',
+		borderRadius: 0,
+	},
+	paddingNone: {
+		padding: 0,
+	},
+	title: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		marginBottom: '20px',
+	},
+	badge: {
+		'& .MuiBadge-badge': {
+			width: '36px',
+			height: '36px',
+			borderRadius: '100%',
+			top: '10px',
+			left: '10px',
+		},
+	},
+	listItem: {
+		height: '80px',
+		marginBottom: '12px',
+		'&:last-of-type': {
+			marginBottom: 0,
+		},
+	},
+}));
+
+const Item = ({ name, img, text, badge, onClick }: PropsData) => {
+	const classes = useStyles();
+
+	return (
+		<ListItem
+			key={name}
+			disableGutters={true}
+      onClick={onClick}
+			className={[classes.paddingNone, classes.listItem].join(' ')}>
+			{badge.display ? (
+				<Badge
+					badgeContent={badge.content}
+					color='success'
+					className={classes.badge}
+					anchorOrigin={{
+						vertical: 'top',
+						horizontal: 'left',
+					}}>
+					<ListItemAvatar className={classes.listImg}>
+						<Avatar alt={name} src={img} className={classes.itemImg}></Avatar>
+					</ListItemAvatar>
+				</Badge>
+			) : (
+				<ListItemAvatar className={classes.listImg}>
+					<Avatar alt={name} src={img} className={classes.itemImg}></Avatar>
+				</ListItemAvatar>
+			)}
+			<ListItemText
+				style={{ marginBottom: 0 }}
+				secondary={
+					<Fragment>
+						<Typography
+							component='span'
+							variant='body2'
+							className={classes.inline + 'MuiTypography-gutterBottom'}
+							gutterBottom={false}
+							color='textPrimary'>
+							{text}
+						</Typography>
+					</Fragment>
+				}
+			/>
+		</ListItem>
+	);
+};
+export default Item;
