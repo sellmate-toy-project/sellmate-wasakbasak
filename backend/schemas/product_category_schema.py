@@ -19,8 +19,8 @@ class ProductCategoryUpdate(ProductCategoryBase):
 class ProductCategoryInDBBase(ProductCategoryBase):
     id: int
     name: str
-    code: str
-    owner_id: int
+    code: Optional[str]
+    owner_id: Optional[int]
 
     class Config:
         orm_mode = True
