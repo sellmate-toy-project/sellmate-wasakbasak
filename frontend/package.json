@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "homepage": "https://sellmate-toy-project.github.io/sellmate-wasakbasak/frontend",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",

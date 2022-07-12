@@ -10,17 +10,6 @@ const useStyles = makeStyles((theme) => ({
 	inline: {
 		display: 'inline',
 	},
-	listImg: {
-		width: '80px',
-		height: '80px',
-		marginTop: 0,
-		marginRight: '16px',
-	},
-	itemImg: {
-		width: '100%',
-		height: '100%',
-		borderRadius: 0,
-	},
 	paddingNone: {
 		padding: 0,
 	},
@@ -31,26 +20,46 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
 const RecentOrder = () => {
-	const classes = useStyles();
+  const classes = useStyles();
 	const recentOrderData = [
 		{
 			img: '/static/images/avatar/1.jpg',
-			name: 'Ali Connors',
-			text: "I'll be in your neighborhood doing errands this…",
+			title: '[피코크] 초콜릿 샌드위치 비스킷 135g 초콜릿 샌드위치 비스킷 135g',
+			text: '2,980 원',
 		},
 		{
 			img: '/static/images/avatar/2.jpg',
-			name: 'Jennifer',
-			text: "Wish I could come, but I'm out of town this…",
+			title: '[오리온] 후레쉬 베리',
+			text: '5,120 원',
 		},
 		{
 			img: '/static/images/avatar/3.jpg',
-			name: 'Alex',
-			text: 'Do you have Paris recommendations? Have you ever…',
+			title: '[크라운] 쿠크다스 케이크 154g',
+			text: '2,080 원',
+		},
+		{
+			img: '/static/images/avatar/3.jpg',
+			title: '오레오 화이트크림 샌드위치 쿠키100g',
+			text: '1,280 원',
+		},
+		{
+			img: '/static/images/avatar/3.jpg',
+			title: '[농심] 포테토칩 오리지널 4번들',
+			text: '3,180 원',
+		},
+		{
+			img: '/static/images/avatar/3.jpg',
+			title: '[CJ] 맛밤 60g*4번들',
+			text: '6,480 원',
+		},
+		{
+			img: '/static/images/avatar/3.jpg',
+			title: '[라라스윗] 생우유 모나카 (140ml*4입)',
+			text: '9,400 원',
 		},
 	];
-
 	return (
 		<List className={classes.list} disablePadding={true}>
 			<div className={classes.title}>
@@ -61,16 +70,22 @@ const RecentOrder = () => {
 					View all
 				</Button>
 			</div>
-			{recentOrderData.map((items) => (
+			{recentOrderData.map((items, idx) => (
 				<Item
-					name={items.name}
-					img={items.img}
-					text={items.text}
-					badge={{ display: false }}
-          key={items.name}
+					title={items.title}
+					img={{
+            src: items.img,
+            style: {width: '80px', height: '80px'},
+          }}
+					text={{
+						content: items.text,
+						display: true,
+					}}
+					rank={{ display: false }}
+					key={idx}
 				/>
 			))}
 		</List>
 	);
-}
+};
 export default RecentOrder;

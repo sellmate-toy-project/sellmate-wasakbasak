@@ -76,33 +76,22 @@ const ModalLayout = ({
 					className={classes.toggleBtn}
 					color='primary'
 					sx={{ border: 'none' }}>
-					<ToggleButton
-						sx={{ border: 'none', backgroundColor: 'transparent' }}
-						value='3F'
-						disableFocusRipple
-						disableRipple>
-						3F
-					</ToggleButton>
-					<ToggleButton
-						sx={{ border: 'none', backgroundColor: 'transparent' }}
-						value='5F'
-						disableFocusRipple
-						disableRipple>
-						5F
-					</ToggleButton>
-					<ToggleButton
-						sx={{ border: 'none', backgroundColor: 'transparent' }}
-						value='11F'
-						disableFocusRipple
-						disableRipple>
-						11F
-					</ToggleButton>
+            {['3F', '5F', '11F'].map((floor, idx) => (
+              <ToggleButton
+                key={idx}
+                sx={{ border: 'none', backgroundColor: 'transparent' }}
+                value={floor}
+                disableFocusRipple
+                disableRipple>
+                {floor}
+              </ToggleButton>
+            ))}
 				</ToggleButtonGroup>
 				{/* <IconButton aria-label='close' onClick={onClose}>
 					<CloseIcon  />
 				</IconButton> */}
 			</DialogTitle>
-			<DialogActions sx={{justifyContent: 'space-between'}}>{actionChildren}</DialogActions>
+			<DialogActions sx={{justifyContent: 'space-between', p: '16px 45px 16px 40px', backgroundColor: '#FAFAFB'}}>{actionChildren}</DialogActions>
 			<DialogContent>{children}</DialogContent>
 		</Dialog>
 	);
