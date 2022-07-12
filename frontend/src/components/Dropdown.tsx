@@ -51,7 +51,9 @@ export default function SplitButton({ options }: DropdownProps) {
 			<ButtonGroup
 				variant='contained'
 				ref={anchorRef}
-				aria-label='split button'>
+				aria-label='split button'
+        sx={{ml: '0 !important'}}
+      >
 				<Button onClick={handleClick}>{options[selectedIndex]}</Button>
 				<Button
 					size='small'
@@ -73,6 +75,7 @@ export default function SplitButton({ options }: DropdownProps) {
 					<Grow
 						{...TransitionProps}
 						style={{
+              padding: '0 !important',
 							transformOrigin:
 								placement === 'bottom' ? 'center top' : 'center bottom',
 						}}>

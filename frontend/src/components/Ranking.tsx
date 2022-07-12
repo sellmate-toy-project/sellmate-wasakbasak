@@ -1,11 +1,10 @@
-import { Button, makeStyles } from '@material-ui/core';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { makeStyles } from '@material-ui/core';
+import { TabContext, TabPanel } from '@mui/lab';
 import {
   Box,
+  Button,
   List,
-  Paper,
-  Tab,
-  ToggleButton,
+  Paper, Tab, Tabs, ToggleButton,
   ToggleButtonGroup
 } from '@mui/material';
 import { Fragment, MouseEvent, SyntheticEvent, useState } from 'react';
@@ -18,13 +17,14 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		padding: '20px',
 		boxSizing: 'border-box',
+    display: 'flex',
 	},
 	inline: {
 		display: 'inline',
 	},
 	listImg: {
-		width: '80px',
-		height: '80px',
+		width: '92px',
+		height: '92px',
 		marginTop: 0,
 		marginRight: '16px',
 	},
@@ -34,84 +34,135 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 0,
 	},
 	paddingNone: {
-		padding: 0,
+		padding: '0 !important',
 	},
 	title: {
 		display: 'flex',
+		justifyContent: 'space-between',
 		alignItems: 'center',
-		// marginBottom: '20px',
+		marginBottom: '20px',
 	},
 	spacing: {
 		padding: '0 20px 20px',
 	},
-  toggleBtn: {
-		'& .Mui-selected': {
-			backgroundColor: 'transparent !important',
+	toggleBtn: {
+		'& .MuiToggleButton-root': {
+			borderColor: '#C0C8D3',
+			color: 'rgba(51, 63, 82, 0.3) !important',
+			'&.MuiToggleButtonGroup-grouped:not(:first-of-type)': {
+				marginLeft: 0,
+			},
 		},
-		'& .MuiToggleButton-root:hover': {
+		'&> .Mui-selected': {
+			backgroundColor: '#F5F6F7 !important',
+			color: '#333F52 !important',
+			fontWeight: 600,
+			fontSize: '14px',
+		},
+	},
+	button: {
+		color: '#333F52 !important',
+		'&:hover': {
 			backgroundColor: 'transparent !important',
 		},
 	},
+  itemsClass : {
+    padding: '20px !important',
+    border: '1px solid #F1F1F1',
+    marginRight: '20px',
+    '&:last-of-type': {
+      marginRight: 0,
+    },
+    '& .ranking-text': {
+      padding: '4px 20px',
+      borderRadius: '4px',
+      color: 'white',
+    },
+    '& .title-text': {
+      fontSize: '12px',
+    },
+  },
+  tabs:{
+    '& .MuiTabs-indicator': {
+      backgroundColor: '#56AEFF !important',
+    },
+  },
+  tab: {
+    color: '#333F52 !important',
+    padding: '0 !important',
+    width: '20px !important',
+    height: '23px !important',
+    minHeight: '0 !important',
+    minWidth: '0 !important',
+    marginRight: '24px !important',
+    '&:last-of-type':{
+      marginRight: '0 !important',
+      letterSpacing: '0px',
+    },
+  },
 }));
 
 export default function Ranking() {
 	const classes = useStyles();
 	const floorsRankingData = {
-		floor3: [
+		'3F': [
 			{
-				img: '/static/images/avatar/1.jpg',
-				name: 'floor3',
-				text: "I'll be in your neighborhood doing errands this…",
-			},
-			{
-				img: '/static/images/avatar/2.jpg',
-				name: 'floor3',
-				text: "Wish I could come, but I'm out of town this…",
+				img: '/static/images/avatar/3.jpg',
+				title: '오레오 화이트크림 샌드위치 쿠키100g',
+				text: '1,280 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
-				name: 'floor3',
-				text: 'Do you have Paris recommendations? Have you ever…',
+				title: '[농심] 포테토칩 오리지널 4번들',
+				text: '3,180 원',
+			},
+			{
+				img: '/static/images/avatar/3.jpg',
+				title: '[CJ] 맛밤 60g*4번들',
+				text: '6,480 원',
 			},
 		],
-		floor5: [
+		'5F': [
 			{
 				img: '/static/images/avatar/1.jpg',
-				name: 'floor5',
-				text: "I'll be in your neighborhood doing errands this…",
-			},
-			{
-				img: '/static/images/avatar/2.jpg',
-				name: 'floor5',
-				text: "Wish I could come, but I'm out of town this…",
+				title:
+					'[피코크] 초콜릿 샌드위치 비스킷 135g 초콜릿 샌드위치 비스킷 135g',
+				text: '2,980 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
-				name: 'floor5',
-				text: 'Do you have Paris recommendations? Have you ever…',
+				title: '[크라운] 쿠크다스 케이크 154g',
+				text: '2,080 원',
+			},
+			{
+				img: '/static/images/avatar/3.jpg',
+				title: '[라라스윗] 생우유 모나카 (140ml*4입)',
+				text: '9,400 원',
 			},
 		],
-		floor11: [
+		'11F': [
 			{
 				img: '/static/images/avatar/1.jpg',
-				name: 'floor11',
-				text: "I'll be in your neighborhood doing errands this…",
+				title:
+					'[피코크] 초콜릿 샌드위치 비스킷 135g 초콜릿 샌드위치 비스킷 135g',
+				text: '2,980 원',
 			},
 			{
 				img: '/static/images/avatar/2.jpg',
-				name: 'floor11',
-				text: "Wish I could come, but I'm out of town this…",
+				title: '[오리온] 후레쉬 베리',
+				text: '5,120 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
-				name: 'floor11',
-				text: 'Do you have Paris recommendations? Have you ever…',
+				title: '[크라운] 쿠크다스 케이크 154g',
+				text: '2,080 원',
 			},
 		],
 	};
 
-	const [tabValue, setTabValue] = useState('snack');
+	const [tabValue, setTabValue] = useState('3F');
 	const [rangeValue, setRangeValue] = useState('all');
+	const [itemValue, setItemValue] = useState('snack');
 
 	const handleChange = (event: SyntheticEvent, newValue: string) => {
 		setTabValue(newValue);
@@ -124,48 +175,101 @@ export default function Ranking() {
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-	const clickFloorBtn = (floor: string) => {
-		console.log(floor);
+	const clickItemBtn = (item: string) => {
+		console.log(item);
 	};
-  const handleRangeChange = (event: MouseEvent<HTMLElement>, newValue: string) =>{
-    if (newValue !== null) {
+	const handleRangeChange = (
+		event: MouseEvent<HTMLElement>,
+		newValue: string
+	) => {
+		if (newValue !== null) {
 			setRangeValue(newValue);
 		}
-  }
+	};
+	const handleItemChange = (
+		event: MouseEvent<HTMLElement>,
+		newValue: string
+	) => {
+		if (newValue !== null) {
+			setItemValue(newValue);
+		}
+	};
+	const itemOptions = [
+		{ title: '과자', value: 'snack' },
+		{ title: '음료', value: 'drink' },
+	];
+	const rangeOptions = [
+		{ title: '전체', value: 'all' },
+		{ title: '이번 달', value: 'this month' },
+		{ title: '저번 달', value: 'last month' },
+	];
+
 	return (
 		<TabContext value={tabValue}>
-			<div className={classes.spacing}>
+			<div>
 				<Box
 					sx={{
 						display: 'flex',
-						flexDirection: 'row',
+						flexDirection: 'column',
 						justifyContent: 'space-between',
 					}}>
 					<div className={classes.title}>
-						Ranking
-						<TabList
+						<span style={{ fontWeight: 700, fontSize: '14px' }}>랭킹</span>
+						<Button
+							variant='text'
+							size='small'
+							className={[classes.paddingNone, classes.button].join(' ')}
+							onClick={handleClickOpen}
+							disableFocusRipple
+							disableRipple
+							sx={{
+								fontWeight: '600',
+								fontSize: 14,
+							}}>
+							+ 더보기
+						</Button>
+					</div>
+					<div className={classes.title}>
+						<ToggleButtonGroup
+							value={itemValue}
+							onChange={handleItemChange}
+							exclusive
+							className={classes.toggleBtn}
+							sx={{ borderRadius: '6px' }}>
+							{itemOptions.map((item, idx) => (
+								<ToggleButton
+									sx={{ p: '10px 20px' }}
+									value={item.value}
+									disableFocusRipple
+									disableRipple
+									key={idx}
+                >
+									{item.title}
+								</ToggleButton>
+							))}
+						</ToggleButtonGroup>
+						<Tabs
 							value={tabValue}
 							onChange={handleChange}
-							variant='scrollable'>
-							<Tab label='snack' value='snack' />
-							<Tab label='drink' value='drink' />
-						</TabList>
+							variant='standard'
+              style={{minHeight: 0}}
+              className={classes.tabs}
+            >
+              {
+                ['3F', '5F', '11F'].map((floor, i) => (
+                  <Tab disableFocusRipple disableRipple key={i} className={classes.tab} label={floor} value={floor} />
+                ))
+              }
+						</Tabs>
 					</div>
-					<Button
-						variant='text'
-						size='small'
-						className={classes.paddingNone}
-						onClick={handleClickOpen}>
-						View all
-					</Button>
 					<ModalLayout
 						onClose={handleClose}
 						open={open}
-						changeFloor={clickFloorBtn}
-						title={tabValue === 'snack' ? 'Ranking Snack' : 'Ranking Drink'}
+						changeFloor={clickItemBtn}
+						title={rangeValue === 'snack' ? 'Ranking Snack' : 'Ranking Drink'}
 						actionChildren={
 							<Fragment>
-                {/* TODO: 컴포넌트로 빼는 작업 필요 */}
+								{/* TODO: 컴포넌트로 빼는 작업 필요 */}
 								<ToggleButtonGroup
 									value={rangeValue}
 									onChange={handleRangeChange}
@@ -173,69 +277,59 @@ export default function Ranking() {
 									className={classes.toggleBtn}
 									color='primary'
 									sx={{ border: 'none' }}>
-									<ToggleButton
-										sx={{ border: 'none', backgroundColor: 'transparent' }}
-										value='all'
-										disableFocusRipple
-										disableRipple>
-										all
-									</ToggleButton>
-									<ToggleButton
-										sx={{ border: 'none', backgroundColor: 'transparent' }}
-										value='this month'
-										disableFocusRipple
-										disableRipple>
-										this month
-									</ToggleButton>
-									<ToggleButton
-										sx={{ border: 'none', backgroundColor: 'transparent' }}
-										value='last month'
-										disableFocusRipple
-										disableRipple>
-										last month
-									</ToggleButton>
+									{rangeOptions.map((date, idx) => (
+										<ToggleButton
+											sx={{ border: 'none', backgroundColor: 'transparent' }}
+											value={date.value}
+											disableFocusRipple
+											disableRipple
+											key={idx}>
+											{date.title}
+										</ToggleButton>
+									))}
 								</ToggleButtonGroup>
 								<Dropdown options={['주문 수량 순', '공감 순']} />
 							</Fragment>
 						}>
-						{tabValue === 'snack' ? (
+						{itemValue === 'snack' ? (
 							<Paper elevation={0}>snack</Paper>
 						) : (
 							<Paper elevation={0}>drink</Paper>
 						)}
 					</ModalLayout>
 				</Box>
-				<TabPanel value='snack' sx={{ padding: 0, display: 'flex' }}>
-					{Object.values(floorsRankingData).map((floor, index) => (
-						<List className={classes.list} disablePadding={true} key={index}>
-							{floor.map((items, idx) => (
-								<Item
-									name={items.name}
-									img={items.img}
-									text={items.text}
-									badge={{ display: true, content: idx + 1 }}
-									key={idx}
-								/>
-							))}
-						</List>
-					))}
-				</TabPanel>
-				<TabPanel value='drink' sx={{ padding: 0, display: 'flex' }}>
-					{Object.values(floorsRankingData).map((floor, idx) => (
-						<List className={classes.list} disablePadding={true} key={idx}>
-							{floor.map((items, idx) => (
-								<Item
-									name={items.name}
-									img={items.img}
-									text={items.text}
-									badge={{ display: false }}
-									key={idx}
-								/>
-							))}
-						</List>
-					))}
-				</TabPanel>
+				<Fragment>
+					{Object.entries(floorsRankingData).map(
+						([floor, valueArr], index) => (
+							<TabPanel key={floor} value={floor} sx={{ padding: 0, display: 'flex' }}>
+								<List
+									className={classes.list}
+									disablePadding={true}
+									key={index}>
+									{valueArr.map((items, idx) => (
+										<Item
+											title={items.title}
+											img={{
+                        src: items.img,
+                        style: {width: '92px', height: '92px'},
+                      }}
+											text={{
+												content: items.text,
+												display: false,
+											}}
+											rank={{ display: true, content: idx + 1 }}
+											key={idx}
+                      itemsClass={classes.itemsClass}
+                      iconColor={idx + 1 === 1 ? '#40A3FF' : idx + 1 === 2 ? '#FFA800' : '#405069'}
+										/>
+									))}
+								</List>
+							</TabPanel>
+            )
+					)}
+				</Fragment>
 			</div>
 		</TabContext>
 	);
 }
+

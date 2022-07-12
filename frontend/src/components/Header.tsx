@@ -1,12 +1,13 @@
-import styled from 'styled-components';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
+import styled from 'styled-components';
+import logo from '../logo.png';
 const Header = () => {
 	return (
 		<Container>
-			<b>WASAKBASAK</b>
+			<Avatar sx={{ width: 156, height: 18 }} src={logo} variant="square">
+			</Avatar>
 			<Stack direction="row" spacing={2}>
 				<Avatar variant="square">
 				</Avatar>
