@@ -12,34 +12,32 @@ class Ssg:
         ]
 
     def collect_category(self):
-        product_category = crud.product_category.get_by_name(
+        base_category = crud.product_category.get_by_name(
             db=self.db,
             name="과자",
         )
 
         for main_category in self.collect_main_categories:
-            print(self.base_uri + main_category)
-            res = requests.get(self.base_uri + main_category)
+            try:
+                res = requests.get(self.base_uri + main_category)
 
-            if res.status_code == 200:
-                soup = BeautifulSoup(res.text, "html.parser")
-                product_categories = soup.select("#category_filter .clickable")
+                if res.status_code == 200:
+                    soup = BeautifulSoup(res.text, "html.parser")
+                    product_categories = soup.select("#category_filter .clickable")
 
-                for category in product_categories:
-                    crud.product_category.create_with_owner(
-                        db=self.db,
-                        obj_in={
-                            "name": category.text,
-                            "code": category["data-ilparam-value"],
-                        },
-                        owner_id=product_category.id
-                    )
-                    print(self.base_uri + category["data-ilparam-value"])
-                    sub_res = requests.get(self.base_uri + main_category)
-
-                    if res.status_code == 200:
-                        print('test')
-
-
-            else:
-                raise Exception("Server Error")
+                    for category in product_categories:
+                        product_category = crud.product_category.create_with_owner(
+                            db=self.db,
+                            obj_in={
+                                "name": category.text,
+                                "code": category["data-ilparam-value"],
+                            },
+                            owner_id=base_category.id
+                        )
+                        print(product_category)
+                        # sub_res = requests.get(self.base_uri + main_category)
+                        #
+                        # if res.status_code == 200:
+                        #     print('test')
+            except Exception as e:
+                print(f'Server Error: {e}')
