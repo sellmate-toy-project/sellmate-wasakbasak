@@ -1,27 +1,9 @@
-import { Tabs, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import React from 'react';
+import Button from "@material-ui/core/Button";
+import { Box, Dialog, DialogContent, DialogTitle, Tab, Tabs, Typography } from '@mui/material';
+import { useState } from "react";
 import styled from 'styled-components';
 import FlipCard from "./FlipCard";
-import React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Button from "@material-ui/core/Button";
-import {TabPanel} from "@mui/lab";
-import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    makeStyles,
-    Tabs,
-    Typography
-} from "@mui/material";
-import Review from "./Review";
 import ReviewItem from "./ReviewItem";
-import classes from "*.module.css";
 
 const BestReview = () => {
 	const CardData = [
@@ -110,7 +92,7 @@ const BestReview = () => {
 		};
 	}
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -120,7 +102,7 @@ const BestReview = () => {
         setOpen(false);
     };
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
