@@ -147,6 +147,7 @@ const BestReview = () => {
                                         title={data.title}
                                         content={data.content}
                                         like={data.like}
+                                        key={index}
                                     />
                                 )
                             )
@@ -162,6 +163,7 @@ const BestReview = () => {
                                 backContentText={data.backText}
                                 frontContentText={data.frontText}
                                 backImage={data.backImage}
+                                key={index}
                             />
                         )
                     )
