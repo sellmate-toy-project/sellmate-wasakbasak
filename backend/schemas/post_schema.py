@@ -4,10 +4,8 @@ from pydantic import BaseModel
 
 class PostBase(BaseModel):
     user_id: Optional[int]
-    title: str
+    title: Optional[str]
     body: Optional[str]
-
-
 
 
 class PostCreate(BaseModel):
@@ -17,8 +15,9 @@ class PostCreate(BaseModel):
 
 
 class PostUpdate(BaseModel):
-    title: str
-    body: str
+    title: Optional[str]
+    body: Optional[str]
+
 
 class PostInDBBase(PostBase):
     id: int
