@@ -12,7 +12,7 @@ def prefix_inserts(insert, compiler, **kw):
     return compiler.visit_insert(insert.prefix_with("IGNORE"), **kw)
 
 
-class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate]):
+class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]):
     def get_by_name(
         self, db: Session, name: str
     ) -> Optional[ProductCategory]:

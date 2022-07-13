@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from schemas.user import PostCreate
 
 
-class CRUDPost(CRUDBase[Post]):
+class CRUDPost(CRUDBase[Post, None, None]):
     def create(self, db: Session, *, obj_in: PostCreate) -> Post:
         db_obj = Post(
             title=obj_in.title,
