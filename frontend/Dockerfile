@@ -3,7 +3,6 @@ WORKDIR /build
 COPY ./package*.json ./
 
 RUN npm install
-RUN chown -R node:node node_modules
 
 # develop-stage
 FROM base as develop-stage

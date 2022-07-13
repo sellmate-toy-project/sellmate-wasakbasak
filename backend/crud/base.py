@@ -1,11 +1,14 @@
 from typing import Generic, TypeVar, Type, Optional, Any, List
 from db.base_class import Base
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 ModelType = TypeVar("ModelType", bound=Base)
+CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
-class CRUDBase(Generic[ModelType]):
+class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: Type[ModelType]):
         self.model = model
 
