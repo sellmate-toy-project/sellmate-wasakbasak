@@ -18,9 +18,9 @@ const App = () => {
 };
 
 export default App;
-<style lang='scss'></style>;
 const DashBoard = styled.div`
 	text-align: center;
+  font-family: Pretendard;
 `;
 const Werapper = styled.div`
 	margin: 0 auto;
