@@ -1,4 +1,5 @@
 from typing import Any, List
+from schemas.post_schema import PostUpdate
 from fastapi import APIRouter, Depends, Path, Body
 from sqlalchemy.orm import Session
 from . import deps
@@ -31,7 +32,6 @@ def read_item(
 def create_item(
     db: Session = Depends(deps.get_db),
     data=Body(
-        ...,
         example={
             "title" : "새로운게시글",
             "body" : "제가 작성한 글 좀 봐주시겠어요?",
@@ -42,3 +42,13 @@ def create_item(
     post = crud.post.create(db, data)
     return post
 
+
+@router.put("/{post_id}", response_model=schemas.Post)
+async def update(
+    db: Session = Depends(deps.get_db),
+    post_id: int = Path(...),
+    data: PostUpdate = Body(..., embed=False),
+) -> Any:
+    post = crud.post.update(db, post_id, data)
+
+    return post
