@@ -4,20 +4,43 @@ import {
   Box,
   Button,
   List,
-  Paper, Tab, Tabs, ToggleButton,
+  Paper,
+  Tab,
+  Tabs,
+  ToggleButton,
   ToggleButtonGroup
 } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Fragment, MouseEvent, SyntheticEvent, useState } from 'react';
 import Dropdown from './Dropdown';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
-
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: '#21CAFF',
+		},
+		secondary: {
+			main: 'rgba(0, 0, 0, 0)',
+		},
+	},
+});
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
 		padding: '20px',
 		boxSizing: 'border-box',
-    display: 'flex',
+		display: 'flex',
+		flexDirection: 'column',
+		'& .floor': {
+			height: '32px',
+			textAlign: 'left',
+			borderBottom: '1px solid #E0E0E0',
+			margin: '0 16px 20px 0',
+			color: '#181818',
+			fontWeight: 600,
+			fontSize: '14px',
+		},
 	},
 	inline: {
 		display: 'inline',
@@ -66,40 +89,31 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: 'transparent !important',
 		},
 	},
-  itemsClass : {
-    padding: '20px !important',
-    border: '1px solid #F1F1F1',
-    marginRight: '20px',
-    '&:last-of-type': {
-      marginRight: 0,
-    },
-    '& .ranking-text': {
-      padding: '4px 20px',
-      borderRadius: '4px',
-      color: 'white',
-    },
-    '& .title-text': {
-      fontSize: '12px',
-    },
-  },
-  tabs:{
-    '& .MuiTabs-indicator': {
-      backgroundColor: '#56AEFF !important',
-    },
-  },
-  tab: {
-    color: '#333F52 !important',
-    padding: '0 !important',
-    width: '20px !important',
-    height: '23px !important',
-    minHeight: '0 !important',
-    minWidth: '0 !important',
-    marginRight: '24px !important',
-    '&:last-of-type':{
-      marginRight: '0 !important',
-      letterSpacing: '0px',
-    },
-  },
+	itemsClass: {
+		marginRight: '20px',
+		'&:last-of-type': {
+			marginRight: 0,
+		},
+		'& .ranking-text': {
+			padding: '4px 20px',
+			borderRadius: '4px',
+			color: 'white',
+		},
+		'& .title-text': {
+			fontSize: '12px',
+		},
+	},
+	tab: {
+		padding: '0 !important',
+		width: '30px !important',
+		height: '26px !important',
+		minHeight: '0 !important',
+		minWidth: '0 !important',
+		marginRight: '20px !important',
+		'&:last-of-type': {
+			marginRight: '0 !important',
+		},
+	},
 }));
 
 export default function Ranking() {
@@ -109,61 +123,48 @@ export default function Ranking() {
 			{
 				img: '/static/images/avatar/3.jpg',
 				title: '오레오 화이트크림 샌드위치 쿠키100g',
-				text: '1,280 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
 				title: '[농심] 포테토칩 오리지널 4번들',
-				text: '3,180 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
 				title: '[CJ] 맛밤 60g*4번들',
-				text: '6,480 원',
 			},
 		],
 		'5F': [
 			{
-				img: '/static/images/avatar/1.jpg',
-				title:
-					'[피코크] 초콜릿 샌드위치 비스킷 135g 초콜릿 샌드위치 비스킷 135g',
-				text: '2,980 원',
-			},
-			{
 				img: '/static/images/avatar/3.jpg',
 				title: '[크라운] 쿠크다스 케이크 154g',
-				text: '2,080 원',
+			},
+			{
+				img: '/static/images/avatar/1.jpg',
+				title: '[피코크] 초콜릿 샌드위치 비스킷 135g',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
 				title: '[라라스윗] 생우유 모나카 (140ml*4입)',
-				text: '9,400 원',
 			},
 		],
 		'11F': [
 			{
 				img: '/static/images/avatar/1.jpg',
-				title:
-					'[피코크] 초콜릿 샌드위치 비스킷 135g 초콜릿 샌드위치 비스킷 135g',
-				text: '2,980 원',
+				title: '[피코크] 초콜릿 샌드위치 비스킷 135g',
 			},
 			{
 				img: '/static/images/avatar/2.jpg',
 				title: '[오리온] 후레쉬 베리',
-				text: '5,120 원',
 			},
 			{
 				img: '/static/images/avatar/3.jpg',
 				title: '[크라운] 쿠크다스 케이크 154g',
-				text: '2,080 원',
 			},
 		],
 	};
 
-	const [tabValue, setTabValue] = useState('3F');
+	const [tabValue, setTabValue] = useState('snack');
 	const [rangeValue, setRangeValue] = useState('all');
-	const [itemValue, setItemValue] = useState('snack');
-
 	const handleChange = (event: SyntheticEvent, newValue: string) => {
 		setTabValue(newValue);
 	};
@@ -186,14 +187,7 @@ export default function Ranking() {
 			setRangeValue(newValue);
 		}
 	};
-	const handleItemChange = (
-		event: MouseEvent<HTMLElement>,
-		newValue: string
-	) => {
-		if (newValue !== null) {
-			setItemValue(newValue);
-		}
-	};
+
 	const itemOptions = [
 		{ title: '과자', value: 'snack' },
 		{ title: '음료', value: 'drink' },
@@ -206,62 +200,59 @@ export default function Ranking() {
 
 	return (
 		<TabContext value={tabValue}>
-			<div>
+			<ThemeProvider theme={theme}>
 				<Box
 					sx={{
 						display: 'flex',
-						flexDirection: 'column',
 						justifyContent: 'space-between',
 					}}>
 					<div className={classes.title}>
-						<span style={{ fontWeight: 700, fontSize: '14px' }}>랭킹</span>
-						<Button
-							variant='text'
-							size='small'
-							className={[classes.paddingNone, classes.button].join(' ')}
-							onClick={handleClickOpen}
-							disableFocusRipple
-							disableRipple
-							sx={{
-								fontWeight: '600',
-								fontSize: 14,
+						<span
+							style={{
+								fontWeight: 700,
+								fontSize: '16px',
+								marginRight: '24px',
 							}}>
-							+ 더보기
-						</Button>
-					</div>
-					<div className={classes.title}>
-						<ToggleButtonGroup
-							value={itemValue}
-							onChange={handleItemChange}
-							exclusive
-							className={classes.toggleBtn}
-							sx={{ borderRadius: '6px' }}>
-							{itemOptions.map((item, idx) => (
-								<ToggleButton
-									sx={{ p: '10px 20px' }}
-									value={item.value}
-									disableFocusRipple
-									disableRipple
-									key={idx}
-                >
-									{item.title}
-								</ToggleButton>
-							))}
-						</ToggleButtonGroup>
+							랭킹
+						</span>
 						<Tabs
 							value={tabValue}
 							onChange={handleChange}
 							variant='standard'
-              style={{minHeight: 0}}
-              className={classes.tabs}
-            >
-              {
-                ['3F', '5F', '11F'].map((floor, i) => (
-                  <Tab disableFocusRipple disableRipple key={i} className={classes.tab} label={floor} value={floor} />
-                ))
-              }
+							style={{ minHeight: 0 }}
+							textColor='primary'
+							sx={{
+								fontSize: '16px',
+								'& .MuiTabs-indicator': {
+									display: 'none',
+								},
+							}}>
+							{itemOptions.map((floor, i) => (
+								<Tab
+									disableFocusRipple
+									disableRipple
+									key={i}
+									className={classes.tab}
+									label={floor.title}
+									value={floor.value}
+									sx={{ fontSize: '16px !important', fontWeight: '700' }}
+								/>
+							))}
 						</Tabs>
 					</div>
+					<Button
+						variant='text'
+						size='small'
+						className={[classes.paddingNone, classes.button].join(' ')}
+						onClick={handleClickOpen}
+						disableFocusRipple
+						disableRipple
+						sx={{
+							fontWeight: '600',
+							fontSize: 14,
+						}}>
+						+ 더보기
+					</Button>
 					<ModalLayout
 						onClose={handleClose}
 						open={open}
@@ -291,45 +282,49 @@ export default function Ranking() {
 								<Dropdown options={['주문 수량 순', '공감 순']} />
 							</Fragment>
 						}>
-						{itemValue === 'snack' ? (
+						{tabValue === 'snack' ? (
 							<Paper elevation={0}>snack</Paper>
 						) : (
 							<Paper elevation={0}>drink</Paper>
 						)}
 					</ModalLayout>
 				</Box>
-				<Fragment>
-					{Object.entries(floorsRankingData).map(
-						([floor, valueArr], index) => (
-							<TabPanel key={floor} value={floor} sx={{ padding: 0, display: 'flex' }}>
-								<List
-									className={classes.list}
-									disablePadding={true}
-									key={index}>
+			</ThemeProvider>
+			<Fragment>
+				{itemOptions.map((item, idx) => (
+					<TabPanel
+						key={idx}
+						value={item.value}
+						sx={{ padding: 0, display: 'flex' }}>
+						{Object.entries(floorsRankingData).map(
+							([floor, valueArr], index) => (
+								<List className={classes.list} disablePadding key={index}>
+									<div className='floor'>{floor}</div>
 									{valueArr.map((items, idx) => (
 										<Item
 											title={items.title}
 											img={{
-                        src: items.img,
-                        style: {width: '92px', height: '92px'},
-                      }}
+												src: items.img,
+												style: {
+													width: '80px',
+													height: '80px',
+													borderRadius: '8px',
+												},
+											}}
 											text={{
-												content: items.text,
 												display: false,
 											}}
 											rank={{ display: true, content: idx + 1 }}
 											key={idx}
-                      itemsClass={classes.itemsClass}
-                      iconColor={idx + 1 === 1 ? '#40A3FF' : idx + 1 === 2 ? '#FFA800' : '#405069'}
+											itemsClass={classes.itemsClass}
 										/>
 									))}
 								</List>
-							</TabPanel>
-            )
-					)}
-				</Fragment>
-			</div>
+							)
+						)}
+					</TabPanel>
+				))}
+			</Fragment>
 		</TabContext>
 	);
 }
-
