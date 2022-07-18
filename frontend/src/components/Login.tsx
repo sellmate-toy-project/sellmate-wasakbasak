@@ -2,8 +2,7 @@ import {
   Avatar,
   Box,
   Button,
-  Container,
-  TextField,
+  Container, InputAdornment, TextField,
   Typography
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
@@ -22,10 +21,10 @@ const Login = () => {
 		if (btnText === '입장') {
 			if (!inputVal) {
 				setError(true);
-			} else {
+      } else {
 				// 로그인 api
 				console.log('login id', inputVal);
-			}
+      }
 		}
 	}
 	return (
@@ -59,6 +58,10 @@ const Login = () => {
 						error={error}
 						defaultValue={inputVal}
 						onChange={handleInputChange}
+            type='email'
+            InputProps={{
+              endAdornment: <InputAdornment position="end">@sellmate.co.kr</InputAdornment>,
+            }}
 						sx={{
 							mb: '24px',
 							width: '368px',
