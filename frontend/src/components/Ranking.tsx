@@ -261,10 +261,10 @@ export default function Ranking() {
 							/>
 						}
             >
-						{tabValue === 'snack' ? (
-							<Paper elevation={0}>snack</Paper>
+						{itemValue === '과자' ? (
+							<Paper elevation={0}>과자 리스트</Paper>
 						) : (
-							<Paper elevation={0}>drink</Paper>
+							<Paper elevation={0}>음료 리스트</Paper>
 						)}
 					</ModalLayout>
 				</Box>
