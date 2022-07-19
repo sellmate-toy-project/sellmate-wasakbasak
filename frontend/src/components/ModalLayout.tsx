@@ -3,18 +3,15 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  ToggleButton,
-  ToggleButtonGroup
+  DialogTitle
 } from '@mui/material';
-import { MouseEvent, useState } from 'react';
 interface DialogProps {
 	open: boolean;
 	onClose: () => void;
 	title: string;
 	children: React.ReactNode;
-	actionChildren: React.ReactNode;
-	changeFloor: (floor: string) => void;
+	actionChildren?: React.ReactNode;
+	titleChildren?: React.ReactNode;
 }
 const useStyles = makeStyles((theme) => ({
 	dialog: {
@@ -22,42 +19,34 @@ const useStyles = makeStyles((theme) => ({
 			'& .MuiDialog-paper': {
 				minWidth: '800px',
 				minHeight: '940px',
+        borderRadius: '20px',
 			},
 		},
 	},
 	dialogTitle: {
-		fontSize: '14px',
+    '& > .title': {
+      fontSize: '28px',
+      fontWeight: 700,
+      minWidth: '49px',
+    },
 	},
-	toggleBtn: {
-		'& .Mui-selected': {
-			backgroundColor: 'transparent !important',
-		},
-		'& .MuiToggleButton-root:hover': {
-			backgroundColor: 'transparent !important',
-		},
-	},
+
 }));
 const ModalLayout = ({
 	title,
 	open,
 	onClose,
 	children,
-	changeFloor,
+  titleChildren,
 	actionChildren,
 }: DialogProps) => {
 	const classes = useStyles();
 	// user 정보에 따라 받기
-	const [btnValue, setbtnValue] = useState('3F');
-	const handleChange = (event: MouseEvent<HTMLElement>, newValue: string) => {
-		if (newValue !== null) {
-			setbtnValue(newValue);
-			changeFloor(newValue);
-		}
-	};
+
 	const handleClose = () => {
 		onClose();
 		// value reset
-		setbtnValue('3F');
+		// setbtnValue('3F');
 	};
 
 	return (
@@ -67,31 +56,12 @@ const ModalLayout = ({
 			className={classes.dialog}>
 			<DialogTitle
 				className={classes.dialogTitle}
-				sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				{title}
-				<ToggleButtonGroup
-					value={btnValue}
-					onChange={handleChange}
-					exclusive={true}
-					className={classes.toggleBtn}
-					color='primary'
-					sx={{ border: 'none' }}>
-            {['3F', '5F', '11F'].map((floor, idx) => (
-              <ToggleButton
-                key={idx}
-                sx={{ border: 'none', backgroundColor: 'transparent' }}
-                value={floor}
-                disableFocusRipple
-                disableRipple>
-                {floor}
-              </ToggleButton>
-            ))}
-				</ToggleButtonGroup>
-				{/* <IconButton aria-label='close' onClick={onClose}>
-					<CloseIcon  />
-				</IconButton> */}
+        sx={{display: 'flex'}}
+      >
+        <div className='title'>{title}</div>
+				{titleChildren}
 			</DialogTitle>
-			<DialogActions sx={{justifyContent: 'space-between', p: '16px 45px 16px 40px', backgroundColor: '#FAFAFB'}}>{actionChildren}</DialogActions>
+			<DialogActions sx={{p: '0'}}>{actionChildren}</DialogActions>
 			<DialogContent>{children}</DialogContent>
 		</Dialog>
 	);

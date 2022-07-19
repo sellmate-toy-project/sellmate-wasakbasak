@@ -1,20 +1,11 @@
 import { makeStyles } from '@material-ui/core';
 import { TabContext, TabPanel } from '@mui/lab';
-import {
-  Box,
-  Button,
-  List,
-  Paper,
-  Tab,
-  Tabs,
-  ToggleButton,
-  ToggleButtonGroup
-} from '@mui/material';
+import { Box, Button, List, Paper, Tab, Tabs } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Fragment, MouseEvent, SyntheticEvent, useState } from 'react';
-import Dropdown from './Dropdown';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
+import { RankingActionItem, RankingTitleItem } from './RankingItem';
 const theme = createTheme({
 	palette: {
 		primary: {
@@ -68,21 +59,7 @@ const useStyles = makeStyles((theme) => ({
 	spacing: {
 		padding: '0 20px 20px',
 	},
-	toggleBtn: {
-		'& .MuiToggleButton-root': {
-			borderColor: '#C0C8D3',
-			color: 'rgba(51, 63, 82, 0.3) !important',
-			'&.MuiToggleButtonGroup-grouped:not(:first-of-type)': {
-				marginLeft: 0,
-			},
-		},
-		'&> .Mui-selected': {
-			backgroundColor: '#F5F6F7 !important',
-			color: '#333F52 !important',
-			fontWeight: 600,
-			fontSize: '14px',
-		},
-	},
+
 	button: {
 		color: '#333F52 !important',
 		'&:hover': {
@@ -164,7 +141,7 @@ export default function Ranking() {
 	};
 
 	const [tabValue, setTabValue] = useState('snack');
-	const [rangeValue, setRangeValue] = useState('all');
+
 	const handleChange = (event: SyntheticEvent, newValue: string) => {
 		setTabValue(newValue);
 	};
@@ -176,9 +153,8 @@ export default function Ranking() {
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-	const clickItemBtn = (item: string) => {
-		console.log(item);
-	};
+
+	const [rangeValue, setRangeValue] = useState('all');
 	const handleRangeChange = (
 		event: MouseEvent<HTMLElement>,
 		newValue: string
@@ -187,17 +163,27 @@ export default function Ranking() {
 			setRangeValue(newValue);
 		}
 	};
+	const [floorValue, setFloorValue] = useState('3F');
+	const [itemValue, setItemValue] = useState('과자');
 
-	const itemOptions = [
+  const itemOptions = [
 		{ title: '과자', value: 'snack' },
 		{ title: '음료', value: 'drink' },
 	];
-	const rangeOptions = [
-		{ title: '전체', value: 'all' },
-		{ title: '이번 달', value: 'this month' },
-		{ title: '저번 달', value: 'last month' },
-	];
-
+	const handleTitleChange = (
+		event: MouseEvent<HTMLElement>,
+		newValue: string
+	) => {
+    const value = event.target as HTMLButtonElement;
+    if(itemOptions.some(v => v.title.includes(value.value))){
+      setItemValue(value.value)
+    } else {
+      if (newValue !== null) {
+        setFloorValue(newValue);
+      }
+    }
+	};
+	
 	return (
 		<TabContext value={tabValue}>
 			<ThemeProvider theme={theme}>
@@ -256,32 +242,25 @@ export default function Ranking() {
 					<ModalLayout
 						onClose={handleClose}
 						open={open}
-						changeFloor={clickItemBtn}
-						title={rangeValue === 'snack' ? 'Ranking Snack' : 'Ranking Drink'}
+						title={'랭킹'}
+            titleChildren={
+							<RankingTitleItem
+              onChange={(event: MouseEvent<HTMLElement>, newValue: string) =>
+                  handleTitleChange(event, newValue)
+								}
+								floorValue={floorValue}
+                itemValue={itemValue}
+							/>
+						}
 						actionChildren={
-							<Fragment>
-								{/* TODO: 컴포넌트로 빼는 작업 필요 */}
-								<ToggleButtonGroup
-									value={rangeValue}
-									onChange={handleRangeChange}
-									exclusive={true}
-									className={classes.toggleBtn}
-									color='primary'
-									sx={{ border: 'none' }}>
-									{rangeOptions.map((date, idx) => (
-										<ToggleButton
-											sx={{ border: 'none', backgroundColor: 'transparent' }}
-											value={date.value}
-											disableFocusRipple
-											disableRipple
-											key={idx}>
-											{date.title}
-										</ToggleButton>
-									))}
-								</ToggleButtonGroup>
-								<Dropdown options={['주문 수량 순', '공감 순']} />
-							</Fragment>
-						}>
+							<RankingActionItem
+              onChange={(event: MouseEvent<HTMLElement>, newValue: string) =>
+									handleRangeChange(event, newValue)
+								}
+								rangeValue={rangeValue}
+							/>
+						}
+            >
 						{tabValue === 'snack' ? (
 							<Paper elevation={0}>snack</Paper>
 						) : (
