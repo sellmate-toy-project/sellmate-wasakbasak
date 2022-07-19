@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 class CRUDUser(CRUDBase[User, None, None]):
     def get_by_email(self, db: Session, email: str) -> Optional[User]:
-        return db.query(self.model).filter(User.email == email).first()
+        return db.query(self.model).filter(self.model.email == email).first()
 
 
 user = CRUDUser(User)
