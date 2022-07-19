@@ -3,13 +3,6 @@ from .base import CRUDBase
 from models.product_category import ProductCategory
 from schemas.product_category_schema import ProductCategoryCreate
 from sqlalchemy.orm import Session
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql.expression import Insert
-
-
-@compiles(Insert)
-def prefix_inserts(insert, compiler, **kw):
-    return compiler.visit_insert(insert.prefix_with("IGNORE"), **kw)
 
 
 class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]):
@@ -26,7 +19,7 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]
         limit: int = 100,
     ) -> List[ProductCategory]:
         return db.query(self.model)\
-                .filter(ProductCategory.owner_id == owner_id)\
+                .filter(self.model.owner_id == owner_id)\
                 .offset(skip)\
                 .limit(limit)\
                 .all()
@@ -37,6 +30,7 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]
         db_obj = self.model(**obj_in, owner_id=owner_id)
         db.add(db_obj)
         db.commit()
+        db.refresh(db_obj)
         return db_obj
 
 
