@@ -1,21 +1,58 @@
+import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import styled from 'styled-components';
 import logo from '../logo.png';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+	avatar: {
+		width: '50px',
+		height: '50px',
+	},
+	select: {
+		width: '100px',
+		height: '40px',
+	},
+}));
+
 const Header = () => {
+	const classes = useStyles();
+	const [floor, setFloor] = React.useState("");
+
+  	const handleChange = (event: SelectChangeEvent) => {
+    	setFloor(event.target.value as string);
+	};
 	return (
 		<Container>
 			<Avatar sx={{ width: 156, height: 18 }} src={logo} variant="square">
 			</Avatar>
-			<Stack direction="row" spacing={2}>
-				<Avatar variant="square">
+			<Stack
+				direction="row"
+				justifyContent="center"
+				alignItems="center"
+				spacing={2}
+			>
+				<Avatar variant="rounded" className={classes.avatar}>
 				</Avatar>
-				<Avatar variant="square">
+				<Avatar variant="rounded" className={classes.avatar}>
 				</Avatar>
-				<Typography gutterBottom variant="body2" component="div">
-					floor
-				</Typography>
+				<Avatar variant="rounded" className={classes.avatar}>
+				</Avatar>
+				<FormControl fullWidth>
+					<Select 
+						value={floor}
+						onChange={handleChange} 
+						className={classes.select}
+					>
+						<MenuItem value={3}>3F</MenuItem>
+						<MenuItem value={5}>5F</MenuItem>
+						<MenuItem value={11}>11F</MenuItem>
+					</Select>
+				</FormControl>
 			</Stack>
 		</Container>
 	);
