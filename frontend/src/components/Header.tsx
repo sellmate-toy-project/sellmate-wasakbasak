@@ -1,18 +1,14 @@
-import * as React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import styled from 'styled-components';
-import logo from '../logo.png';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { makeStyles } from '@material-ui/core/styles';
+import Stack from '@mui/material/Stack';
+import * as React from 'react';
+import styled from 'styled-components';
+import logo from '../logo.png';
 
 const useStyles = makeStyles((theme) => ({
-	avatar: {
-		width: '50px',
-		height: '50px',
-	},
 	select: {
 		width: '100px',
 		height: '40px',
@@ -36,11 +32,10 @@ const Header = () => {
 				alignItems="center"
 				spacing={2}
 			>
-				<Avatar variant="rounded" className={classes.avatar}>
+        {/* TODO: 뱃지 변경 필요*/}
+				<Avatar variant="rounded" sx={{ width: '32px', height: '32px', borderRadius: '8px' }}>
 				</Avatar>
-				<Avatar variant="rounded" className={classes.avatar}>
-				</Avatar>
-				<Avatar variant="rounded" className={classes.avatar}>
+        <Avatar variant="rounded" sx={{ width: '32px', height: '32px', borderRadius: '8px' }}>
 				</Avatar>
 				<FormControl fullWidth>
 					<Select 

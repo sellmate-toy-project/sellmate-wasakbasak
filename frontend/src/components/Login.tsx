@@ -2,12 +2,12 @@ import {
   Avatar,
   Box,
   Button,
-  Container, InputAdornment, TextField,
+  Container, TextField,
   Typography
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import loginLogo from '../icons/loginLogo.png';
-
 const Login = () => {
 	const [btnText, setBtnText] = useState('Login with sellmate');
 	const [inputVal, setInputVal] = useState('');
@@ -16,14 +16,18 @@ const Login = () => {
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputVal(event.target.value);
 	}
+  const navigate = useNavigate();
 	const onClickLogin = () => {
-		setBtnText('입장');
+    if(btnText !== '입장') {
+      // 구글 로그인
+    } 
+    // 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
+    setBtnText('입장');
 		if (btnText === '입장') {
-			if (!inputVal) {
-				setError(true);
+      if (!inputVal) {
+        setError(true);
       } else {
-				// 로그인 api
-				console.log('login id', inputVal);
+        navigate('/')
       }
 		}
 	}
@@ -58,10 +62,6 @@ const Login = () => {
 						error={error}
 						defaultValue={inputVal}
 						onChange={handleInputChange}
-            type='email'
-            InputProps={{
-              endAdornment: <InputAdornment position="end">@sellmate.co.kr</InputAdornment>,
-            }}
 						sx={{
 							mb: '24px',
 							width: '368px',
@@ -86,6 +86,7 @@ const Login = () => {
 					variant='contained'
 					onClick={onClickLogin}
 					disableElevation
+          id="loginBtn"
 					sx={{
 						color: 'white',
 						backgroundColor: '#00BAF4',
