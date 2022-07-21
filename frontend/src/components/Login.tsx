@@ -20,9 +20,10 @@ const Login = () => {
 	const onClickLogin = () => {
     if(btnText !== '입장') {
       // 구글 로그인
+      setBtnText('입장');
+      return;
     } 
     // 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
-    setBtnText('입장');
 		if (btnText === '입장') {
       if (!inputVal) {
         setError(true);
@@ -42,17 +43,17 @@ const Login = () => {
 				justifyContent: 'space-between',
 			}}>
 			<Box
-				sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+				sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
 				<Avatar
 					src={loginLogo}
 					variant='rounded'
 					sx={{
 						width: '192px',
 						height: '26px',
-						margin:
+						marginBottom:
 							btnText === '입장'
-								? '411px auto 80px auto'
-								: '411px auto 60px auto',
+								? '80px'
+								: '60px',
 					}}
 				/>
 				{btnText === '입장' ? (
