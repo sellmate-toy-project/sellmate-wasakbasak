@@ -28,7 +28,8 @@ const Login = () => {
       if (!inputVal) {
         setError(true);
       } else {
-        navigate('/')
+        localStorage.setItem('user', inputVal);
+        navigate('/');
       }
 		}
 	}
