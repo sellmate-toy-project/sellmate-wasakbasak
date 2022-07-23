@@ -11,63 +11,88 @@ const BestReview = () => {
   {
    leftImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
-   rightImage:
-    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   isLike: false,
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+   '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
-    'Lorem ipsum dolor sit amet, consectetur ipiscing Comment Quis diam nulla sit dictum vulputate. Consequat mauris, diam urna risus. Nibh faucibus mi urna malesuada feugiat',
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
    backText:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
   },
   {
    leftImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
-   rightImage:
-    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   isLike: false,
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
-    'Lorem ipsum dolor sit amet,consectetur ipiscing Comment Quis diam nulla sit dictum vulputate. Consequat mauris, diam urna risus. Nibh faucibus mi urna malesuada feugiat',
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
    backText:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
   },
   {
    leftImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
-   rightImage:
-    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   isLike: false,
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
-    'Lorem ipsum dolor sit amet,consectetur ipiscing Comment Quis diam nulla sit dictum vulputate. Consequat mauris, diam urna risus. Nibh faucibus mi urna malesuada feugiat',
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
    backText:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
   },
   {
    leftImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
-   rightImage:
-    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   isLike: false,
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
-    'Lorem ipsum dolor sit amet,consectetur ipiscing Comment Quis diam nulla sit dictum vulputate. Consequat mauris, diam urna risus. Nibh faucibus mi urna malesuada feugiat',
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
    backText:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
   },
   {
    leftImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
-   rightImage:
-    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   isLike: false,
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
-    'Lorem ipsum dolor sit amet,consectetur ipiscing Comment Quis diam nulla sit dictum vulputate. Consequat mauris, diam urna risus. Nibh faucibus mi urna malesuada feugiat',
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
    backText:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
   },
+  {
+   leftImage:
+    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220613_1095%2Fupload_1655099079990EKeR0.jpg%22&type=nf464_260',
+   isLike: false,
+   backImage:
+    'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
+   frontTitle:
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
+   frontText:
+    '“ 팝콘은 언제먹어도 맛있지.\n' +
+    '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
+   backText:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec sed enim, integer tincidunt metus.',
+  },
+
  ];
 
  const ReviewData = [
@@ -135,7 +160,13 @@ const BestReview = () => {
  return (
   <BestReviewWrapper>
    <Box sx={{width: '100%'}}>
-    <Box sx={{borderBottom: 1, borderColor: 'divider', display: 'flex', flexDirection: 'row',}}>
+    <Box sx={{
+     borderBottom: 1,
+     borderColor: 'divider',
+     display: 'flex',
+     flexDirection: 'row',
+     justifyContent: 'space-between'
+    }}>
      <div style={topStyle}>
       <span
        style={{
@@ -146,12 +177,17 @@ const BestReview = () => {
        }}>
        베스트 리뷰
       </span>
-      <Tabs value={value} onChange={handleChange} sx={{
-       fontSize: '16px',
-       '& .MuiTabs-indicator': {
-        display: 'none',
-       },
-      }}>
+      <Tabs
+       variant='standard'
+       value={value}
+       onChange={handleChange}
+       style={{ minHeight: 0 }}
+       sx={{
+        fontSize: '16px',
+        '& .MuiTabs-indicator': {
+         display: 'none',
+        },
+       }}>
        <Tab
         disableFocusRipple
         disableRipple
@@ -165,8 +201,27 @@ const BestReview = () => {
         sx={{fontSize: '16px !important', fontWeight: '700'}}
        />
       </Tabs>
-      <Button variant='text' size='small' onClick={handleClickOpen}>
-       + 더보기
+     </div>
+     <div>
+      <Button
+       disableFocusRipple
+       disableRipple
+       size='small'
+       variant="contained"
+       component="label"
+       color={"primary"}
+      >
+       리뷰 작성
+      </Button>
+
+      <Button
+       disableFocusRipple
+       disableRipple
+       variant='text'
+       size='small'
+       onClick={handleClickOpen}
+      >
+       더 보기
       </Button>
      </div>
     </Box>
@@ -213,8 +268,9 @@ const BestReview = () => {
          <li style={{float: 'left'}}>
           <FlipCard
            frontLeftImage={data.leftImage}
-           frontRightImage={data.rightImage}
+           isLike={data.isLike}
            backContentText={data.backText}
+           frontTitleText={data.frontTitle}
            frontContentText={data.frontText}
            backImage={data.backImage}
            key={index}
