@@ -1,10 +1,9 @@
 import Button from "@material-ui/core/Button";
-import {Box, Dialog, DialogContent, DialogTitle, Tab, Tabs, Typography} from '@mui/material';
-import {useState} from "react";
+import { Box, Dialog, DialogContent, DialogTitle, Tab, Tabs, Typography } from '@mui/material';
+import { useState } from "react";
 import styled from 'styled-components';
 import FlipCard from "./FlipCard";
 import ReviewItem from "./ReviewItem";
-import classes from "*.module.css";
 
 const BestReview = () => {
  const CardData = [
@@ -210,7 +209,7 @@ const BestReview = () => {
      <ul style={ulStyle}>
       {
        CardData.map((data, index) => (
-         <li style={{float: 'left'}}>
+         <li style={{float: 'left'}} key={index}>
           <FlipCard
            frontLeftImage={data.leftImage}
            frontRightImage={data.rightImage}
