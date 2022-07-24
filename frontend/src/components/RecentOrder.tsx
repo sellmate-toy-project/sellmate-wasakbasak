@@ -114,7 +114,7 @@ const RecentOrder = () => {
 					}}
 					text={{
 						display: true,
-						content: `<div style="background-color: #F5F5F5; padding: 4px 16px; border-radius: 16px"><span style="color: #181818;">${items.count}개</span><span style="color: #888888;"> / </span><span style="color: #8C8C8C;"> 개당 </span><span style="color: #181818;">${items.price}원</span></div>`,
+						content: `<span style="display: block; height: 30px; line-height: 30px; background-color: #F5F5F5; padding: 4px 16px; border-radius: 16px"><span style="color: #181818;">${items.count}개</span><span style="color: #888888;"> / </span><span style="color: #8C8C8C;"> 개당 </span><span style="color: #181818;">${items.price}원</span></span>`,
 					}}
 					rank={{ display: false }}
 					key={idx}
