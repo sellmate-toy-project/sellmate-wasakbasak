@@ -39,20 +39,16 @@ const useStyles = makeStyles((theme) => ({
 			fontSize: '14px',
 		},
 	},
-	paddingNone: {
-		padding: '0 !important',
-	},
 	title: {
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		marginBottom: '20px',
-	},
-	button: {
-		color: '#333F52 !important',
-		'&:hover': {
-			backgroundColor: 'transparent !important',
-		},
+    '& > span': {
+      fontWeight: 700,
+      fontSize: '16px',
+      marginRight: '24px',
+    },
 	},
 	itemsClass: {
 		marginRight: '20px',
@@ -182,12 +178,7 @@ export default function Ranking() {
 							justifyContent: 'space-between',
 						}}>
 						<div className={classes.title}>
-							<span
-								style={{
-									fontWeight: 700,
-									fontSize: '16px',
-									marginRight: '24px',
-								}}>
+							<span>
 								랭킹
 							</span>
 							<Tabs
@@ -218,15 +209,21 @@ export default function Ranking() {
 						<Button
 							variant='text'
 							size='small'
-							className={[classes.paddingNone, classes.button].join(' ')}
 							onClick={handleClickOpen}
 							disableFocusRipple
 							disableRipple
 							sx={{
+                p: 0,
+                width: '40px',
+                height: '22px',
 								fontWeight: '600',
-								fontSize: 14,
+								fontSize: '14px',
+                color: '#8C8C8C',
+                '&:hover': {
+                  backgroundColor: 'transparent !important',
+                },
 							}}>
-							+ 더보기
+                더 보기
 						</Button>
 						<ModalLayout
 							onClose={handleClose}
@@ -282,6 +279,7 @@ export default function Ranking() {
 												}}
 												text={{
 													display: false,
+                          content:'',
 												}}
 												rank={{ display: true, content: idx + 1 }}
 												key={idx}
