@@ -59,7 +59,7 @@ const RankingActionItem = ({ onChange, rangeValue }: PropsData) => {
 					</ToggleButton>
 				))}
 			</ToggleButtonGroup>
-			<Dropdown options={['주문 수량 순', '공감 순']} />
+			<Dropdown options={['주문 수량 순', '좋아요 순']} />
 		</Container>
 	);
 };
@@ -73,6 +73,7 @@ const RankingTitleItem = ({ onChange, floorValue, itemValue }: PropsData) => {
 				px: '0px !important',
 				ml: '40px',
 				mr: '16px',
+        backgroundColor: 'white',
 			}}>
 			<Fragment>
 				<ToggleButtonGroup
