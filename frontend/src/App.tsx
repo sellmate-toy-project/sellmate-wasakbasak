@@ -13,7 +13,9 @@ const App = () => {
 					path='/'
 					element={
 						<Home>
-							<Header />
+              <HeaderWrapper>
+							  <Header />
+              </HeaderWrapper>
 							<Werapper>
 								<LeftContainer />
 								<Main />
@@ -32,11 +34,21 @@ export default App;
 const Home = styled.div`
 	text-align: center;
 	font-family: Pretendard;
+  background-color: #F2F5F5;
+  width: 100%;
+`;
+const HeaderWrapper = styled.div`
+  padding: 0 120px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-contant: center;
+  background-color: white;
 `;
 const Werapper = styled.div`
 	margin: 0 auto;
-	width: 1680px;
-	padding: 22px 0 40px 0;
+  padding: 0 120px;
 	display: flex;
 	justify-contant: center;
 `;
+	// width: 1680px;

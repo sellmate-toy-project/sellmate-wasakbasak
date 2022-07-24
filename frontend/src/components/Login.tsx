@@ -28,6 +28,7 @@ const Login = () => {
       if (!inputVal) {
         setError(true);
       } else {
+        // TODO: redux 사용 필요
         localStorage.setItem('user', inputVal);
         navigate('/');
       }

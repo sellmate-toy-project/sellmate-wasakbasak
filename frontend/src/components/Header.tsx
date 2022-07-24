@@ -19,13 +19,12 @@ const Header = () => {
 	const classes = useStyles();
 	const [floor, setFloor] = React.useState("");
 
-  	const handleChange = (event: SelectChangeEvent) => {
-    	setFloor(event.target.value as string);
+  const handleChange = (event: SelectChangeEvent) => {
+    setFloor(event.target.value as string);
 	};
 	return (
-		<Container>
-			<Avatar sx={{ width: 156, height: 18 }} src={logo} variant="square">
-			</Avatar>
+		<Container style={{backgroundColor: 'white'}}>
+			<Avatar sx={{ width: '156px !important', height: '18px !important' }} src={logo} variant="square" />
 			<Stack
 				direction="row"
 				justifyContent="center"
