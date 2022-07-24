@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		'& .MuiDialog-container': {
 			'& .MuiDialog-paper': {
 				minWidth: '800px',
-				minHeight: '940px',
+				minHeight: '90%',
         borderRadius: '20px',
 			},
 		},
