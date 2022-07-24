@@ -17,6 +17,12 @@ const theme = createTheme({
 	},
 });
 const useStyles = makeStyles((theme) => ({
+  wrapper:{
+    backgroundColor: 'white',
+    padding: '20px 24px',
+    borderRadius: '16px',
+    marginBottom: '20px',
+  },
 	list: {
 		width: '100%',
 		padding: '20px',
@@ -33,20 +39,6 @@ const useStyles = makeStyles((theme) => ({
 			fontSize: '14px',
 		},
 	},
-	inline: {
-		display: 'inline',
-	},
-	listImg: {
-		width: '92px',
-		height: '92px',
-		marginTop: 0,
-		marginRight: '16px',
-	},
-	itemImg: {
-		width: '100%',
-		height: '100%',
-		borderRadius: 0,
-	},
 	paddingNone: {
 		padding: '0 !important',
 	},
@@ -56,10 +48,6 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		marginBottom: '20px',
 	},
-	spacing: {
-		padding: '0 20px 20px',
-	},
-
 	button: {
 		color: '#333F52 !important',
 		'&:hover': {
@@ -166,7 +154,7 @@ export default function Ranking() {
 	const [floorValue, setFloorValue] = useState('3F');
 	const [itemValue, setItemValue] = useState('과자');
 
-  const itemOptions = [
+	const itemOptions = [
 		{ title: '과자', value: 'snack' },
 		{ title: '음료', value: 'drink' },
 	];
@@ -174,136 +162,139 @@ export default function Ranking() {
 		event: MouseEvent<HTMLElement>,
 		newValue: string
 	) => {
-    const value = event.target as HTMLButtonElement;
-    if(itemOptions.some(v => v.title.includes(value.value))){
-      setItemValue(value.value)
-    } else {
-      if (newValue !== null) {
-        setFloorValue(newValue);
-      }
-    }
+		const value = event.target as HTMLButtonElement;
+		if (itemOptions.some((v) => v.title.includes(value.value))) {
+			setItemValue(value.value);
+		} else {
+			if (newValue !== null) {
+				setFloorValue(newValue);
+			}
+		}
 	};
-	
+
 	return (
 		<TabContext value={tabValue}>
-			<ThemeProvider theme={theme}>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-					}}>
-					<div className={classes.title}>
-						<span
-							style={{
-								fontWeight: 700,
-								fontSize: '16px',
-								marginRight: '24px',
-							}}>
-							랭킹
-						</span>
-						<Tabs
-							value={tabValue}
-							onChange={handleChange}
-							variant='standard'
-							style={{ minHeight: 0 }}
-							textColor='primary'
-							sx={{
-								fontSize: '16px',
-								'& .MuiTabs-indicator': {
-									display: 'none',
-								},
-							}}>
-							{itemOptions.map((floor, i) => (
-								<Tab
-									disableFocusRipple
-									disableRipple
-									key={i}
-									className={classes.tab}
-									label={floor.title}
-									value={floor.value}
-									sx={{ fontSize: '16px !important', fontWeight: '700' }}
-								/>
-							))}
-						</Tabs>
-					</div>
-					<Button
-						variant='text'
-						size='small'
-						className={[classes.paddingNone, classes.button].join(' ')}
-						onClick={handleClickOpen}
-						disableFocusRipple
-						disableRipple
+			<div className={classes.wrapper}>
+				<ThemeProvider theme={theme}>
+					<Box
 						sx={{
-							fontWeight: '600',
-							fontSize: 14,
+							display: 'flex',
+							justifyContent: 'space-between',
 						}}>
-						+ 더보기
-					</Button>
-					<ModalLayout
-						onClose={handleClose}
-						open={open}
-						title={'랭킹'}
-            titleChildren={
-							<RankingTitleItem
-              onChange={(event: MouseEvent<HTMLElement>, newValue: string) =>
-                  handleTitleChange(event, newValue)
-								}
-								floorValue={floorValue}
-                itemValue={itemValue}
-							/>
-						}
-						actionChildren={
-							<RankingActionItem
-              onChange={(event: MouseEvent<HTMLElement>, newValue: string) =>
-									handleRangeChange(event, newValue)
-								}
-								rangeValue={rangeValue}
-							/>
-						}
-            >
-						{itemValue === '과자' ? (
-							<Paper elevation={0}>과자 리스트</Paper>
-						) : (
-							<Paper elevation={0}>음료 리스트</Paper>
-						)}
-					</ModalLayout>
-				</Box>
-			</ThemeProvider>
-			<Fragment>
-				{itemOptions.map((item, idx) => (
-					<TabPanel
-						key={idx}
-						value={item.value}
-						sx={{ padding: 0, display: 'flex' }}>
-						{Object.entries(floorsRankingData).map(
-							([floor, valueArr], index) => (
-								<List className={classes.list} disablePadding key={index}>
-									<div className='floor'>{floor}</div>
-									{valueArr.map((items, idx) => (
-										<Item
-											title={items.title}
-											img={{
-												src: items.img,
-												style: {
-													width: '80px',
-													height: '80px',
-													borderRadius: '8px',
-												},
-											}}
-											text={{
-												display: false,
-											}}
-											rank={{ display: true, content: idx + 1 }}
-											key={idx}
-											itemsClass={classes.itemsClass}
-										/>
-									))}
-								</List>
-							)
-						)}
-					</TabPanel>
-				))}
-			</Fragment>
+						<div className={classes.title}>
+							<span
+								style={{
+									fontWeight: 700,
+									fontSize: '16px',
+									marginRight: '24px',
+								}}>
+								랭킹
+							</span>
+							<Tabs
+								value={tabValue}
+								onChange={handleChange}
+								variant='standard'
+								style={{ minHeight: 0 }}
+								textColor='primary'
+								sx={{
+									fontSize: '16px',
+									'& .MuiTabs-indicator': {
+										display: 'none',
+									},
+								}}>
+								{itemOptions.map((floor, i) => (
+									<Tab
+										disableFocusRipple
+										disableRipple
+										key={i}
+										className={classes.tab}
+										label={floor.title}
+										value={floor.value}
+										sx={{ fontSize: '16px !important', fontWeight: '700' }}
+									/>
+								))}
+							</Tabs>
+						</div>
+						<Button
+							variant='text'
+							size='small'
+							className={[classes.paddingNone, classes.button].join(' ')}
+							onClick={handleClickOpen}
+							disableFocusRipple
+							disableRipple
+							sx={{
+								fontWeight: '600',
+								fontSize: 14,
+							}}>
+							+ 더보기
+						</Button>
+						<ModalLayout
+							onClose={handleClose}
+							open={open}
+							title={'랭킹'}
+							titleChildren={
+								<RankingTitleItem
+									onChange={(
+										event: MouseEvent<HTMLElement>,
+										newValue: string
+									) => handleTitleChange(event, newValue)}
+									floorValue={floorValue}
+									itemValue={itemValue}
+								/>
+							}
+							actionChildren={
+								<RankingActionItem
+									onChange={(
+										event: MouseEvent<HTMLElement>,
+										newValue: string
+									) => handleRangeChange(event, newValue)}
+									rangeValue={rangeValue}
+								/>
+							}>
+							{itemValue === '과자' ? (
+								<Paper elevation={0}>과자 리스트</Paper>
+							) : (
+								<Paper elevation={0}>음료 리스트</Paper>
+							)}
+						</ModalLayout>
+					</Box>
+				</ThemeProvider>
+				<Fragment>
+					{itemOptions.map((item, idx) => (
+						<TabPanel
+							key={idx}
+							value={item.value}
+							sx={{ padding: 0, display: 'flex' }}>
+							{Object.entries(floorsRankingData).map(
+								([floor, valueArr], index) => (
+									<List className={classes.list} disablePadding key={index}>
+										<div className='floor'>{floor}</div>
+										{valueArr.map((items, idx) => (
+											<Item
+												title={items.title}
+												img={{
+													src: items.img,
+													style: {
+														width: '80px',
+														height: '80px',
+														borderRadius: '8px',
+													},
+												}}
+												text={{
+													display: false,
+												}}
+												rank={{ display: true, content: idx + 1 }}
+												key={idx}
+												itemsClass={classes.itemsClass}
+											/>
+										))}
+									</List>
+								)
+							)}
+						</TabPanel>
+					))}
+				</Fragment>
+			</div>
 		</TabContext>
 	);
 }

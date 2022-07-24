@@ -46,7 +46,7 @@ const HeaderWrapper = styled.div`
   background-color: white;
 `;
 const Werapper = styled.div`
-	margin: 0 auto;
+	margin: 24px auto 0 auto;
   padding: 0 120px;
 	display: flex;
 	justify-contant: center;
