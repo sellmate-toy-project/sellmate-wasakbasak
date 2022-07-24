@@ -15,7 +15,7 @@ const BestReview = () => {
    backImage:
     'https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fstatic%2Fwww%2Fmobile%2Fedit%2F20220616_1095%2Fupload_1655361001541EsLif.jpg%22&type=nf340_228',
    frontTitle:
-   '노브랜드 고르곤졸라치즈스포트콘 225g',
+    '노브랜드 고르곤졸라치즈스포트콘 225g',
    frontText:
     '“ 팝콘은 언제먹어도 맛있지.\n' +
     '바삭바삭 와삭바삭 다들 먹어보세요. 한번 먹으면 멈출 수 없음 헤헤 리뷰리뷰 내용 최대 4줄표시가능...',
@@ -181,7 +181,7 @@ const BestReview = () => {
        variant='standard'
        value={value}
        onChange={handleChange}
-       style={{ minHeight: 0 }}
+       style={{minHeight: 0}}
        sx={{
         fontSize: '16px',
         '& .MuiTabs-indicator': {
@@ -191,12 +191,14 @@ const BestReview = () => {
        <Tab
         disableFocusRipple
         disableRipple
+        style={tabStyle}
         label="과자" {...a11yProps(0)}
         sx={{fontSize: '16px !important', fontWeight: '700'}}
        />
        <Tab
         disableFocusRipple
         disableRipple
+        style={tabStyle}
         label="음료" {...a11yProps(1)}
         sx={{fontSize: '16px !important', fontWeight: '700'}}
        />
@@ -261,7 +263,10 @@ const BestReview = () => {
       }
      </DialogContent>
     </Dialog>
-    <TabPanel value={value} index={0}>
+    <TabPanel
+     value={value}
+     index={0}
+     >
      <ul style={ulStyle}>
       {
        CardData.map((data, index) => (
@@ -294,11 +299,24 @@ const BestReviewWrapper = styled.div`
 `;
 
 const ulStyle = {
+ margin: 0,
+ padding: 0,
  listStyle: 'none',
  display: 'flex',
  overflow: 'auto',
 }
 
+const tabStyle = {
+ padding: '0 !important',
+ width: '30px !important',
+ height: '26px !important',
+ minHeight: '0 !important',
+ minWidth: '0 !important',
+ marginRight: '20px !important',
+ '&:last-of-type': {
+  marginRight: '0 !important',
+ },
+}
 
 const topStyle = {
  display: 'flex'

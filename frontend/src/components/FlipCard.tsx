@@ -3,7 +3,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import {IconButton} from "@mui/material"
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {pink} from "@mui/material/colors";
+import {FavoriteBorder} from "@mui/icons-material";
 
 type FlipCardProps = {
  frontLeftImage: string;
@@ -35,17 +37,26 @@ const FlipCard: React.FC<FlipCardProps> = ({
      />
      <span style={spacer}/>
      <IconButton
-      aria-label="fingerprint"
       color="secondary"
       style={favIcon}
       sx={{position: 'absolute'}}
+      onClick={toggleFav}
      >
-      <FavoriteIcon sx={{color: pink[500]}}/>
+      <FavoriteBorderIcon sx={{color: pink[500]}}/>
      </IconButton>
     </div>
     <div>
      <p style={textStyle.title}>{frontTitleText}</p>
      <p style={textStyle.content}>{frontContentText}</p>
+    </div>
+    <div
+     style={bottomStyle}>
+     <span>
+      sang
+     </span>
+     <span>
+      &gt;
+     </span>
     </div>
    </CardContent>
    <CardContent className='back card'>
@@ -62,11 +73,22 @@ const FlipCard: React.FC<FlipCardProps> = ({
 };
 export default FlipCard;
 
+const bottomStyle = {
+ flex: 1,
+ display: 'flex',
+ justifyContent: 'space-between',
+ size: 13,
+ color: '#8c8c8c',
+ marginBottom: 16,
+ marginTop: 11
+}
+
 const textStyle = {
  title: {
   size: 13,
   color: '#c8c8c8',
   textAlign: 'left' as 'left',
+  marginBottom: 12
  },
  content: {
   fontWeight: 600,
@@ -75,7 +97,8 @@ const textStyle = {
   height: 92,
   textAlign: 'left' as 'left',
   textOverflow: 'ellipsis',
-  overflow: 'auto'
+  overflow: 'auto',
+  margin: 0
  }
 };
 
@@ -96,6 +119,10 @@ const favIcon = {
  right: 0,
  flex: 1
 };
+
+function toggleFav() {
+
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const img = {
