@@ -1,4 +1,4 @@
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {
   Button,
   ButtonGroup,
@@ -9,19 +9,25 @@ import {
   Paper,
   Popper
 } from '@mui/material';
-import { Fragment, useRef, useState } from 'react';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRef, useState } from 'react';
 interface DropdownProps {
 	options: Array<string>;
 }
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: '#8C8C8C',
+		},
+		secondary: {
+			main: 'rgba(0, 0, 0, 0)',
+		},
+	},
+});
 export default function SplitButton({ options }: DropdownProps) {
 	const [open, setOpen] = useState(false);
 	const anchorRef = useRef<HTMLDivElement>(null);
 	const [selectedIndex, setSelectedIndex] = useState(1);
-
-	const handleClick = () => {
-		console.info(`You clicked ${options[selectedIndex]}`);
-	};
 
 	const handleMenuItemClick = (
 		event: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -29,6 +35,7 @@ export default function SplitButton({ options }: DropdownProps) {
 	) => {
 		setSelectedIndex(index);
 		setOpen(false);
+		console.info(`You clicked ${options[index]}`);
 	};
 
 	const handleToggle = () => {
@@ -47,22 +54,48 @@ export default function SplitButton({ options }: DropdownProps) {
 	};
 
 	return (
-		<Fragment>
+		<ThemeProvider theme={theme}>
 			<ButtonGroup
-				variant='contained'
+				variant='outlined'
 				ref={anchorRef}
 				aria-label='split button'
-        sx={{ml: '0 !important'}}
-      >
-				<Button onClick={handleClick}>{options[selectedIndex]}</Button>
+				sx={{
+					ml: '0 !important',
+					backgroundColor: 'white',
+				}}>
 				<Button
 					size='small'
+					variant='text'
+					disableFocusRipple
+					disableElevation
+					disableRipple
 					aria-controls={open ? 'split-button-menu' : undefined}
 					aria-expanded={open ? 'true' : undefined}
 					aria-label='select merge strategy'
 					aria-haspopup='menu'
-					onClick={handleToggle}>
-					<ArrowDropDownIcon />
+					onClick={handleToggle}
+					sx={{
+						p: '8px 16px',
+						border: '1px solid #E0E0E0',
+						borderRadius: '8px',
+						width: '142px',
+						height: '42px',
+						justifyContent: 'space-between',
+					}}>
+					<span
+						style={{
+							color: '#484848',
+							width: '84px',
+							height: '26px',
+							lineHeight: '26px',
+							fontSize: '16px',
+							fontWeight: 400,
+						}}>
+						{options[selectedIndex]}
+					</span>
+					<KeyboardArrowDownRoundedIcon
+						sx={{ color: 'primary', ml: '10px', fontSize: '16px' }}
+					/>
 				</Button>
 			</ButtonGroup>
 			<Popper
@@ -70,21 +103,29 @@ export default function SplitButton({ options }: DropdownProps) {
 				anchorEl={anchorRef.current}
 				role={undefined}
 				transition
-				disablePortal>
+				disablePortal
+				sx={{ width: '142px' }}>
 				{({ TransitionProps, placement }) => (
 					<Grow
 						{...TransitionProps}
 						style={{
-              padding: '0 !important',
 							transformOrigin:
 								placement === 'bottom' ? 'center top' : 'center bottom',
+							boxShadow: 'none',
 						}}>
 						<Paper>
 							<ClickAwayListener onClickAway={handleClose}>
-								<MenuList id='split-button-menu' autoFocusItem>
+								<MenuList
+									id='split-button-menu'
+									autoFocusItem
+									sx={{
+										p: '0 !important',
+										border: '1px solid #E0E0E0',
+										borderRadius: '8px',
+									}}>
 									{options.map((option, index) => (
 										<MenuItem
-											key={option}
+											key={index}
 											disabled={index === 2}
 											selected={index === selectedIndex}
 											onClick={(event) => handleMenuItemClick(event, index)}>
@@ -97,6 +138,6 @@ export default function SplitButton({ options }: DropdownProps) {
 					</Grow>
 				)}
 			</Popper>
-		</Fragment>
+		</ThemeProvider>
 	);
 }
