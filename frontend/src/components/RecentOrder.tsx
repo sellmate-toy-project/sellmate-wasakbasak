@@ -1,8 +1,11 @@
 import { List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@mui/material';
-import { useState } from 'react';
+import { Button, Paper } from '@mui/material';
+import { MouseEvent, useState } from 'react';
 import Item from './Item';
+import ModalLayout from './ModalLayout';
+import { RecentOrderActionItem, RecentOrderTitleItem } from './RecentOrderItem';
+
 const useStyles = makeStyles((theme) => ({
 	list: {
 		width: '100%',
@@ -81,6 +84,37 @@ const RecentOrder = () => {
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
+  const handleClose = () => {
+		setOpen(false);
+	};
+  const itemOptions = [
+		{ title: '과자', value: 'snack' },
+		{ title: '음료', value: 'drink' },
+	];
+	const [itemValue, setItemValue] = useState('과자');
+	const [floorValue, setFloorValue] = useState('3F');
+  const handleTitleChange = (
+		event: MouseEvent<HTMLElement>,
+		newValue: string
+	) => {
+		const value = event.target as HTMLButtonElement;
+		if (itemOptions.some((v) => v.title.includes(value.value))) {
+			setItemValue(value.value);
+		} else {
+			if (newValue !== null) {
+				setFloorValue(newValue);
+			}
+		}
+	};	
+  const [rangeValue, setRangeValue] = useState('all');
+	const handleRangeChange = (
+		event: MouseEvent<HTMLElement>,
+		newValue: string
+	) => {
+		if (newValue !== null) {
+			setRangeValue(newValue);
+		}
+	};
 	return (
 		<List className={classes.list} disablePadding={true}>
 			<div className={classes.title}>
@@ -104,6 +138,35 @@ const RecentOrder = () => {
 					}}>
 					더 보기
 				</Button>
+        <ModalLayout
+          onClose={handleClose}
+          open={open}
+          title={'최근 주문내역'}
+          titleChildren={
+            <RecentOrderTitleItem
+              onChange={(
+                event: MouseEvent<HTMLElement>,
+                newValue: string
+              ) => handleTitleChange(event, newValue)}
+              floorValue={floorValue}
+              itemValue={itemValue}
+            />
+          }
+          actionChildren={
+            <RecentOrderActionItem
+              onChange={(
+                event: MouseEvent<HTMLElement>,
+                newValue: string
+              ) => handleRangeChange(event, newValue)}
+              rangeValue={rangeValue}
+            />
+          }>
+          {itemValue === '과자' ? (
+            <Paper elevation={0}>과자 리스트</Paper>
+          ) : (
+            <Paper elevation={0}>음료 리스트</Paper>
+          )}
+        </ModalLayout>
 			</div>
 			{recentOrderData.map((items, idx) => (
 				<Item
