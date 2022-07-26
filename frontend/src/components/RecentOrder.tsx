@@ -1,7 +1,8 @@
 import { List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@mui/material';
-import { MouseEvent, useState } from 'react';
+import { SelectChangeEvent } from '@mui/material/Select';
+import { MouseEvent, ReactNode, useState } from 'react';
 import Item from './Item';
 import ModalLayout from './ModalLayout';
 import { RecentOrderActionItem, RecentOrderTitleItem } from './RecentOrderItem';
@@ -106,14 +107,13 @@ const RecentOrder = () => {
 			}
 		}
 	};	
-  const [rangeValue, setRangeValue] = useState('all');
+  const [rangeValue, setRangeValue] = useState('1회 / 2022-06-30');
 	const handleRangeChange = (
-		event: MouseEvent<HTMLElement>,
-		newValue: string
+		event: SelectChangeEvent<string>,
+		newValue: ReactNode
 	) => {
-		if (newValue !== null) {
-			setRangeValue(newValue);
-		}
+    setRangeValue(event.target.value as string);
+    console.log(event.target.value as string);
 	};
 	return (
 		<List className={classes.list} disablePadding={true}>
@@ -155,8 +155,8 @@ const RecentOrder = () => {
           actionChildren={
             <RecentOrderActionItem
               onChange={(
-                event: MouseEvent<HTMLElement>,
-                newValue: string
+                event: SelectChangeEvent<string>,
+                newValue: ReactNode
               ) => handleRangeChange(event, newValue)}
               rangeValue={rangeValue}
             />
