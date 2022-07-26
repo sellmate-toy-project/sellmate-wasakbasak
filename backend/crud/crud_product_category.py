@@ -3,6 +3,7 @@ from .base import CRUDBase
 from models.product_category import ProductCategory
 from schemas.product_category_schema import ProductCategoryCreate
 from sqlalchemy.orm import Session
+from sqlalchemy import literal
 
 
 class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]):
@@ -11,10 +12,27 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]
     ) -> Optional[ProductCategory]:
         return db.query(self.model).filter(ProductCategory.name == name).first()
 
+    def get_multi_with_deps(
+        self, db: Session, skip: int = 0, limit: int = 100
+    ) -> List[ProductCategory]:
+        top_deps = db.query(self.model, literal('1').label('deps'))\
+            .filter(self.model.owner_id == 0)\
+            .cte('cte', recursive=True)
+        bottom_deps = db.query(
+            self.model,
+            (top_deps.c.deps + 1).label('deps')
+        ).join(top_deps, self.model.owner_id == top_deps.c.id)
+        hierarchy_query = top_deps.union(bottom_deps)
+
+        return db.query(hierarchy_query)\
+            .offset(skip)\
+            .limit(limit)\
+            .all()
+
     def get_multi_by_owner(
         self,
         db: Session,
-        owner_id: str,
+        owner_id: int,
         skip: int = 0,
         limit: int = 100,
     ) -> List[ProductCategory]:
