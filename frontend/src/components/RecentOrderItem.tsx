@@ -53,6 +53,7 @@ const RecentOrderTitleItem = ({
 								border: 'none',
 								backgroundColor: 'transparent',
 								p: 0,
+                '&.Mui-selected':{color: '#21CAFF'},
 								'&:first-of-type': { mr: '32px' },
 							}}
 							value={item}
@@ -80,6 +81,7 @@ const RecentOrderTitleItem = ({
 								border: 'none',
 								backgroundColor: 'transparent',
 								p: 0,
+                '&.Mui-selected':{color: '#21CAFF'},
 								'&:nth-of-type(2)': { mx: '32px !important' },
 							}}
 							value={floor}
