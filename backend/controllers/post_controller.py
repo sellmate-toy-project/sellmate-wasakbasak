@@ -37,7 +37,7 @@ def create_item(
 
 
 @router.put("/{post_id}", response_model=schemas.Post)
-async def update(
+def update(
     post_id: int,
     data: schemas.PostUpdate,
     db: Session = Depends(deps.get_db),
