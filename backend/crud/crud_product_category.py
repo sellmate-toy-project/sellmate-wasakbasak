@@ -15,7 +15,7 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]
     def get_multi_with_deps(
         self, db: Session, skip: int = 0, limit: int = 100
     ) -> List[ProductCategory]:
-        top_deps = db.query(self.model, literal('1').label('deps'))\
+        top_deps = db.query(self.model, literal(1).label('deps'))\
             .filter(self.model.owner_id == 0)\
             .cte('cte', recursive=True)
         bottom_deps = db.query(
