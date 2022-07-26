@@ -33,7 +33,7 @@ def create_item(
     db: Session = Depends(deps.get_db),
     data=Body(
         example={
-            "title" : "새로운게시글",
+            "title" : "새로운 게시글",
             "body" : "제가 작성한 글 좀 봐주시겠어요?",
             "user_id" : 1,
         },
@@ -47,8 +47,23 @@ def create_item(
 async def update(
     db: Session = Depends(deps.get_db),
     post_id: int = Path(...),
-    data: PostUpdate = Body(..., embed=False),
+    data: PostUpdate = Body(
+        example={
+            "title" : "수정한 게시글",
+            "body" : "이렇게 수정 했습니다.",
+            "user_id" : 1,
+        }, embed=False),
 ) -> Any:
     post = crud.post.update(db, post_id, data)
+
+    return post
+
+
+@router.delete("/{post_id}", response_model=schemas.Post)
+def delete(
+    db: Session = Depends(deps.get_db),
+    post_id: int = Path(...)
+) -> Any:
+    post = crud.post.delete(db, post_id)
 
     return post
