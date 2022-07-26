@@ -10,6 +10,7 @@ class Ssg:
         self.collect_main_categories = [
             "6000095505",  # 과자/시리얼/빙과/떡
         ]
+        self.sub_product_categories = []
 
     def collect_category(self):
         # 최상위 카테고리 정보 조회
@@ -39,7 +40,8 @@ class Ssg:
 
                             # 소분류 수집
                             for sub_category in sub_categories:
-                                self.insert_category(product_category, sub_category)
+                                product_category = self.insert_category(product_category, sub_category)
+                                self.sub_product_categories.append(product_category)
             except Exception as e:
                 print(f'Server Error: {e}')
 
@@ -60,3 +62,25 @@ class Ssg:
             )
 
         return product_category
+
+    def collect_product(self):
+        sub_product_category = {
+            'id': 193,
+            'name': '과자/쿠키/파이',
+            'owner_id': 3,
+            'code': '6000095859',
+        }
+        try:
+            res = requests.get(self.base_uri + sub_product_category.get('code') + "&sort=regdt&pageSize=100")
+            if res.status_code == 200:
+                # 상품 리스트 파싱
+                soup = BeautifulSoup(res.text, "html.parser")
+                products = soup.select(".cunit_thmb_lst li")
+
+                for product in products:
+                    print(product.select(".thmb img")[0]['src'])
+                    print(product.select(".cunit_info .tx_ko")[0].text)
+                    print(product.select(".cunit_info .ssg_price")[0].text)
+                    raise
+        except Exception as e:
+            print(f'Server Error: {e}')
