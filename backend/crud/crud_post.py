@@ -8,13 +8,11 @@ from sqlalchemy.orm import Session, Query
 
 class CRUDPost(CRUDBase[Post, None, None]):
     def create(self, db: Session, obj_in: PostCreate) -> Post:
-        print(obj_in)
         db_obj = self.model(**obj_in)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
         return db_obj
-
 
     def update(self, db: Session, post_id, obj_in: PostUpdate):
         post = (
