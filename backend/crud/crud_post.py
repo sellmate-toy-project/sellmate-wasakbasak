@@ -8,25 +8,38 @@ from sqlalchemy.orm import Session, Query
 
 class CRUDPost(CRUDBase[Post, None, None]):
     def create(self, db: Session, obj_in: PostCreate) -> Post:
-        print(obj_in)
         db_obj = self.model(**obj_in)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
         return db_obj
 
-
-    def update(self, db: Session, post_id, obj_in: PostUpdate):
+    def update(self, db: Session, post_id, obj_in: PostUpdate) -> Post:
         post = (
-            Query(Post).
+            Query(self.model).
                 with_session(db).
                 filter(Post.id == post_id).
                 filter(Post.is_deleted == 0).
                 first()
         )
-        
+
         post.title = obj_in.title
         post.body = obj_in.body
+
+        db.flush()
+        db.commit()
+        return post
+
+    def delete(self, db: Session, post_id: int) -> Post:
+        post = (
+            Query(self.model).
+                with_session(db).
+                filter(Post.id == post_id).
+                filter(Post.is_deleted == 0).
+                first()
+        )
+
+        post.is_deleted = 1
 
         db.flush()
         db.commit()
