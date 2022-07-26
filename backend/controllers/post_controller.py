@@ -1,6 +1,5 @@
 from typing import Any, List
-from schemas.post_schema import PostUpdate
-from fastapi import APIRouter, Depends, Path, Body
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from . import deps
 import schemas
@@ -21,7 +20,7 @@ def read_items(
 
 @router.get("/{post_id}", response_model=schemas.Post)
 def read_item(
-    post_id: int = Path(...),
+    post_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
     post = crud.post.get(db, id=post_id)
@@ -30,14 +29,8 @@ def read_item(
 
 @router.post("/", response_model=schemas.Post)
 def create_item(
+    data: schemas.PostCreate,
     db: Session = Depends(deps.get_db),
-    data=Body(
-        example={
-            "title" : "새로운게시글",
-            "body" : "제가 작성한 글 좀 봐주시겠어요?",
-            "user_id" : 1,
-        },
-    ),
 ) -> Any:
     post = crud.post.create(db, data)
     return post
@@ -45,10 +38,9 @@ def create_item(
 
 @router.put("/{post_id}", response_model=schemas.Post)
 async def update(
+    post_id: int,
+    data: schemas.PostUpdate,
     db: Session = Depends(deps.get_db),
-    post_id: int = Path(...),
-    data: PostUpdate = Body(..., embed=False),
 ) -> Any:
     post = crud.post.update(db, post_id, data)
-
     return post
