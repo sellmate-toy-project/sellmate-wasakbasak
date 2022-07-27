@@ -6,7 +6,7 @@ from models.user import FloorType
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     nick_name: Optional[str] = None
-    floor: FloorType = None
+    floor: FloorType
 
 
 class UserCreate(UserBase):
@@ -17,7 +17,9 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    password: Optional[str] = None
+    password: Optional[str]
+    nick_name: Optional[str]
+    floor: FloorType
 
 
 class UserInDBBase(UserBase):
