@@ -16,6 +16,8 @@ def read_users():
 @router.get("/{user_id}", response_model=schemas.User)
 def read_user_by_id(
     user_id: int,
+    skip: int = 0,
+    limit: int = 100,
     db: Session = Depends(deps.get_db),
 ) -> Any:
     user = crud.user.get(db, id=user_id)

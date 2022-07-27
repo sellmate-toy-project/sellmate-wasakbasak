@@ -12,4 +12,5 @@ def snack(
     db: Session = Depends(deps.get_db),
 ) -> Any:
     scraper = scrapers.Ssg(db)
-    scraper.collect_category()
+    # scraper.collect_category()
+    scraper.collect_product()
