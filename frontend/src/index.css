@@ -19,8 +19,8 @@ code {
 
 .flip-panel {
 	position: relative;
-	width: 220px;
-	height: 346px;
+	width: 230px;
+	height: 306px;
 	display: inline-grid;
 	border-style: solid;
 	border-width: 1px;

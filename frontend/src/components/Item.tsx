@@ -124,7 +124,7 @@ const Item = ({ title, img, text, rank, onClick, itemsClass }: PropsData) => {
 				}
         secondary={
           text?.display 
-          ? <div dangerouslySetInnerHTML={{__html: text.content}}></div>
+          ? <span dangerouslySetInnerHTML={{__html: text.content}}></span>
           : ''
         }
 			>

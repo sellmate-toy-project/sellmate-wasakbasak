@@ -79,6 +79,8 @@ def get_users(
 @router.get("/{user_id}", response_model=schemas.User)
 def read_user_by_id(
     user_id: int,
+    skip: int = 0,
+    limit: int = 100,
     db: Session = Depends(deps.get_db),
 ):
     user = crud.user.get_user(db, user_id)
