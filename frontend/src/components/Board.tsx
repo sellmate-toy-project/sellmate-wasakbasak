@@ -1,7 +1,5 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
-import FiberNewSharpIcon from '@mui/icons-material/FiberNewSharp';
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, Stack, SvgIcon} from '@mui/material';
-import { fontSize } from '@mui/system';
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Stack } from '@mui/material';
 import newIcon from '../icons/new.png';
 const useStyles = makeStyles((theme) => ({
 	paddingNone: {
@@ -55,7 +53,7 @@ const Board = () => {
 	];
 
 	return (
-		<Stack direction='column' p='20px' height='442px' boxSizing='border-box'>
+		<Stack direction='column' p='20px' height='442px' boxSizing='border-box' sx={{backgroundColor: 'white', borderRadius: '16px'}}>
 			<Box className={classes.title}>
 				<Typography display='block' variant='button' component='div'>
 					게시판
@@ -73,12 +71,12 @@ const Board = () => {
 						sx={{ padding: 0, marginBottom: '20px', flexDirection: 'column' }}
 						disablePadding
 						>
-						<ListItemAvatar className={classes.title}>
+						<ListItemAvatar sx={{width: '100%'}} className={classes.title}>
 							<span className={classes.title}>{post.boardType == 'notice' ? '공지' : post.userId}</span>
 							<Avatar sx={{ width: 40, height: 20 }} src={newIcon} variant="square"/>
 						</ListItemAvatar>
 						<ListItemText
-              				className={classes.text}
+              className={classes.text}
 							primary={post.text}
 							sx={{ height: 46, margin: 0 }}
 						/>
