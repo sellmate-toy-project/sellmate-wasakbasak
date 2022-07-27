@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     '& > .title': {
       fontSize: '28px',
       fontWeight: 700,
-      minWidth: '49px',
+      whiteSpace: 'nowrap',
     },
 	},
 

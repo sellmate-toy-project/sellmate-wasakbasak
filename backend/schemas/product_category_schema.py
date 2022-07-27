@@ -27,7 +27,7 @@ class ProductCategoryInDBBase(ProductCategoryBase):
 
 
 class ProductCategory(ProductCategoryInDBBase):
-    pass
+    deps: Optional[int]
 
 
 class ProductCategoryInDB(ProductCategoryInDBBase):
