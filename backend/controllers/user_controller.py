@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 from fastapi import APIRouter, Depends, Body, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 from . import deps
@@ -6,12 +6,10 @@ from . import deps
 from controllers.response_entity import ResponseEntity
 from starlette.requests import Request
 from passlib.context import CryptContext
-from models.user import User
 
 import schemas
 import crud
 import bcrypt
-# import db
 
 router = APIRouter()
 
@@ -22,21 +20,15 @@ def sign_up(
     data: schemas.UserCreate,
     db: Session = Depends(deps.get_db)
 ):
-    data = data.dict(exclude_unset=True)
-    db_user = crud.user.get_by_email(db, email=data["email"])
+    obj = data.dict(exclude_unset=True)
+    db_user = crud.user.get_by_email(db, email=obj["email"])
 
     if db_user:
         raise HTTPException(400, '이미 가입한 회원입니다.')
-
     else:
         bcrypt = CryptContext(db, schemas=["bcrypt"], deprecated="auto")
-        payload = ({
-            "email": data["email"],
-            "password": bcrypt.hash(data["password"]),
-            "nick_name": data["nick_name"],
-            "floor": data["floor"],
-        })
-        user = crud.user.create(db, payload)
+        obj['password'] = bcrypt.hash(obj["password"])
+        user = crud.user.create(db, obj)
 
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
 
@@ -48,30 +40,29 @@ def update_user(
     data: schemas.UserUpdate,
     db: Session = Depends(deps.get_db),
 ):
-    data = data.dict(exclude_unset=True)
+    obj = data.dict(exclude_unset=True)
 
     bcrypt = CryptContext(db, schemas=["bcrypt"], deprecated="auto")
 
-    if "password" in data:
-        data["password"] = bcrypt.hash(data["password"])
+    if "password" in obj:
+        obj["password"] = bcrypt.hash(obj["password"])
 
-    user = db.crud.user.query().filter(User.id == user_id).first()
-    if not user:
-        raise HTTPException(400, '회원 정보가 존재하지 않습니다.')
+    user = crud.user.get(db, id=user_id)
+    if user:
+        user = crud.user.update(db, obj)
     else:
-        user = crud.user.update(db, data)
+        raise HTTPException(400, '회원 정보가 존재하지 않습니다.')
 
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
 
 
 @router.get("/", response_model=List[schemas.User])
 def get_users(
-    request: Request,
     page: int = Query(1, ge=1),
     limit: int = Query(15, ge=1),
-    floor: int = Query(None),
+    floor: Optional[int] = Query(None),
     db: Session = Depends(deps.get_db),
-):
+) -> Any:
     users = crud.user.get_users(db, page, limit, floor)
     return users
 
@@ -82,6 +73,6 @@ def read_user_by_id(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(deps.get_db),
-):
+) -> Any:
     user = crud.user.get_user(db, user_id)
     return user
