@@ -32,7 +32,6 @@ def read_user_by_id(
     user_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    obj = data.dict(exclude_unset=True)
     user = crud.user.get_user(db, user_id)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
 
@@ -49,8 +48,8 @@ def sign_up(
     if db_user:
         raise HTTPException(400, '이미 가입한 회원입니다.')
     else:
-        bcrypt = CryptContext(db, schemas=["bcrypt"], deprecated="auto")
-        obj.password = bcrypt.hash(obj.password)
+        pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        obj["password"] = pwd_context.hash(obj["password"])
         user = crud.user.create(db, obj)
 
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
@@ -65,7 +64,7 @@ def update_user(
 ):
     obj = data.dict(exclude_unset=True)
 
-    bcrypt = CryptContext(db, schemas=["bcrypt"], deprecated="auto")
+    bcrypt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     if "password" in obj:
         obj["password"] = bcrypt.hash(obj["password"])

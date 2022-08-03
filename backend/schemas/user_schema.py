@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from models.user import FloorType, UserType
+from models.user import FloorType
 
 
 class UserBase(BaseModel):
@@ -20,7 +20,6 @@ class UserUpdate(UserBase):
     password: Optional[str]
     nick_name: Optional[str]
     floor: FloorType
-    type: UserType
 
 
 class UserInDBBase(UserBase):
@@ -28,7 +27,6 @@ class UserInDBBase(UserBase):
     email: EmailStr
     nick_name: str
     floor: FloorType
-    type: UserType
 
     class Config:
         orm_mode = True
