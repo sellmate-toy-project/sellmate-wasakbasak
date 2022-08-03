@@ -78,9 +78,15 @@ class Ssg:
                 products = soup.select(".cunit_thmb_lst li")
 
                 for product in products:
-                    print(product.select(".thmb img")[0]['src'])
-                    print(product.select(".cunit_info .tx_ko")[0].text)
-                    print(product.select(".cunit_info .ssg_price")[0].text)
+                    crud.product.create(
+                        db=self.db,
+                        obj_in={
+                            "name": product.select(".cunit_info .tx_ko")[0].text,
+                            "desc": product.select(".thmb img")[0]['src'],
+                            "price": product.select(".cunit_info .ssg_price")[0].text.replace(",", "")
+                        },
+                        product_category_id=sub_product_category.get('id')
+                    )
                     raise
         except Exception as e:
             print(f'Server Error: {e}')
