@@ -1,7 +1,14 @@
-from sqlalchemy import Column, Integer, String
+import enum
+from sqlalchemy import Column, Integer, String, Enum, text
 from db.base_class import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
+
+
+class StatusType(enum.Enum):
+    active = "active"
+    soldOut = "soldOut"
+    delete = "delete"
 
 
 class Product(Base):
@@ -11,8 +18,10 @@ class Product(Base):
     name = Column(String(100), unique=True, index=True, nullable=False)
     desc = Column(String(1000))
     price = Column(Integer, nullable=False)
+    status = Column(Enum(StatusType), nullable=True, server_default="active")
 
     orders = relationship("Order", back_populates="product")
     product_likes = relationship("ProductLike", back_populates="product")
     reviews = relationship("Review", back_populates="product")
     product_category = relationship("ProductCategory", back_populates="products")
+
