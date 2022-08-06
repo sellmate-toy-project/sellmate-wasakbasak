@@ -293,8 +293,9 @@ export default BestReview;
 
 const BestReviewWrapper = styled.div`
 	width: 830px;
-	height: 423px;
+	height: 392px;
 	margin-bottom: 20px;
+	background: #FFFFFF;
 `;
 
 const ulStyle = {

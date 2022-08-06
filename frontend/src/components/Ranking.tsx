@@ -216,8 +216,8 @@ export default function Ranking() {
                 p: 0,
                 width: '40px',
                 height: '22px',
-								fontWeight: '600',
-								fontSize: '14px',
+								        fontWeight: '600',
+								        fontSize: '14px',
                 color: '#8C8C8C',
                 '&:hover': {
                   backgroundColor: 'transparent !important',
