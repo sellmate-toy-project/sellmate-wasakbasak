@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	itemsClass: {
 		marginRight: '20px',
-		'&:last-of-type': {
+		'&:lastOfType': {
 			marginRight: 0,
 		},
 		'& .ranking-text': {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 		minHeight: '0 !important',
 		minWidth: '0 !important',
 		marginRight: '20px !important',
-		'&:last-of-type': {
+		'&:lastOfType': {
 			marginRight: '0 !important',
 		},
 	},
