@@ -214,9 +214,11 @@ export default function Ranking() {
 							disableRipple
 							sx={{
                 p: 0,
+                minWidth: '40px',
                 width: '40px',
+                letterSpacing:'-1px',
                 height: '22px',
-								fontWeight: '600',
+								fontWeight: '400',
 								fontSize: '14px',
                 color: '#8C8C8C',
                 '&:hover': {

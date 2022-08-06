@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		marginBottom: '20px',
+    margin: '0 4px 20px 4px',
 		'& > span': {
 			fontWeight: 700,
 			fontSize: '16px',
@@ -128,10 +128,12 @@ const RecentOrder = () => {
 					sx={{
 						p: 0,
 						width: '40px',
-						height: '26px',
-						fontWeight: '600',
+            minWidth: '40px',
+						height: '22px',
+						fontWeight: '400',
 						fontSize: '14px',
 						color: '#8C8C8C',
+            letterSpacing:'-1px',
 						'&:hover': {
 							backgroundColor: 'transparent !important',
 						},
@@ -177,7 +179,7 @@ const RecentOrder = () => {
 					}}
 					text={{
 						display: true,
-						content: `<span style="display: block; height: 30px; line-height: 30px; background-color: #F5F5F5; padding: 4px 16px; border-radius: 16px"><span style="color: #181818;">${items.count}개</span><span style="color: #888888;"> / </span><span style="color: #8C8C8C;"> 개당 </span><span style="color: #181818;">${items.price}원</span></span>`,
+						content: `<span style="display: block; height: 22px; line-height: 22px; background-color: #F5F5F5; padding: 4px 16px; border-radius: 16px"><span style="color: #181818;">${items.count}개</span><span style="color: #888888;"> / </span><span style="color: #8C8C8C;"> 개당 </span><span style="color: #181818;">${items.price}원</span></span>`,
 					}}
 					rank={{ display: false }}
 					key={idx}
