@@ -1,14 +1,22 @@
 import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import { Container, MenuItem, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Container,
+  MenuItem,
+  ToggleButton,
+  ToggleButtonGroup
+} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Fragment, MouseEvent, ReactNode } from 'react';
-import Dropdown from './Dropdown';
 interface PropsData {
-	onChange: (event: MouseEvent<HTMLElement>|SelectChangeEvent<string>|any, newValue: string|ReactNode|any) => void;
+	onChange: (
+		event: MouseEvent<HTMLElement> | SelectChangeEvent<string> | any,
+		newValue: string | ReactNode | any
+	) => void;
 	rangeValue?: string;
 	floorValue?: string;
 	itemValue?: string;
+	sortValue?: string;
 }
 const useStyles = makeStyles((theme) => ({
 	toggleBtn: {
@@ -53,7 +61,7 @@ const RecentOrderTitleItem = ({
 								border: 'none',
 								backgroundColor: 'transparent',
 								p: 0,
-                '&.Mui-selected':{color: '#21CAFF'},
+								'&.Mui-selected': { color: '#21CAFF' },
 								'&:first-of-type': { mr: '32px' },
 							}}
 							value={item}
@@ -81,7 +89,7 @@ const RecentOrderTitleItem = ({
 								border: 'none',
 								backgroundColor: 'transparent',
 								p: 0,
-                '&.Mui-selected':{color: '#21CAFF'},
+								'&.Mui-selected': { color: '#21CAFF' },
 								'&:nth-of-type(2)': { mx: '32px !important' },
 							}}
 							value={floor}
@@ -95,11 +103,19 @@ const RecentOrderTitleItem = ({
 		</Container>
 	);
 };
-const RecentOrderActionItem = ({ onChange, rangeValue }: PropsData) => {
+const RecentOrderActionItem = ({
+	onChange,
+	rangeValue,
+	sortValue,
+}: PropsData) => {
 	const rangeOptions = [
-		{ time: '1', date: '2022-06-30' },
-		{ time: '2', date: '2022-07-15' },
-		{ time: '3', date: '2022-07-23' },
+		{ time: '1', date: '2022-06-30', name: 'range' },
+		{ time: '2', date: '2022-07-15', name: 'range' },
+		{ time: '3', date: '2022-07-23', name: 'range' },
+	];
+	const sortOptions = [
+		{ value: '최근 주문 순', name: 'sort' },
+		{ value: '좋아요 순', name: 'sort' },
 	];
 	return (
 		<Container
@@ -108,25 +124,43 @@ const RecentOrderActionItem = ({ onChange, rangeValue }: PropsData) => {
 				justifyContent: 'space-between',
 				p: '16px 45px 16px 40px',
 			}}>
-			
-				<Select
-          onChange={(event: SelectChangeEvent<string>, newValue: ReactNode) =>
-						onChange(event, newValue)}
-					value={rangeValue} 
-          IconComponent={() =>
-            <KeyboardArrowDownRoundedIcon sx={{ color: 'primary', fontSize: '16px' }}/>
-          }
-          sx={{p:'8px 16px 8px 10px', '& > .MuiInputBase-input':{p:0}}}
-        >
-					{rangeOptions.map((data, idx) => (
-						<MenuItem key={idx} value={`${data.time}회 / ${data.date}`}>{`${data.time}회 / ${data.date}`}</MenuItem>
-					))}
-				</Select>
-			<Dropdown options={['주문 수량 순', '좋아요 순']} />
+			<Select
+				onChange={(event: SelectChangeEvent<string>, newValue: ReactNode) =>
+					onChange(event, newValue)
+				}
+				value={rangeValue}
+				IconComponent={() => (
+					<KeyboardArrowDownRoundedIcon
+						sx={{ color: '#8C8C8C', fontSize: '16px' }}
+					/>
+				)}
+				sx={{ p: '8px 16px 8px 10px', '& > .MuiInputBase-input': { p: 0 }, border: '1px solid #E0E0E0', 'fieldset': { display: 'none' } }}>
+				{rangeOptions.map((data, idx) => (
+					<MenuItem
+						key={idx}
+						value={`${data.time}회 / ${data.date}`}>{`${data.time}회 / ${data.date}`}</MenuItem>
+				))}
+			</Select>
+			<Select
+				onChange={(event: SelectChangeEvent<string>, newValue: ReactNode) =>
+					onChange(event, newValue)
+				}
+				value={sortValue}
+				IconComponent={() => (
+					<KeyboardArrowDownRoundedIcon
+						sx={{ color: '#8C8C8C', fontSize: '16px' }}
+					/>
+				)}
+				sx={{ p: '8px 16px 8px 10px', '& > .MuiInputBase-input': { p: 0 }, border: '1px solid #E0E0E0', 'fieldset': { display: 'none' } }}>
+				{sortOptions.map((data, idx) => (
+					<MenuItem sx={{p: 0, 'ul': {p: 0}}}key={idx} value={data.value}>
+						{data.value}
+					</MenuItem>
+				))}
+			</Select>
 		</Container>
 	);
 };
-
 
 export { RecentOrderTitleItem, RecentOrderActionItem };
 
