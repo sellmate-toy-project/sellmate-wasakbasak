@@ -1,52 +1,57 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+* {
+	font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+		'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
+		'Malgun Gothic', sans-serif !important;
+  /* line-height: 165%; */
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 
 .flip-panel {
-  position: relative;
-  width: 220px;
-  height: 346px;
-  display: inline-grid;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #c4c4c4;
-  margin-right: 20px;
+	position: relative;
+	width: 230px;
+	height: 306px;
+	display: inline-grid;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #c4c4c4;
+	margin-right: 20px;
 }
 
 .card {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  transition: all .5s;
-  backface-visibility: hidden;
-  background: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	transition: all 0.5s;
+	backface-visibility: hidden;
+	background: white;
 }
 
 .front {
-  z-index: 2;
+	z-index: 2;
 }
 
 .back {
-  z-index: 1;
-  transform: rotateY(-180deg);
+	z-index: 1;
+	transform: rotateY(-180deg);
 }
 
 .panel:hover .front {
-  z-index: 1;
-  transform: rotateY(180deg);
+	z-index: 1;
+	transform: rotateY(180deg);
 }
 
 .flip-panel:hover .back {
-  z-index: 2;
-  transform: rotateY(0deg);
+	z-index: 2;
+	transform: rotateY(0deg);
 }

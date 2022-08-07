@@ -6,8 +6,11 @@ import {
   makeStyles,
   Typography
 } from '@material-ui/core';
+import Badge from '@mui/material/Badge';
 import { Fragment } from 'react';
-import { Crown } from '../icons/Crown';
+import rank1 from '../icons/rank1.svg';
+import rank2 from '../icons/rank2.svg';
+import rank3 from '../icons/rank3.svg';
 
 interface PropsData {
 	title: string;
@@ -15,9 +18,9 @@ interface PropsData {
 		src: string;
 		style: object;
 	};
-	text: {
+	text?: {
 		display: boolean;
-		content?: string;
+		content: string;
 		class?: string;
 	};
 	onClick?: () => void;
@@ -25,14 +28,9 @@ interface PropsData {
 		display: boolean;
 		content?: number;
 	};
-  itemsClass?: string;
-  iconColor?: string;
+	itemsClass?: string;
 }
 const useStyles = makeStyles((theme) => ({
-	list: {
-		width: '100%',
-		boxSizing: 'border-box',
-	},
 	inline: {
 		display: 'inline',
 	},
@@ -40,20 +38,14 @@ const useStyles = makeStyles((theme) => ({
 		width: 'auto',
 		height: 'auto',
 		marginTop: 0,
-		marginRight: '18px',
-	},
-	itemImg: {
-		width: '100%',
-		height: '100%',
-		borderRadius: 0,
+		'& .rank-img': {
+			position: 'absolute',
+			left: '-6px',
+			top: '-6px',
+		},
 	},
 	paddingNone: {
 		padding: 0,
-	},
-	title: {
-		display: 'flex',
-		justifyContent: 'space-between',
-		marginBottom: '20px',
 	},
 	badge: {
 		'& .MuiBadge-badge': {
@@ -67,69 +59,76 @@ const useStyles = makeStyles((theme) => ({
 	listItem: {
 		height: 'auto',
 		marginBottom: '12px',
-		// '&:last-of-type': {
-		// 	marginBottom: 0,
-		// },
 	},
+  boldTitle:{
+    fontWeight: 600,
+  },
+  title: {
+    fontWeight: 500,
+  }
 }));
 
-const Item = ({ title, img, text, rank, onClick, itemsClass, iconColor }: PropsData) => {
+const Item = ({ title, img, text, rank, onClick, itemsClass }: PropsData) => {
 	const classes = useStyles();
 	return (
 		<ListItem
 			key={title}
 			onClick={onClick}
-			className={[classes.paddingNone, classes.listItem, itemsClass].join(' ')}
-    >
-			<ListItemAvatar className={classes.listImg}>
-				<Avatar variant='rounded' src={img.src} style={img.style}></Avatar>
-			</ListItemAvatar>
+			className={[classes.paddingNone, classes.listItem, itemsClass].join(' ')}>
+			{rank.display ? (
+				<Badge
+					className={classes.badge}
+					anchorOrigin={{
+						vertical: 'top',
+						horizontal: 'left',
+					}}>
+					<ListItemAvatar className={classes.listImg}>
+						<div>
+							<Avatar src={img.src} style={img.style}></Avatar>
+							{rank.content === 1 ? (
+								<img src={rank1} alt='rank1' className='rank-img' />
+							) : rank.content === 2 ? (
+								<img src={rank2} alt='rank2' className='rank-img' />
+							) : (
+								<img src={rank3} alt='rank3' className='rank-img' />
+							)}
+						</div>
+					</ListItemAvatar>
+				</Badge>
+			) : (
+				<ListItemAvatar className={classes.listImg}>
+					<Avatar variant='rounded' src={img.src} style={img.style}></Avatar>
+				</ListItemAvatar>
+			)}
 			<ListItemText
-				style={{ margin: 0, width: '100px', display: 'flex', flexDirection: 'column', alignItems: 'start', }}
+				style={{
+					margin: '0 16px',
+					width: '100px',
+          height: '90px',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'start',
+          justifyContent: 'space-between',
+				}}
 				primary={
 					<Fragment>
-						{rank.display ? (
-							<Typography
-                component='div'
-								variant='body2'
-								className={'MuiTypography-gutterBottom'}
-								gutterBottom={false}
-                style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
-								>
-								<Crown style={{fontSize: '20px'}} color={iconColor}/>
-								<span style={{backgroundColor : iconColor}} className='ranking-text'>랭킹 {rank.content}위</span>
-							</Typography>
-						) : (
-							''
-						)}
 						<Typography
 							component='span'
 							variant='body2'
-							className={classes.inline + 'MuiTypography-gutterBottom title-text'}
+							className={[classes.inline, (text?.display ? classes.boldTitle : classes.title)].join(' ')}
 							gutterBottom={false}
-							color='textPrimary'
-            >
+							color='textPrimary'>
 							{title}
 						</Typography>
 					</Fragment>
 				}
-				secondary={
-					text.display ? (
-						<Fragment>
-							<Typography
-								component='b'
-								variant='body2'
-								className={classes.inline + 'MuiTypography-gutterBottom'}
-								gutterBottom={false}
-								color='textPrimary'>
-								{text.content}
-							</Typography>
-						</Fragment>
-					) : (
-						''
-					)
-				}
-			/>
+        secondary={
+          text?.display 
+          ? <span dangerouslySetInnerHTML={{__html: text.content}}></span>
+          : ''
+        }
+			>
+      </ListItemText>
 		</ListItem>
 	);
 };
