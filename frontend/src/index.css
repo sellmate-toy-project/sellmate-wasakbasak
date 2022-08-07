@@ -62,3 +62,6 @@ code {
 .margin-none {
   margin: 0 !important;
 }
+.transparent:hover {
+  background-color: transparent !important;
+}

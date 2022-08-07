@@ -4,14 +4,21 @@ import {
   ListItemAvatar,
   ListItemText
 } from '@material-ui/core';
-import { Avatar, IconButton } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Typography
+} from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MouseEvent, ReactNode, useState } from 'react';
-import { Active, Inactive } from "../icons/Heart";
+import { Comment } from '../icons/Comment';
+import { Active, Inactive } from '../icons/Heart';
 import ModalLayout from './ModalLayout';
 import { RankingActionItem, RankingTitleItem } from './RankingItem';
-
 interface PropsData {
 	onClose: () => void;
 	open: boolean;
@@ -67,6 +74,7 @@ const RankingModal = ({ open, onClose }: PropsData) => {
 	};
 	const [rangeValue, setRangeValue] = useState('all');
 	const [sortValue, setSortValue] = useState('최근 주문 순');
+	const [activeCount, setActiveCount] = useState(0);
 
 	const handleRangeChange = (
 		event: SelectChangeEvent<string>,
@@ -79,15 +87,20 @@ const RankingModal = ({ open, onClose }: PropsData) => {
 			setRangeValue(value.value as string);
 		}
 	};
-  const [iconValue, setIconValue] = useState('inactive')
-	const toggleActive = (event: React.MouseEvent<HTMLButtonElement>, newValue:string) => {
-    if(newValue === 'active') {
-      setIconValue('inactive');
-      console.log('좋아요 취소');
-    } else {
-      console.log('좋아요 누름');
-      setIconValue('active');
-    }
+	const [iconValue, setIconValue] = useState('inactive');
+	const toggleActive = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		newValue: string
+	) => {
+		if (newValue === 'active') {
+			console.log('좋아요 취소');
+			setIconValue('inactive');
+			setActiveCount(activeCount - 1);
+		} else {
+			console.log('좋아요 누름');
+			setActiveCount(activeCount + 1);
+			setIconValue('active');
+		}
 	};
 	return (
 		<ModalLayout
@@ -149,27 +162,74 @@ const RankingModal = ({ open, onClose }: PropsData) => {
 										</span>
 									</label>
 								}></ListItemText>
-							<IconButton
-								onClick={(event) => toggleActive(event, iconValue)}
-								disableFocusRipple
-                disableRipple
-								id='loginBtn'
+							<Box
 								sx={{
-									color: '#181818',
+									display: 'flex',
+									flexDirection: 'column',
+									alignItems: 'center',
+									justifyContent: 'center',
 									backgroundColor: 'white',
-									fontSize: '15px',
-									fontWeight: 500,
 									width: '92px',
 									height: '120px',
-									borderRadius: '8px',
 									textTransform: 'none',
-									p: '8px 20px',
-									'&:hover': {
-										backgroundColor: '#9CE2F8',
-									},
+									p: 0,
+									boxSizing: 'border-box',
+									border: '1px solid #E0E0E0',
+									borderRadius: '8px',
 								}}>
-								{iconValue === 'active' ? <Active /> : <Inactive/>}
-							</IconButton>
+								<IconButton
+									onClick={(event) => toggleActive(event, iconValue)}
+									disableFocusRipple
+									disableRipple
+									id='loginBtn'
+									sx={{
+										width: '22px',
+										height: '20px',
+										p: 0,
+									}}>
+									{iconValue === 'active' ? <Active /> : <Inactive />}
+								</IconButton>
+								<Typography
+									sx={{
+										width: '100%',
+										fontSize: '15px',
+										fontWeight: 500,
+										color: '#181818',
+										m: '10px 0 0 0',
+									}}
+									align='center'
+									variant='body1'>
+									{activeCount}
+								</Typography>
+								<Divider
+									sx={{
+										width: '100%',
+										height: '1px',
+										bottom: '43px',
+										margin: '10px 0',
+									}}
+								/>
+								<Button
+									disableFocusRipple
+									disableRipple
+									disableElevation
+									startIcon={<Comment />}
+									className='transparent'
+									sx={{
+										p: 0,
+										width: '40px',
+										height: '24px',
+										color: '#8C8C8C',
+										'.MuiButton-startIcon': {
+											width: '16px',
+											height: '16px',
+											mr: '8px',
+										},
+									}}
+									variant='text'>
+									12
+								</Button>
+							</Box>
 						</ListItem>
 					))}
 				</List>
