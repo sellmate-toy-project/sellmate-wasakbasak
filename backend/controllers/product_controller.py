@@ -14,7 +14,7 @@ def read_product(
     skip: int = 0,
     limit: int = 100,
 ) -> Any:
-    products = crud.product.get_multi(db, skip=skip, limit=limit)
+    products = crud.product.get_product(db, skip=skip, limit=limit)
     return products
 
 

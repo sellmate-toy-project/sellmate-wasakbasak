@@ -1,7 +1,9 @@
+from typing import Optional
 from .base import CRUDBase
 from models.product import Product
 from schemas.product_schema import ProductCreate
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
+from models.product import StatusType
 
 
 class CRUDProduct(CRUDBase[Product, ProductCreate, None]):
@@ -13,6 +15,23 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, None]):
         db.commit()
         db.refresh(db_obj)
         return db_obj
+
+    def duplicate_check(
+        self, db: Session, name: str, code: str
+    ) -> Optional[Product]:
+        return db.query(self.model)\
+            .filter(self.model.name == name)\
+            .filter(self.model.code == code)\
+            .first()
+
+    def get_product(
+        self, db: Session, skip: int = 0, limit: int = 100
+    ) -> list[Product]:
+        return db.query(self.model)\
+            .filter(self.model.status == StatusType.active)\
+            .offset(skip)\
+            .limit(limit)\
+            .all()
 
 
 product = CRUDProduct(Product)
