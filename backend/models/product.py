@@ -16,6 +16,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     product_category_id = Column(Integer, ForeignKey("product_categories.id"))
     name = Column(String(100), unique=True, index=True, nullable=False)
+    code = Column(String(100), unique=True, index=True, nullable=False)
     desc = Column(String(1000))
     price = Column(Integer, nullable=False)
     status = Column(Enum(StatusType), nullable=True, server_default="active")
@@ -24,4 +25,3 @@ class Product(Base):
     product_likes = relationship("ProductLike", back_populates="product")
     reviews = relationship("Review", back_populates="product")
     product_category = relationship("ProductCategory", back_populates="products")
-
