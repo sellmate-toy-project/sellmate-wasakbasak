@@ -25,7 +25,13 @@ class ProductLikeInDBBase(ProductLikeBase):
 
 
 class ProductLike(ProductLikeInDBBase):
-    pass
+    class Config:
+        schema_extra = {
+            "example": {
+                "user_id": "사용자 일련번호",
+                "product_id": "상품 일련번호"
+            }
+        }
 
 
 class ProductLikeInDB(ProductLikeInDBBase):
