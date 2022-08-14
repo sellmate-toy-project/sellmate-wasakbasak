@@ -44,14 +44,14 @@ class Ssg:
                                 sub_product_category = self.insert_category(product_category, sub_category)
                                 self.sub_product_categories.append(sub_product_category)
                         else:
-                            raise Exception(f"ssg sub category request error: {sub_res}")
+                            raise Exception(f"Sub Category Request Exception: {sub_res}")
 
-                        # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 3초 대기
-                        time.sleep(5)
+                        # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
+                        time.sleep(10)
                 else:
-                    raise Exception(f"ssg middle category request error: {res}")
+                    raise Exception(f"Middle Category Request Exception: {res}")
             except Exception as e:
-                print(f'Server Error: {e}')
+                print(f"Collect Category Server Error: {e}")
 
     def insert_category(self, owner_category, category):
         product_category = crud.product_category.get_by_name(
@@ -82,20 +82,20 @@ class Ssg:
 
                     for product in products:
                         product_dict = {
-                            "name": product.select(".cunit_info .tx_ko")[0].text,
-                            "code": product.select(".thmb a")[0]['data-info'],
-                            "desc": product.select(".thmb img")[0]['src'],
-                            "price": product.select(".cunit_info .ssg_price")[0].text.replace(",", "")
+                            "name": product.select(".cunit_info .cunit_md a .tx_ko")[0].text,
+                            "code": product.select(".thmb .cunit_md a")[0]['data-info'],
+                            "desc": product.select(".thmb .cunit_md img")[0]['src'],
+                            "price": product.select(".cunit_info .opt_price .ssg_price")[0].text.replace(",", "")
                         }
                         self.insert_product(product_dict, sub_product_category.id)
 
-                    # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 3초 대기
-                    time.sleep(5)
+                    # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
+                    time.sleep(10)
                 else:
-                    raise Exception(f"ssg product request error: {res}, "
-                                    f"category code : {sub_product_category.code}")
+                    raise Exception(f"Request Exception: {res}, "
+                                    f"Category Code : {sub_product_category.code}")
             except Exception as e:
-                print(f'Server Error: {e}')
+                print(f"Collect Product Server Error: {e}")
 
     def insert_product(self, product_dict, product_category_id):
         product = crud.product.duplicate_check(
@@ -110,5 +110,8 @@ class Ssg:
                 obj_in=product_dict,
                 product_category_id=product_category_id
             )
+        else:
+            # 신상품 순으로 상품 등록 중 중복 상품 존재 시 중단
+            raise Exception("Duplicate Product")
 
         return product
