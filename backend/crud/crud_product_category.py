@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import literal
 
 
-class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]):
+class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None, None]):
     def get_by_name(
         self, db: Session, name: str
     ) -> Optional[ProductCategory]:

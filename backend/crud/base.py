@@ -7,6 +7,7 @@ import enum
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
+DeleteSchemaType = TypeVar("DeleteSchemaType", bound=BaseModel)
 
 
 class SortType(enum.Enum):
@@ -14,7 +15,7 @@ class SortType(enum.Enum):
     ASC = "asc"
 
 
-class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, DeleteSchemaType]):
     def __init__(self, model: Type[ModelType]):
         self.model = model
 

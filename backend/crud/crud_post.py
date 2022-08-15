@@ -6,7 +6,7 @@ from schemas.post_schema import PostUpdate
 from sqlalchemy.orm import Session, Query
 
 
-class CRUDPost(CRUDBase[Post, None, None]):
+class CRUDPost(CRUDBase[Post, None, None, None]):
     def create(self, db: Session, obj_in: PostCreate) -> Post:
         db_obj = self.model(**obj_in)
         db.add(db_obj)

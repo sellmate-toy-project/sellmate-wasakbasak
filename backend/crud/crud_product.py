@@ -2,12 +2,12 @@ from typing import Optional
 from .base import CRUDBase, SortType
 from models.product import Product
 from schemas.product_schema import ProductCreate
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, subqueryload
 from models.product import StatusType
 from sqlalchemy.sql import text
 
 
-class CRUDProduct(CRUDBase[Product, ProductCreate, None]):
+class CRUDProduct(CRUDBase[Product, ProductCreate, None, None]):
     def create(
         self, db: Session, obj_in: ProductCreate, product_category_id: int
     ) -> Product:
@@ -34,10 +34,10 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, None]):
         sort_by: SortType = "asc"
     ) -> list[Product]:
         return db.query(self.model)\
-            .filter(self.model.status == StatusType.active) \
-            .order_by(text(f"{sort} {sort_by.value}")) \
-            .offset(skip) \
-            .limit(limit) \
+            .filter(self.model.status == StatusType.active)\
+            .order_by(text(f"{sort} {sort_by.value}"))\
+            .offset(skip)\
+            .limit(limit)\
             .all()
 
 
