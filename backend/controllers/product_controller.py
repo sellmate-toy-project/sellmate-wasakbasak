@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from . import deps
@@ -13,8 +13,16 @@ def read_product(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
+    sort: str = "id",
+    sort_by: crud.SortType = "asc",
+    category_name: str = None
 ) -> Any:
-    products = crud.product.get_product(db, skip=skip, limit=limit)
+    # TODO: 상품 카테고리 필터 추가
+    if category_name is not None:
+        products = crud.product.get_product(db, skip=skip, limit=limit)
+    else:
+        products = crud.product.get_product(db, skip=skip, limit=limit, sort=sort, sort_by=sort_by)
+
     return products
 
 
