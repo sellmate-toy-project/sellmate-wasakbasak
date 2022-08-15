@@ -47,7 +47,7 @@ class Ssg:
                             raise Exception(f"Sub Category Request Exception: {sub_res}")
 
                         # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
-                        time.sleep(10)
+                        time.sleep(5)
                 else:
                     raise Exception(f"Middle Category Request Exception: {res}")
             except Exception as e:
@@ -73,29 +73,40 @@ class Ssg:
 
     def collect_product(self):
         for sub_product_category in self.sub_product_categories:
+            page = 1
+
             try:
-                res = requests.get(self.base_uri + sub_product_category.code + "&sort=regdt&pageSize=100")
-                if res.status_code == 200:
-                    # 상품 리스트 파싱
-                    soup = BeautifulSoup(res.text, "html.parser")
-                    products = soup.select(".cunit_thmb_lst li")
-
-                    for product in products:
-                        product_dict = {
-                            "name": product.select(".cunit_info .cunit_md a .tx_ko")[0].text,
-                            "code": product.select(".thmb .cunit_md a")[0]['data-info'],
-                            "desc": product.select(".thmb .cunit_md img")[0]['src'],
-                            "price": product.select(".cunit_info .opt_price .ssg_price")[0].text.replace(",", "")
-                        }
-                        self.insert_product(product_dict, sub_product_category.id)
-
-                    # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
-                    time.sleep(10)
-                else:
-                    raise Exception(f"Request Exception: {res}, "
-                                    f"Category Code : {sub_product_category.code}")
+                while True:
+                    res = requests.get(
+                        self.base_uri + sub_product_category.code + "&sort=regdt&pageSize=100&page=" + str(page)
+                    )
+                    if res.status_code == 200:
+                        # 상품 리스트 파싱
+                        soup = BeautifulSoup(res.text, "html.parser")
+                        products = soup.select(".cunit_thmb_lst li")
+                        
+                        # 조호된 상품 존재 시 수집
+                        if products:
+                            for product in products:
+                                product_dict = {
+                                    "name": product.select(".cunit_info .cunit_md a .tx_ko")[0].text,
+                                    "code": product.select(".cunit_info .cunit_md a")[0]['data-info'],
+                                    "desc": product.select(".thmb img")[0]['src'],
+                                    "price": product.select(".cunit_info .opt_price .ssg_price")[0].text.replace(",", "")
+                                }
+                                self.insert_product(product_dict, sub_product_category.id)
+    
+                            # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
+                            time.sleep(5)
+                            page += 1
+                        else:
+                            break
+                    else:
+                        raise Exception(f"Request Exception: {res}, "
+                                        f"Category Code : {sub_product_category.code}")
             except Exception as e:
                 print(f"Collect Product Server Error: {e}")
+                time.sleep(5)
 
     def insert_product(self, product_dict, product_category_id):
         product = crud.product.duplicate_check(
