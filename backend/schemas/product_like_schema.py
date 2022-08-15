@@ -8,8 +8,7 @@ class ProductLikeBase(BaseModel):
 
 
 class ProductLikeCreate(ProductLikeBase):
-    user_id: int
-    product_id: int
+    pass
 
 
 class ProductLikeUpdate(ProductLikeBase):

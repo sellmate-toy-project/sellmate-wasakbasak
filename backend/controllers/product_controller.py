@@ -31,5 +31,20 @@ def read_product_by_id(
     product_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    products = crud.product.get(db, id=product_id)
-    return products
+    product = crud.product.get(db, id=product_id)
+    return product
+
+
+@router.get("/{product_id}/like", response_model=schemas.Product)
+def press_product_like(
+    product_id: int,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    product_likes = crud.product_like.check_product_like(db, product_id=product_id)
+    if product_likes:
+        crud.product_like.delete(db, product_id=product_id)
+    else:
+        crud.product_like.create(db, product_id=product_id)
+
+    product = crud.product.get(db, id=product_id)
+    return product
