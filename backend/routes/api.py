@@ -12,3 +12,5 @@ api_router.include_router(product_category_controller.router,
                           prefix="/products/categories", tags=['products'])
 api_router.include_router(review_controller.router,
                           prefix="/reviews", tags=["reviews"])
+api_router.include_router(review_comment_controller.router,
+                          prefix="/review_comments", tags=["review_comments"])
