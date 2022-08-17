@@ -108,7 +108,7 @@ const Item = ({ title, img, text, rank, onClick, itemsClass }: PropsData) => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'start',
-          justifyContent: 'space-between',
+          justifyContent: !rank.display ? 'space-between' : 'center',
 				}}
 				primary={
 					<Fragment>

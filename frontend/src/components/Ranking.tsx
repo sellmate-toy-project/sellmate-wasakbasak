@@ -1,11 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import { TabContext, TabPanel } from '@mui/lab';
-import { Box, Button, List, Paper, Tab, Tabs } from '@mui/material';
+import { Box, Button, List, Tab, Tabs } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Fragment, MouseEvent, SyntheticEvent, useState } from 'react';
+import { Fragment, SyntheticEvent, useState } from 'react';
 import Item from './Item';
-import ModalLayout from './ModalLayout';
-import { RankingActionItem, RankingTitleItem } from './RankingItem';
+import RankingModal from './RankingModal';
 const theme = createTheme({
 	palette: {
 		primary: {
@@ -131,42 +130,14 @@ export default function Ranking() {
 	};
 	const [open, setOpen] = useState(false);
 
-	const handleClose = () => {
-		setOpen(false);
-	};
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
-	const [rangeValue, setRangeValue] = useState('all');
-	const handleRangeChange = (
-		event: MouseEvent<HTMLElement>,
-		newValue: string
-	) => {
-		if (newValue !== null) {
-			setRangeValue(newValue);
-		}
-	};
-	const [floorValue, setFloorValue] = useState('3F');
-	const [itemValue, setItemValue] = useState('과자');
 
 	const itemOptions = [
 		{ title: '과자', value: 'snack' },
 		{ title: '음료', value: 'drink' },
 	];
-	const handleTitleChange = (
-		event: MouseEvent<HTMLElement>,
-		newValue: string
-	) => {
-		const value = event.target as HTMLButtonElement;
-		if (itemOptions.some((v) => v.title.includes(value.value))) {
-			setItemValue(value.value);
-		} else {
-			if (newValue !== null) {
-				setFloorValue(newValue);
-			}
-		}
-	};
 
 	return (
 		<TabContext value={tabValue}>
@@ -215,9 +186,11 @@ export default function Ranking() {
 							sx={{
                 p: 0,
                 width: '40px',
+                minWidth: '40px',
+                letterSpacing:'-1px',
                 height: '22px',
-								        fontWeight: '600',
-								        fontSize: '14px',
+                fontWeight: '600',
+                fontSize: '14px',
                 color: '#8C8C8C',
                 '&:hover': {
                   backgroundColor: 'transparent !important',
@@ -225,35 +198,7 @@ export default function Ranking() {
 							}}>
                 더 보기
 						</Button>
-						<ModalLayout
-							onClose={handleClose}
-							open={open}
-							title={'랭킹'}
-							titleChildren={
-								<RankingTitleItem
-									onChange={(
-										event: MouseEvent<HTMLElement>,
-										newValue: string
-									) => handleTitleChange(event, newValue)}
-									floorValue={floorValue}
-									itemValue={itemValue}
-								/>
-							}
-							actionChildren={
-								<RankingActionItem
-									onChange={(
-										event: MouseEvent<HTMLElement>,
-										newValue: string
-									) => handleRangeChange(event, newValue)}
-									rangeValue={rangeValue}
-								/>
-							}>
-							{itemValue === '과자' ? (
-								<Paper elevation={0}>과자 리스트</Paper>
-							) : (
-								<Paper elevation={0}>음료 리스트</Paper>
-							)}
-						</ModalLayout>
+            <RankingModal open={open} onClose={() => setOpen(false)} />
 					</Box>
 				</ThemeProvider>
 				<Fragment>

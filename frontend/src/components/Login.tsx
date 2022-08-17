@@ -5,7 +5,7 @@ import {
   Container, TextField,
   Typography
 } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginLogo from '../icons/loginLogo.png';
 const Login = () => {
@@ -17,6 +17,7 @@ const Login = () => {
 		setInputVal(event.target.value);
 	}
   const navigate = useNavigate();
+
 	const onClickLogin = () => {
     if(btnText !== '입장') {
       // 구글 로그인
@@ -34,6 +35,12 @@ const Login = () => {
       }
 		}
 	}
+  
+  const onEnterLogin = (e:KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      onClickLogin();
+    }
+  } 
 	return (
 		<Container
 			sx={{
@@ -50,8 +57,8 @@ const Login = () => {
 					src={loginLogo}
 					variant='rounded'
 					sx={{
-						width: '192px',
-						height: '26px',
+						width: '348px',
+						height: '47px',
 						marginBottom:
 							btnText === '입장'
 								? '80px'
@@ -65,6 +72,7 @@ const Login = () => {
 						error={error}
 						defaultValue={inputVal}
 						onChange={handleInputChange}
+            onKeyPress={onEnterLogin}
 						sx={{
 							mb: '24px',
 							width: '368px',
@@ -99,6 +107,7 @@ const Login = () => {
 						height: '66px',
 						borderRadius: '16px',
 						textTransform: 'none',
+            p: '20px 24px',
 						'&:hover': {
 							backgroundColor: '#9CE2F8',
 						},

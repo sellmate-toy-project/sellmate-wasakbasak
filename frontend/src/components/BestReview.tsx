@@ -313,7 +313,7 @@ const tabStyle = {
  minHeight: '0 !important',
  minWidth: '0 !important',
  marginRight: '20px !important',
- '&:last-of-type': {
+ '&:lastOfType': {
   marginRight: '0 !important',
  },
 }
