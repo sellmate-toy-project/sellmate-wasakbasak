@@ -55,3 +55,13 @@ code {
 	z-index: 2;
 	transform: rotateY(0deg);
 }
+
+.padding-none {
+  padding: 0 !important;
+}
+.margin-none {
+  margin: 0 !important;
+}
+.transparent:hover {
+  background-color: transparent !important;
+}
