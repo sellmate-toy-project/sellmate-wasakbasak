@@ -29,6 +29,17 @@ class ProductCategoryInDBBase(ProductCategoryBase):
 class ProductCategory(ProductCategoryInDBBase):
     deps: Optional[int]
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "id": "상품 카테고리 일련번호",
+                "name": "상품 카테고리명",
+                "code": "판매처 상품 카테고리 코드",
+                "owner_id": "부모 카테고리 일련번호",
+                "deps": "상품 카테고리 분류"
+            }
+        }
+
 
 class ProductCategoryInDB(ProductCategoryInDBBase):
     pass

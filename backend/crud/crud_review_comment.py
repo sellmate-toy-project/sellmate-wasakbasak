@@ -8,7 +8,7 @@ import schemas
 import crud
 
 
-class CRUDReviewComment(CRUDBase[ReviewComment, None, None]):
+class CRUDReviewComment(CRUDBase[ReviewComment, None, None, None]):
 
     def get_review_comments(self, db: Session, skip, limit, user_id, review_id) -> ReviewComment:
         review_comments = crud.review.get_multi(db, skip, limit)
