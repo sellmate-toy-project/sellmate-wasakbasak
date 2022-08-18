@@ -10,8 +10,8 @@ while ! nc $db_host $db_port; do
 done
 
 # Apply autogenerate migrations
-#echo "Apply autogenerate migrations"
-#alembic revision --autogenerate -m "autogenerate migrations"
+# echo "Apply autogenerate migrations"
+# alembic revision --autogenerate -m "autogenerate migrations"
 
 # Apply database migrations
 echo "Apply system database migrations"
