@@ -293,8 +293,9 @@ export default BestReview;
 
 const BestReviewWrapper = styled.div`
 	width: 830px;
-	height: 423px;
+	height: 392px;
 	margin-bottom: 20px;
+	background: #FFFFFF;
 `;
 
 const ulStyle = {
@@ -312,7 +313,7 @@ const tabStyle = {
  minHeight: '0 !important',
  minWidth: '0 !important',
  marginRight: '20px !important',
- '&:last-of-type': {
+ '&:lastOfType': {
   marginRight: '0 !important',
  },
 }
