@@ -8,7 +8,7 @@ import schemas
 import crud
 
 
-class CRUDReview(CRUDBase[Review, None, None]):
+class CRUDReview(CRUDBase[Review, None, None, None]):
 
     def get_reviews(self, db: Session, skip, limit, user_id, product_id) -> Review:
         reviews = crud.review.get_multi(db, skip, limit)
