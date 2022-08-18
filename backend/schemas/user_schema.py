@@ -17,9 +17,16 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    password: Optional[str]
     nick_name: Optional[str]
     floor: FloorType
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "nick_name": "nick_name",
+                "floor": 3,
+            }
+        }
 
 
 class UserInDBBase(UserBase):
@@ -37,4 +44,4 @@ class User(UserInDBBase):
 
 
 class UserInDB(UserInDBBase):
-    hashed_password: str
+    password: str
