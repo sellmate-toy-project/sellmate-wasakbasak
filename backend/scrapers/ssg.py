@@ -40,8 +40,8 @@ class Ssg:
 
                             # 소분류 수집
                             for sub_category in sub_categories:
-                                product_category = self.insert_category(product_category, sub_category)
-                                self.sub_product_categories.append(product_category)
+                                sub_product_category = self.insert_category(product_category, sub_category)
+                                self.sub_product_categories.append(sub_product_category)
             except Exception as e:
                 print(f'Server Error: {e}')
 
@@ -64,29 +64,24 @@ class Ssg:
         return product_category
 
     def collect_product(self):
-        sub_product_category = {
-            'id': 193,
-            'name': '과자/쿠키/파이',
-            'owner_id': 3,
-            'code': '6000095859',
-        }
-        try:
-            res = requests.get(self.base_uri + sub_product_category.get('code') + "&sort=regdt&pageSize=100")
-            if res.status_code == 200:
-                # 상품 리스트 파싱
-                soup = BeautifulSoup(res.text, "html.parser")
-                products = soup.select(".cunit_thmb_lst li")
+        for sub_product_category in self.sub_product_categories:
+            try:
+                res = requests.get(self.base_uri + sub_product_category.get('code') + "&sort=regdt&pageSize=100")
+                if res.status_code == 200:
+                    # 상품 리스트 파싱
+                    soup = BeautifulSoup(res.text, "html.parser")
+                    products = soup.select(".cunit_thmb_lst li")
 
-                for product in products:
-                    crud.product.create(
-                        db=self.db,
-                        obj_in={
-                            "name": product.select(".cunit_info .tx_ko")[0].text,
-                            "desc": product.select(".thmb img")[0]['src'],
-                            "price": product.select(".cunit_info .ssg_price")[0].text.replace(",", "")
-                        },
-                        product_category_id=sub_product_category.get('id')
-                    )
-                    raise
-        except Exception as e:
-            print(f'Server Error: {e}')
+                    for product in products:
+                        crud.product.create(
+                            db=self.db,
+                            obj_in={
+                                "name": product.select(".cunit_info .tx_ko")[0].text,
+                                "desc": product.select(".thmb img")[0]['src'],
+                                "price": product.select(".cunit_info .ssg_price")[0].text.replace(",", "")
+                            },
+                            product_category_id=sub_product_category.get('id')
+                        )
+                        raise
+            except Exception as e:
+                print(f'Server Error: {e}')
