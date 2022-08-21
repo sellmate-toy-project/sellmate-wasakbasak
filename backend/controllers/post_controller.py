@@ -10,18 +10,22 @@ import schemas
 
 router = APIRouter()
 
+
 @router.get("/", response_model=List[schemas.Post])
-def read_items(
+def read_posts(
+    db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
-    db: Session = Depends(deps.get_db),
+    sort: str = "id",
+    sort_by: crud.SortType = "asc",
+    user_id: int = None
 ) -> Any:
-    posts = crud.post.get_multi(db, skip=skip, limit=limit)
+    posts = crud.post.get_posts(db, skip, limit, sort, sort_by, user_id)
     return posts
 
 
 @router.get("/{post_id}", response_model=schemas.Post)
-def read_item(
+def read_post(
     post_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
