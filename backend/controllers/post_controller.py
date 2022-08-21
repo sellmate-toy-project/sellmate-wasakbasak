@@ -39,7 +39,7 @@ def create_item(
     data: schemas.PostCreate,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    obj = data.dict(exclude_unset=True)
+    obj = data.dict()
     post = crud.post.create(db, obj)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=post)
 
@@ -51,7 +51,7 @@ def update(
     data: schemas.PostUpdate,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    obj = data.dict(exclude_unset=True)
+    obj = data.dict()
     post = crud.post.update(db, post_id, obj)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=post)
 
