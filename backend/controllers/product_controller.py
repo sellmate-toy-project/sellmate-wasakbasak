@@ -13,8 +13,16 @@ def read_product(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
+    sort: str = "id",
+    sort_by: crud.SortType = "asc",
+    category_name: str = None
 ) -> Any:
-    products = crud.product.get_multi(db, skip=skip, limit=limit)
+    # TODO: 상품 카테고리 필터 추가
+    if category_name is not None:
+        products = crud.product.get_product(db, skip=skip, limit=limit)
+    else:
+        products = crud.product.get_product(db, skip=skip, limit=limit, sort=sort, sort_by=sort_by)
+
     return products
 
 
@@ -23,5 +31,20 @@ def read_product_by_id(
     product_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    products = crud.product.get(db, id=product_id)
-    return products
+    product = crud.product.get(db, id=product_id)
+    return product
+
+
+@router.get("/{product_id}/like", response_model=schemas.Product)
+def press_product_like(
+    product_id: int,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    product_likes = crud.product_like.check_product_like(db, product_id=product_id)
+    if product_likes:
+        crud.product_like.delete(db, product_id=product_id)
+    else:
+        crud.product_like.create(db, product_id=product_id)
+
+    product = crud.product.get(db, id=product_id)
+    return product

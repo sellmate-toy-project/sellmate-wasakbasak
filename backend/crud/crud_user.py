@@ -8,7 +8,7 @@ import schemas
 import crud
 
 
-class CRUDUser(CRUDBase[User, None, None]):
+class CRUDUser(CRUDBase[User, None, None, None]):
 
     def get_by_email(self, db: Session, email: str) -> Optional[User]:
         return db.query(User).filter(User.email == email).first()

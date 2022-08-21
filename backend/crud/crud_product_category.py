@@ -6,11 +6,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import literal
 
 
-class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None]):
+class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None, None]):
     def get_by_name(
         self, db: Session, name: str
     ) -> Optional[ProductCategory]:
-        return db.query(self.model).filter(ProductCategory.name == name).first()
+        return db.query(self.model).filter(self.model.name == name).first()
 
     def get_multi_with_deps(
         self, db: Session, skip: int = 0, limit: int = 100

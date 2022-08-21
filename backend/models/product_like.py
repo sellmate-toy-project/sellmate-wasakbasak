@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import ForeignKey
 from db.base_class import Base
@@ -6,7 +6,9 @@ from db.base_class import Base
 
 class ProductLike(Base):
     __tablename__ = "product_likes"
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    __table_args__ = (
+        PrimaryKeyConstraint("user_id", "product_id", name="pk_user_product_id"),
+    )
     user_id = Column(Integer, ForeignKey("users.id"))
     product_id = Column(Integer, ForeignKey("products.id"))
     
