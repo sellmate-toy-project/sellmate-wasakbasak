@@ -15,13 +15,16 @@ router = APIRouter()
 @router.get("/", response_model=ResponseEntity)
 def get_review_comments(
     request: Request,
+    db: Session = Depends(deps.get_db),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1),
+    # TODO : user_id 세션 추가 예정
     user_id: Optional[int] = Query(None),
     review_id: Optional[int] = Query(None),
-    db: Session = Depends(deps.get_db),
+    sort: str = Query("id"),
+    sort_by: crud.SortType = Query("asc"),
 ) -> Any:
-    reviews = crud.review_comment.get_review_comments(db, skip, limit, user_id, review_id)
+    reviews = crud.review_comment.get_review_comments(db, skip, limit, user_id, review_id, sort, sort_by)
 
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=reviews)
 
