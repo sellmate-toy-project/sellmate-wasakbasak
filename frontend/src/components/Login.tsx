@@ -54,9 +54,9 @@ const Login = () => {
 	const checkRedirectUrl = () => {
 		const hashedParam = new URLSearchParams(window.location.hash.substr(1));
 		const idToken = hashedParam.get('id_token');
-		const { email, name, sub, picture } : any = idToken !== null ? jwtDecode(idToken) : null;
 
   	if (idToken) {
+			const { email, name, sub, picture } : any = jwtDecode(idToken);
 			console.log(email);
 			console.log(name);
 			console.log(sub);
