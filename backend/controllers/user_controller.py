@@ -24,6 +24,7 @@ def get_users(
     sort_by: crud.SortType = Query("asc"),
     current_user: str = Depends(deps.get_current_user)
 ) -> Any:
+    # TODO: 모든 사용자 조회는 admin만 가능하도록 수정 필요
     users = crud.user.get_users(db, skip, limit, floor, sort, sort_by)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=users)
 
