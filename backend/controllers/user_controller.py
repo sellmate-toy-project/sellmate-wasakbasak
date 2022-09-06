@@ -9,6 +9,7 @@ from passlib.context import CryptContext
 
 import schemas
 import crud
+from models.user import FloorType
 
 router = APIRouter()
 
@@ -16,12 +17,14 @@ router = APIRouter()
 @router.get("/", response_model=ResponseEntity)
 def get_users(
     request: Request,
+    db: Session = Depends(deps.get_db),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1),
-    floor: Optional[int] = Query(None),
-    db: Session = Depends(deps.get_db),
+    floor: FloorType = Query(None),
+    sort: str = Query("id"),
+    sort_by: crud.SortType = Query("asc"),
 ) -> Any:
-    users = crud.user.get_users(db, skip, limit, floor)
+    users = crud.user.get_users(db, skip, limit, floor, sort, sort_by)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=users)
 
 
@@ -31,7 +34,7 @@ def read_user_by_id(
     user_id: int,
     db: Session = Depends(deps.get_db),
 ) -> Any:
-    user = crud.user.get_user(db, user_id)
+    user = crud.user.get(db, id=user_id)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
 
 
