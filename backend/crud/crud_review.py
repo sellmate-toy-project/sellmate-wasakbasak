@@ -1,5 +1,5 @@
 from typing import Optional
-
+from sqlalchemy.sql.functions import func
 from fastapi import HTTPException
 from .base import CRUDBase
 from models.review import Review
@@ -10,32 +10,30 @@ import crud
 
 class CRUDReview(CRUDBase[Review, None, None, None]):
 
-    def get_reviews(self, db: Session, skip, limit, user_id, product_id) -> Review:
-        reviews = crud.review.get_multi(db, skip, limit)
-
+    def get_reviews(self, db: Session, skip, limit, user_id, product_id, sort, sort_by) -> list[Review]:
         if user_id:
             reviews = db.query(self.model)\
                 .filter(Review.user_id == user_id)\
+                .order_by(f"{sort} {sort_by.value}")\
                 .offset(skip)\
                 .limit(limit)\
                 .all()
             return reviews
 
-        if product_id:
+        elif product_id:
             reviews = db.query(self.model)\
                 .filter(Review.product_id == product_id)\
+                .order_by(f"{sort} {sort_by.value}")\
                 .offset(skip)\
                 .limit(limit)\
                 .all()
             return reviews
+
+        else:
+            reviews = crud.review.get_multi(db, skip, limit, sort, sort_by)
 
         return reviews
 
-    def get_review(self, db: Session, review_id) -> Review:
-        review = db.query(self.model).filter(Review.id == review_id).first()
-        if not review:
-            raise HTTPException(400, '리뷰가 존재하지 않습니다.')
-        return review
 
     def create(self, db: Session, obj_in: schemas.ReviewCreate) -> Review:
         db_obj = self.model(**obj_in)
@@ -48,22 +46,16 @@ class CRUDReview(CRUDBase[Review, None, None, None]):
         db_obj = self.model(**obj_in)
         db.query(Review)\
             .filter(Review.id == review_id)\
-            .update({"body": obj_in["body"]})
+            .update({"body": obj_in["body"], "updated_at": func.now()})
         db.commit()
         return db_obj
 
+
     def delete(self, db: Session, review_id) -> Review:
-
-        review = db.query(self.model).filter(Review.id == review_id).first()
-        if not review:
-            raise HTTPException(400, '리뷰가 존재하지 않습니다.')
-        else:
-            db.query(Review)\
-                .filter(Review.id == review_id)\
-                .delete()
-            db.commit()
-
-        return review
+        db.query(Review)\
+            .filter(Review.id == review_id)\
+            .delete()
+        db.commit()
 
 
 review = CRUDReview(Review)
