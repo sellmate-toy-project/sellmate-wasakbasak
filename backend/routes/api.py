@@ -9,6 +9,8 @@ api_router.include_router(collect_controller.router,
                           prefix="/collect", tags=["collect"])
 api_router.include_router(post_controller.router,
                           prefix="/posts", tags=['posts'])
+api_router.include_router(post_comment_controller.router,
+                          prefix="/post_comments", tags=['post_comments'])
 api_router.include_router(product_category_controller.router,
                           prefix="/products/categories", tags=['products'])
 api_router.include_router(product_controller.router, 
