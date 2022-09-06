@@ -37,3 +37,4 @@ pymysql>=1.0.2
 email-validator>=1.0.5
 passlib>=1.7.4
 bcrypt>=3.2.2
+python-jose[cryptography]>=3.3.0

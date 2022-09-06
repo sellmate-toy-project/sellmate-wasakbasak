@@ -2,7 +2,7 @@ from typing import Optional
 from .base import CRUDBase, SortType
 from models.product import Product
 from schemas.product_schema import ProductCreate
-from sqlalchemy.orm import Session, subqueryload
+from sqlalchemy.orm import Session
 from models.product import StatusType
 from sqlalchemy.sql import text
 

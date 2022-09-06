@@ -3,6 +3,7 @@ from db.base_class import Base
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import enum
+from sqlalchemy.sql import text
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -30,4 +31,4 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, DeleteSche
         sort,
         sort_by
     ) -> List[ModelType]:
-        return db.query(self.model).order_by(f"{sort} {sort_by.value}").offset(skip).limit(limit).all()
+        return db.query(self.model).order_by(text(f"{sort} {sort_by.value}")).offset(skip).limit(limit).all()
