@@ -12,7 +12,9 @@ class Review(Base):
     product_id = Column(Integer, ForeignKey("products.id"))
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now())
+    updated_at = Column(TIMESTAMP, server_default=func.now())
 
     user = relationship("User", back_populates="reviews")
     product = relationship("Product", back_populates="reviews")
     review_comments = relationship("ReviewComment", back_populates="review")
+    review_likes = relationship("ReviewLike", back_populates="review")
