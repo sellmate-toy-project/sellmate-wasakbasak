@@ -5,13 +5,18 @@ import {
   Container, TextField,
   Typography
 } from '@mui/material';
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginLogo from '../icons/loginLogo.png';
+import jwtDecode from 'jwt-decode';
 const Login = () => {
 	const [btnText, setBtnText] = useState('Login with sellmate');
 	const [inputVal, setInputVal] = useState('');
 	const [error, setError] = useState(false);
+
+	useEffect(() => {
+		checkRedirectUrl();
+	}, []);
 
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputVal(event.target.value);
@@ -21,7 +26,17 @@ const Login = () => {
 	const onClickLogin = () => {
     if(btnText !== '입장') {
       // 구글 로그인
-      setBtnText('입장');
+			// TODO: env 파일로 분리 필요
+			const googleLoginUrl = 'https://accounts.google.com/o/oauth2/v2/auth?';
+			const payload = {
+				client_id: '613413749609-rd34eq6q0irj1fjpqsp8m6b5ekd3d9v4.apps.googleusercontent.com',
+				scope: 'openid profile email',
+				redirect_uri: 'http://localhost:3000/login',
+				response_type: 'id_token',
+				nonce: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+			}
+			const queryString = new URLSearchParams(payload).toString();
+			window.location.assign(googleLoginUrl + queryString);
       return;
     } 
     // 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
@@ -34,6 +49,20 @@ const Login = () => {
         navigate('/');
       }
 		}
+	}
+
+	const checkRedirectUrl = () => {
+		const hashedParam = new URLSearchParams(window.location.hash.substr(1));
+		const idToken = hashedParam.get('id_token');
+
+  	if (idToken) {
+			const { email, name, sub, picture } : any = jwtDecode(idToken);
+			console.log(email);
+			console.log(name);
+			console.log(sub);
+			console.log(picture);
+			setBtnText('입장');
+  	}
 	}
   
   const onEnterLogin = (e:KeyboardEvent) => {

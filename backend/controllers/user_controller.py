@@ -1,11 +1,10 @@
-from typing import Any, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, Body
+from typing import Any
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from . import deps
 
 from controllers.response_entity import ResponseEntity
 from starlette.requests import Request
-from passlib.context import CryptContext
 
 import schemas
 import crud
@@ -23,7 +22,9 @@ def get_users(
     floor: FloorType = Query(None),
     sort: str = Query("id"),
     sort_by: crud.SortType = Query("asc"),
+    current_user: str = Depends(deps.get_current_user)
 ) -> Any:
+    # TODO: 모든 사용자 조회는 admin만 가능하도록 수정 필요
     users = crud.user.get_users(db, skip, limit, floor, sort, sort_by)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=users)
 
@@ -38,32 +39,13 @@ def read_user_by_id(
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
 
 
-@router.post("/sign-up", response_model=ResponseEntity)
-def sign_up(
-    request: Request,
-    data: schemas.UserCreate,
-    db: Session = Depends(deps.get_db)
-):
-    obj = data.dict(exclude_unset=True)
-    db_user = crud.user.get_by_email(db, email=obj["email"])
-
-    if db_user:
-        raise HTTPException(400, '이미 가입한 회원입니다.')
-    else:
-        pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-        obj["password"] = pwd_context.hash(obj["password"])
-        user = crud.user.create(db, obj)
-
-    return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
-
-
 @router.put("/{user_id}", response_model=ResponseEntity)
 def update_user(
     request: Request,
     user_id: int,
     data: schemas.UserUpdate,
     db: Session = Depends(deps.get_db),
-):
+) -> Any:
     obj = data.dict(exclude_unset=True)
     user = crud.user.get(db, id=user_id)
     if user:

@@ -6,17 +6,17 @@ from models.review_comment import ReviewComment
 from sqlalchemy.orm import Session
 import schemas
 import crud
+from sqlalchemy.sql import text
 
 
 class CRUDReviewComment(CRUDBase[ReviewComment, None, None, None]):
-
     def get_review_comments(self, db: Session, skip, limit, user_id, review_id, sort, sort_by) -> list[ReviewComment]:
         review_comments = crud.review.get_multi(db, skip, limit, sort, sort_by)
 
         if user_id:
             review_comments = db.query(self.model)\
                 .filter(ReviewComment.user_id == user_id) \
-                .order_by(f"{sort} {sort_by.value}") \
+                .order_by(text(f"{sort} {sort_by.value}")) \
                 .offset(skip)\
                 .limit(limit)\
                 .all()
@@ -25,14 +25,13 @@ class CRUDReviewComment(CRUDBase[ReviewComment, None, None, None]):
         if review_id:
             review_comments = db.query(self.model)\
                 .filter(ReviewComment.review_id == review_id) \
-                .order_by(f"{sort} {sort_by.value}") \
+                .order_by(text(f"{sort} {sort_by.value}")) \
                 .offset(skip)\
                 .limit(limit)\
                 .all()
             return review_comments
 
         return review_comments
-
 
     def create(self, db: Session, obj_in: schemas.ReviewCommentCreate) -> ReviewComment:
         db_obj = self.model(**obj_in)

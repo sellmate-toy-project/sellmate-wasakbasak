@@ -6,3 +6,4 @@ from . import product_category_controller
 from . import review_controller
 from . import review_comment_controller
 from . import product_controller
+from . import auth_controller
