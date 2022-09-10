@@ -2,13 +2,14 @@ import {
   Avatar,
   Box,
   Button,
-  Container, TextField,
+  Container,
+  TextField,
   Typography
 } from '@mui/material';
-import { ChangeEvent, KeyboardEvent, useState, useEffect } from 'react';
+import jwtDecode from 'jwt-decode';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginLogo from '../icons/loginLogo.png';
-import jwtDecode from 'jwt-decode';
 const Login = () => {
 	const [btnText, setBtnText] = useState('Login with sellmate');
 	const [inputVal, setInputVal] = useState('');
@@ -20,56 +21,62 @@ const Login = () => {
 
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputVal(event.target.value);
-	}
-  const navigate = useNavigate();
+    setUser({ ...user, name: event.target.value });
 
+	};
+	const navigate = useNavigate();
+	const [user, setUser] = useState({
+		email: '',
+		g_name: '',
+		name: '',
+		picture: '',
+    sub: '',
+	});
 	const onClickLogin = () => {
-    if(btnText !== '입장') {
-      // 구글 로그인
+		if (btnText !== '입장') {
+			// 구글 로그인
 			// TODO: env 파일로 분리 필요
 			const googleLoginUrl = 'https://accounts.google.com/o/oauth2/v2/auth?';
 			const payload = {
-				client_id: '613413749609-rd34eq6q0irj1fjpqsp8m6b5ekd3d9v4.apps.googleusercontent.com',
+				client_id:
+					'613413749609-rd34eq6q0irj1fjpqsp8m6b5ekd3d9v4.apps.googleusercontent.com',
 				scope: 'openid profile email',
 				redirect_uri: 'http://localhost:3000/login',
 				response_type: 'id_token',
-				nonce: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-			}
+				nonce:
+					Math.random().toString(36).substring(2, 15) +
+					Math.random().toString(36).substring(2, 15),
+			};
 			const queryString = new URLSearchParams(payload).toString();
 			window.location.assign(googleLoginUrl + queryString);
-      return;
-    } 
-    // 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
-		if (btnText === '입장') {
-      if (!inputVal) {
-        setError(true);
-      } else {
-        // TODO: redux 사용 필요
-        localStorage.setItem('user', inputVal);
-        navigate('/');
-      }
+			return;
 		}
-	}
+		// 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
+		if (!inputVal) {
+			setError(true);
+		} else {
+			// TODO: redux 사용 필요
+      localStorage.setItem('user', JSON.stringify(user))
+			navigate('/');
+		}
+	};
 
 	const checkRedirectUrl = () => {
 		const hashedParam = new URLSearchParams(window.location.hash.substr(1));
 		const idToken = hashedParam.get('id_token');
 
-  	if (idToken) {
-			const { email, name, sub, picture } : any = jwtDecode(idToken);
-			console.log(email);
-			console.log(name);
-			console.log(sub);
-			console.log(picture);
+		if (idToken) {
+			const { email, name, sub, picture }: any = jwtDecode(idToken);
+			setUser({ ...user, email, g_name: name, picture, sub });
 			setBtnText('입장');
-  	}
-	}
-  
-  const onEnterLogin = (e:KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      onClickLogin();
-    }
-  } 
+		}
+	};
+
+	const onEnterLogin = (e: KeyboardEvent) => {
+		if (e.key === 'Enter') {
+			onClickLogin();
+		}
+	};
 	return (
 		<Container
 			sx={{
@@ -81,17 +88,20 @@ const Login = () => {
 				justifyContent: 'space-between',
 			}}>
 			<Box
-				sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					height: '100%',
+					justifyContent: 'center',
+				}}>
 				<Avatar
 					src={loginLogo}
 					variant='rounded'
 					sx={{
 						width: '348px',
 						height: '47px',
-						marginBottom:
-							btnText === '입장'
-								? '80px'
-								: '60px',
+						marginBottom: btnText === '입장' ? '80px' : '60px',
 					}}
 				/>
 				{btnText === '입장' ? (
@@ -101,7 +111,7 @@ const Login = () => {
 						error={error}
 						defaultValue={inputVal}
 						onChange={handleInputChange}
-            onKeyPress={onEnterLogin}
+						onKeyPress={onEnterLogin}
 						sx={{
 							mb: '24px',
 							width: '368px',
@@ -126,7 +136,7 @@ const Login = () => {
 					variant='contained'
 					onClick={onClickLogin}
 					disableElevation
-          id="loginBtn"
+					id='loginBtn'
 					sx={{
 						color: 'white',
 						backgroundColor: '#00BAF4',
@@ -136,7 +146,7 @@ const Login = () => {
 						height: '66px',
 						borderRadius: '16px',
 						textTransform: 'none',
-            p: '20px 24px',
+						p: '20px 24px',
 						'&:hover': {
 							backgroundColor: '#9CE2F8',
 						},
