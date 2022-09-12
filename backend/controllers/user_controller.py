@@ -34,7 +34,7 @@ def read_user_by_id(
     request: Request,
     user_id: int,
     db: Session = Depends(deps.get_db),
-    current_user: models.User = Depends(deps.get_current_active_superuser)
+    current_user: models.User = Depends(deps.check_admin_user)
 ) -> Any:
     user = crud.user.get(db, id=user_id)
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=user)
