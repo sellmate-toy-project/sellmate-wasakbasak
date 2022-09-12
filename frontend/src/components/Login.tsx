@@ -1,23 +1,26 @@
+import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {
   Avatar,
   Box,
   Button,
   Container,
+  MenuItem,
   TextField,
   Typography
 } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import jwtDecode from 'jwt-decode';
 import {
-  ChangeEvent,
-  Fragment,
-  KeyboardEvent,
+  ChangeEvent, Fragment, KeyboardEvent,
   useCallback,
   useEffect,
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import api from '../api.js';
 import loginLogo from '../icons/loginLogo.svg';
+
 // axios.defaults.baseURL = 'http://jisangdev.iptime.org:805/api'
 const Login = () => {
 	const [btnText, setBtnText] = useState('Login with sellmate');
@@ -40,7 +43,7 @@ const Login = () => {
 		nick_name: '',
 		picture: '',
 		uid: '',
-		floor: '3',
+		floor: '',
 		type: 'basic',
 		access_token: '',
 	});
@@ -147,11 +150,22 @@ const Login = () => {
 		checkRedirectUrl();
 	}, [checkRedirectUrl]);
 
+  const floorOptions = [
+		{ name: '3층', value: '3' },
+		{ name: '5층', value: '5' },
+		{ name: '11층', value: '11' },
+	];
+	const [floorValue, setFloorValue] = useState('3');
+
 	const onEnterLogin = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
 			onClickLogin();
 		}
 	};
+  const onChangeFloor = (event: SelectChangeEvent<string>) => {
+    setFloorValue(event.target.value);
+		setUser((val) => ({ ...val, floor: event.target.value }));
+  }
 
 	return (
 		<Container
@@ -181,7 +195,8 @@ const Login = () => {
 					}}
 				/>
 				{btnText === '입장' && (
-					<Fragment>
+          <Fragment>
+					<Wrapper>
 						<TextField
 							variant='outlined'
 							placeholder='닉네임을 입력해주세요!'
@@ -191,7 +206,8 @@ const Login = () => {
 							onKeyPress={onEnterLogin}
 							sx={{
 								mb: !error ? '24px' : '0px',
-								width: '368px',
+                mr: '15px',
+								width: '252px',
 								height: '66px',
 								justifyContent: 'center',
 								'& > .MuiOutlinedInput-root': {
@@ -206,19 +222,35 @@ const Login = () => {
 								},
 							}}
 						/>
-						{error && (
-							<Typography
-								variant='caption'
-								sx={{
-									color: 'red',
-									fontSize: '14px',
-									fontWeight: 400,
-									mb: '24px',
-								}}>
-								{errorMsg}
-							</Typography>
-						)}
-					</Fragment>
+            <Select
+              onChange={onChangeFloor}
+              value={floorValue}
+              sx={{ height: '66px', p: '8px 16px 8px 10px', '& > .MuiInputBase-input': { p: 0 }, border: '1px solid #E0E0E0', borderRadius: '16px', 'fieldset': { display: 'none' } }}
+              IconComponent={() => (
+                <KeyboardArrowDownRoundedIcon
+                  sx={{ color: '#8C8C8C', fontSize: '16px' }}
+                />
+              )}>
+              {floorOptions.map((floor, idx) => (
+                <MenuItem sx={{p: 0, 'ul': {p: 0}}} key={idx} value={floor.value}>
+                  {floor.name}
+                </MenuItem>
+              ))}
+            </Select>
+					</Wrapper>
+          {error && (
+            <Typography
+              variant='caption'
+              sx={{
+                color: 'red',
+                fontSize: '14px',
+                fontWeight: 400,
+                mb: '24px',
+              }}>
+              {errorMsg}
+            </Typography>
+          )}
+          </Fragment>
 				)}
 				<Button
 					variant='contained'
@@ -254,3 +286,7 @@ const Login = () => {
 	);
 };
 export default Login;
+const Wrapper = styled.div`
+display: flex;
+
+`
