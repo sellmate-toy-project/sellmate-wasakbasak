@@ -72,7 +72,7 @@ const Board = () => {
 						disablePadding
 						>
 						<ListItemAvatar sx={{width: '100%'}} className={classes.title}>
-							<span className={classes.title}>{post.boardType == 'notice' ? '공지' : post.userId}</span>
+							<span className={classes.title}>{post.boardType === 'notice' ? '공지' : post.userId}</span>
 							<Avatar sx={{ width: 40, height: 20 }} src={newIcon} variant="square"/>
 						</ListItemAvatar>
 						<ListItemText
