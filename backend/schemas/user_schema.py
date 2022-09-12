@@ -8,7 +8,7 @@ class UserBase(BaseModel):
     nick_name: Optional[str] = None
     picture: Optional[str] = None
     floor: FloorType
-    type: UserType
+    type: Optional[UserType] = None
 
 
 class UserCreate(UserBase):

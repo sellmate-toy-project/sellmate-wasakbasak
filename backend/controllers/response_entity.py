@@ -10,7 +10,6 @@ class PagingMeta(BaseModel):
 
 
 class ResponseEntity(BaseModel):
-    resultCode: str = "Success"
     httpStatus: int = 200
     httpMethod: Any
     message: str = ""

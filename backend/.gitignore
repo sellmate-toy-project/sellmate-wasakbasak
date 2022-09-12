@@ -4,3 +4,4 @@ __pycache__/*
 *.pyc
 export
 .idea
+.env
