@@ -41,7 +41,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = settings.DB_URL
+    url = settings.get_db_url()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -61,7 +61,7 @@ def run_migrations_online() -> None:
 
     """
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = settings.DB_URL
+    configuration["sqlalchemy.url"] = settings.get_db_url()
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",

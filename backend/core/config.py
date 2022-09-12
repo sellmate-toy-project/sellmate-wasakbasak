@@ -15,7 +15,9 @@ class Settings(BaseSettings):
     DB_DATABASE: str = "wasakbasak"
     DB_USERNAME: str = "root"
     DB_PASSWORD: str = "password1!"
-    DB_URL: str = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
+
+    def get_db_url(self):
+        return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_DATABASE}"
 
     class Config:
         env_file = ".env"
