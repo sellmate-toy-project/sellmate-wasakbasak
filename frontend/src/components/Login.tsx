@@ -11,6 +11,7 @@ import {
   ChangeEvent,
   Fragment,
   KeyboardEvent,
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -22,10 +23,6 @@ const Login = () => {
 	const [btnText, setBtnText] = useState('Login with sellmate');
 	const [inputVal, setInputVal] = useState('');
 	const [error, setError] = useState(false);
-
-	useEffect(() => {
-		checkRedirectUrl();
-	}, []);
 
 	interface User {
 		email: string;
@@ -50,7 +47,7 @@ const Login = () => {
 	const [errorMsg, setErrorMsg] = useState<string>('');
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setInputVal(event.target.value);
-		setUser(() =>({ ...user, nick_name: event.target.value }));
+		setUser((val) => ({ ...val, nick_name: event.target.value }));
 		setErrorMsg('');
 		setError(false);
 	};
@@ -58,14 +55,14 @@ const Login = () => {
 	const navigate = useNavigate();
 	const getLoginData = () => {
 		return new Promise(() => {
-      let tokenObj:any = {};
+			let tokenObj: any = {};
 			api
 				.post(`auth/login?email=${user.email}&uid=${user.uid}`)
 				.then((res: any) => {
-          tokenObj = res.data;
-          // TODO: useState가 promise 안에서 바로 바뀌지 않는 문제가 있음
-          const userDataWithToken = {...user, ...res.data}
-					setUser(() => (userDataWithToken));
+					tokenObj = res.data;
+					// TODO: useState가 promise 안에서 바로 바뀌지 않는 문제가 있음
+					const userDataWithToken = { ...user, ...res.data };
+					setUser(() => userDataWithToken);
 				})
 				.catch((error: any) => {
 					setError(true);
@@ -82,12 +79,12 @@ const Login = () => {
 		});
 	};
 
-  const getJoinData = () => {
+	const getJoinData = () => {
 		return new Promise(() => {
 			api
 				.post('auth/join', JSON.stringify(user))
 				.then((res: any) => {
-					setUser(() =>({ ...user, ...res.data }));
+					setUser(() => ({ ...user, ...res.data }));
 				})
 				.catch((error) => {
 					setError(true);
@@ -97,7 +94,7 @@ const Login = () => {
 					getLoginData();
 				});
 		});
-	}
+	};
 
 	const onClickLogin = async () => {
 		if (btnText !== '입장') {
@@ -129,22 +126,29 @@ const Login = () => {
 		}
 	};
 
-	const checkRedirectUrl = () => {
-		const hashedParam = new URLSearchParams(window.location.hash.substr(1));
+	const checkRedirectUrl = useCallback(() => {
+		const hashedParam: any = new URLSearchParams(
+			window.location.hash.substr(1)
+		);
 		const idToken = hashedParam.get('id_token');
 
 		if (idToken) {
 			const { email, name, sub, picture }: any = jwtDecode(idToken);
-			setUser(() =>({ ...user, email, name, picture, uid: sub }));
 			setBtnText('입장');
+			setUser((val) => ({ ...val, email, name, picture, uid: sub }));
 		}
-	};
+	}, []);
+  
+	useEffect(() => {
+		checkRedirectUrl();
+	}, [checkRedirectUrl]);
 
 	const onEnterLogin = (e: KeyboardEvent) => {
 		if (e.key === 'Enter') {
 			onClickLogin();
 		}
 	};
+
 	return (
 		<Container
 			sx={{
