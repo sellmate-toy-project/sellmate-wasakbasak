@@ -54,8 +54,8 @@ const Login = () => {
 
 	const navigate = useNavigate();
 	const getLoginData = () => {
+    let tokenObj: any = {};
 		return new Promise(() => {
-			let tokenObj: any = {};
 			api
 				.post(`auth/login?email=${user.email}&uid=${user.uid}`)
 				.then((res: any) => {
@@ -65,17 +65,17 @@ const Login = () => {
 					setUser(() => userDataWithToken);
 				})
 				.catch((error: any) => {
-					setError(true);
-					setErrorMsg(error.response.data.detail);
+          setError(true);
+          setErrorMsg(error.response.data.detail);
 				})
 				.finally(() => {
-					if (tokenObj.access_token) {
-						setError(false);
-						setErrorMsg('');
-						localStorage.setItem('user', JSON.stringify({ ...user, access_token: tokenObj.access_token }));
-						navigate('/');
-					}
-				});
+          if (tokenObj.access_token) {
+            setError(() => false);
+            setErrorMsg(() => '');
+            localStorage.setItem('user', JSON.stringify({ ...user, access_token: tokenObj.access_token }));
+            navigate('/');
+          }
+        });
 		});
 	};
 
@@ -87,11 +87,15 @@ const Login = () => {
 					setUser(() => ({ ...user, ...res.data }));
 				})
 				.catch((error) => {
-					setError(true);
-					setErrorMsg(error.response.data.detail);
+          setError(true);
+          setErrorMsg(error.response.data.detail);
 				})
 				.finally(() => {
-					getLoginData();
+          setTimeout(() => {
+            setError(false);
+            setErrorMsg('');
+            getLoginData();
+          }, 500)
 				});
 		});
 	};
