@@ -6,13 +6,9 @@ import models
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 import crud
+from core.config import settings
 
 security = HTTPBearer()
-
-# TODO : ENV 파일로 분리
-# openssl rand -hex 32
-SECRET_KEY = "d80b71594f3a92b9098914874174e13aff10d3936068689399a0d9c9fa35003f"
-ALGORITHM = "HS256"
 
 
 def get_db() -> Generator:
@@ -33,7 +29,7 @@ def get_current_user(
     )
 
     try:
-        token_data = jwt.decode(token.credentials, SECRET_KEY, algorithms=ALGORITHM)
+        token_data = jwt.decode(token.credentials, settings.SECRET_KEY, algorithms=settings.ALGORITHM)
     except JWTError:
         raise credentials_exception
 
