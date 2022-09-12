@@ -43,7 +43,7 @@ const Login = () => {
 		nick_name: '',
 		picture: '',
 		uid: '',
-		floor: '',
+		floor: '3',
 		type: 'basic',
 		access_token: '',
 	});
