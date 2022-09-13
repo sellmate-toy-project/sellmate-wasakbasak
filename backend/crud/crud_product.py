@@ -28,17 +28,12 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, None, None]):
     def get_product(
         self,
         db: Session,
-        skip: int = 0,
-        limit: int = 100,
         sort: str = "id",
         sort_by: SortType = "asc"
     ) -> list[Product]:
         return db.query(self.model)\
             .filter(self.model.status == StatusType.active)\
-            .order_by(text(f"{sort} {sort_by.value}"))\
-            .offset(skip)\
-            .limit(limit)\
-            .all()
+            .order_by(text(f"{sort} {sort_by.value}"))
 
 
 product = CRUDProduct(Product)
