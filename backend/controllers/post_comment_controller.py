@@ -17,7 +17,7 @@ def read_post_comments(
     skip: int = 0,
     limit: int = 100,
     sort: str = "id",
-    sort_by: crud.SortType = "asc",
+    sort_by: crud.SortType = crud.SortType.ASC,
     post_id: int = Query(...),
 ) -> Any:
     post_comments = crud.post_comment.get_post_comments(db, skip, limit, sort, sort_by, post_id)
