@@ -7,6 +7,7 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 import crud
 from core.config import settings
+from datetime import datetime
 
 security = HTTPBearer()
 
@@ -30,13 +31,17 @@ def get_current_user(
 
     try:
         token_data = jwt.decode(token.credentials, settings.SECRET_KEY, algorithms=settings.ALGORITHM)
+
+        if datetime.utcnow().timestamp() > token_data["exp"]:
+            raise credentials_exception
+
+        user = crud.user.get(db, id=token_data["id"])
+        if not user:
+            raise credentials_exception
+
+        return user
     except JWTError:
         raise credentials_exception
-
-    user = crud.user.get(db, id=token_data["id"])
-    if not user:
-        raise credentials_exception
-    return user
 
 
 def check_admin_user(
