@@ -1,26 +1,28 @@
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Button from '@material-ui/core/Button';
+import { Paper, Typography, Avatar, Button, Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-	list: {
-		width: '100%',
+	Paper:{
 		height: '120px',
-		padding: '20px',
-		boxSizing: 'border-box',
+		width: '400px',
+		marginBottom: '20px',
+		borderRadius: '16px !important'
 	},
-	listItem:{
-		height: '120px',
-	},
-	ListItemAvatar: {
-		width: '80px',
-		height: '80px',
-		marginRight: '22px',
-	},
+	// Avatar: {
+	// 	width: '80px',
+	// 	height: '80px',
+	// },
+	botton: {
+		width: '120px',
+		height: '38px',
+		border: '1px solid #E0E0E0',
+		borderRadius: '8px',
+		color: '#484848',
+		fontWeight: 400,
+		fontSize: '12px',
+		lineHeight : '160%'
+
+	}
 }));
 
 const User = () => {
@@ -33,23 +35,37 @@ const User = () => {
 		},
 	];
 	return (
-		<List className={classes.list}>
-		<ListItem className={classes.listItem}>
-		  <ListItemAvatar className={classes.ListItemAvatar}>
-			<Avatar
-				sx={{
-					width: '100%',
-					height: '100%',
-				}}
-			>
-			</Avatar>
-		  </ListItemAvatar>
-		  <ListItemText primary={UserData[0].username} secondary={UserData[0].email} />
-		  <Button size='small' >
-					logout
-		  </Button>	
-		</ListItem>
-	  </List>
+		<Paper elevation={0} className={classes.Paper}>
+			<Grid direction="row">
+				<Grid xs={5}>
+					<Avatar
+						sx={{
+							width: '80px',
+							height: '80px'
+						}}
+					>
+					</Avatar>
+				</Grid>
+				<Grid xs={7}>
+					<Grid>
+						<Typography>
+							{UserData[0].username}
+						</Typography>
+						<Typography>
+							{UserData[0].email}
+						</Typography>
+					</Grid>
+					<Grid >
+						<Button className={classes.botton} >
+							프로필 수정
+						</Button>	
+						<Button className={classes.botton} >
+									로그아웃
+						</Button>	
+					</Grid>
+				</Grid>		
+			</Grid>
+    	</Paper>
 	  );
 }
 export default User;
