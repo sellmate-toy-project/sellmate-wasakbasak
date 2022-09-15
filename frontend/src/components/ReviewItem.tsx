@@ -11,7 +11,7 @@ const ReviewItem: React.FC<ReviewItemProp> = ({image, title, content, like}) => 
     return (
         <div style={itemStyle}>
             <div>
-                <img style={imageStyle}/>
+                <img style={imageStyle} alt="" />
                 <p style={likeStyle}>
                     Like {like}
                 </p>

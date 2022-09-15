@@ -123,10 +123,8 @@ const Board = () => {
 								? <Avatar sx={{ width: 40, height: 20 }} src={newIcon} variant="square"/> 
 								: <span className={[classes.moreText, classes.gray].join(' ')}>{post.createDate}</span>
 							}
-								
 						</ListItemAvatar>
-						<ListItemText
-              				className={post.boardType == 'notice' ? classes.noticeTitleText : classes.noticeSubText}
+						<ListItemText className={post.boardType == 'notice' ? classes.noticeTitleText : classes.noticeSubText}
 							primary={post.text}
 						/>
 					</ListItem>
