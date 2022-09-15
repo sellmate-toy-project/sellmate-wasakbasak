@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'space-around',
 		marginBottom: '20px',
 		padding: '20px',
+		backgroundColor: 'white',
+		borderRadius: '16px'
 	},
 	newText: {
 		fontSize: '16px',
@@ -41,13 +43,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+function numberWithCommas(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const NewArrival = () => {
 	const classes = useStyles();
 	const SnackData = [
         {
             image: 'http://m.jjmall.shop/web/product/big/202202/d0af34ffd687a0a4ffc312fac82e9c84.jpg',
             name: '크라운 콘칩 초당옥수수맛 148g',
-            price: '2380',
+            price: 2380,
         },
     ];
 	return (
@@ -73,7 +79,7 @@ const NewArrival = () => {
 					{SnackData[0].name}
 				</Typography>
 				<Typography className={classes.priceText}>
-				{SnackData[0].price}원
+					{numberWithCommas(SnackData[0].price)}원
 				</Typography>
 			</Box>
 		</Box>
