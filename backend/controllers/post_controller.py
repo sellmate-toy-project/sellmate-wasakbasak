@@ -17,7 +17,7 @@ def read_posts(
     skip: int = 0,
     limit: int = 100,
     sort: str = "id",
-    sort_by: crud.SortType = "asc",
+    sort_by: crud.SortType = crud.SortType.ASC,
     user_id: int = None
 ) -> Any:
     posts = crud.post.get_posts(db, skip, limit, sort, sort_by, user_id)
