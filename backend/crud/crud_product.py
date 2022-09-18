@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 from .base import CRUDBase, SortType
 from models.product import Product
 from schemas.product_schema import ProductCreate
@@ -29,8 +29,8 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, None, None]):
         self,
         db: Session,
         sort: str = "id",
-        sort_by: SortType = "asc"
-    ) -> list[Product]:
+        sort_by: SortType = SortType.ASC
+    ) -> Any:
         return db.query(self.model)\
             .filter(self.model.status == StatusType.active)\
             .order_by(text(f"{sort} {sort_by.value}"))
