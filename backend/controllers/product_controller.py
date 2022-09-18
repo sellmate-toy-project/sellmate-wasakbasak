@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from . import deps
 import schemas
 import crud
+import models
 from controllers.response_entity import ResponseEntity
 from starlette.requests import Request
 from fastapi_pagination import Params
@@ -16,6 +17,7 @@ router = APIRouter()
 def read_product(
     request: Request,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
     params: Params = Depends(),
     sort: str = "id",
     sort_by: crud.SortType = crud.SortType.ASC,
@@ -43,6 +45,7 @@ def read_product_by_id(
     request: Request,
     product_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user)
 ) -> Any:
     product = crud.product.get(db, id=product_id)
 
@@ -57,12 +60,13 @@ def read_product_by_id(
 def press_product_like(
     product_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user)
 ) -> Any:
-    product_likes = crud.product_like.check_product_like(db, product_id=product_id)
+    product_likes = crud.product_like.check_product_like(db, product_id=product_id, user_id=current_user.id)
     if product_likes:
-        crud.product_like.delete(db, product_id=product_id)
+        crud.product_like.delete(db, product_id=product_id, user_id=current_user.id)
     else:
-        crud.product_like.create(db, product_id=product_id)
+        crud.product_like.create(db, product_id=product_id, user_id=current_user.id)
 
     product = crud.product.get(db, id=product_id)
     return product
