@@ -56,8 +56,9 @@ def read_product_by_id(
     )
 
 
-@router.get("/{product_id}/like", response_model=schemas.Product)
+@router.get("/{product_id}/like", response_model=ResponseEntity[schemas.Product])
 def press_product_like(
+    request: Request,
     product_id: int,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user)
@@ -69,4 +70,9 @@ def press_product_like(
         crud.product_like.create(db, product_id=product_id, user_id=current_user.id)
 
     product = crud.product.get(db, id=product_id)
-    return product
+
+    return ResponseEntity(
+        httpMethod=request.method,
+        path=request.url.path,
+        body=[product],
+    )
