@@ -3,7 +3,7 @@ from db.sessoin import SessionLocal
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, HTTPException, status
 import models
-from jose import jwt, JWTError
+from jose import jwt, JWTError, ExpiredSignatureError
 from sqlalchemy.orm import Session
 import crud
 from core.config import settings
@@ -30,13 +30,16 @@ def get_current_user(
 
     try:
         token_data = jwt.decode(token.credentials, settings.SECRET_KEY, algorithms=settings.ALGORITHM)
+
+        user = crud.user.get(db, id=token_data["id"])
+        if not user:
+            raise credentials_exception
+
+        return user
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has been expired")
     except JWTError:
         raise credentials_exception
-
-    user = crud.user.get(db, id=token_data["id"])
-    if not user:
-        raise credentials_exception
-    return user
 
 
 def check_admin_user(
