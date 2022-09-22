@@ -57,7 +57,7 @@ const Container = styled.div`
 	font-size: 20px;
 	font-weight: 700;
   height: 56px;
-  width: 1680px;
+  width: calc(1920px - 240px);
   justify-content: space-between;
   display: flex;
   align-items: center;
