@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Image } from '@mui/icons-material';
-import { flexbox } from '@mui/system';
+// import { Image } from '@mui/icons-material';
+// import { flexbox } from '@mui/system';
 
 const useStyles = makeStyles((theme) => ({
 	Box: {
