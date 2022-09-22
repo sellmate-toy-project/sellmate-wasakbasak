@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Stack from '@mui/material/Stack';
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import logo from '../logo.png';
 
@@ -17,8 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
-	const [floor, setFloor] = React.useState("");
-
+  const localData:string|null = JSON.parse(String(localStorage.getItem('user'))).floor
+	const [floor, setFloor] = useState<string>('3');
+  useEffect(()=> {
+    setFloor(localData ||'');
+  }, [])
   const handleChange = (event: SelectChangeEvent) => {
     setFloor(event.target.value as string);
 	};
@@ -42,9 +45,9 @@ const Header = () => {
 						onChange={handleChange} 
 						className={classes.select}
 					>
-						<MenuItem value={3}>3F</MenuItem>
-						<MenuItem value={5}>5F</MenuItem>
-						<MenuItem value={11}>11F</MenuItem>
+						<MenuItem value={'3'}>3F</MenuItem>
+						<MenuItem value={'5'}>5F</MenuItem>
+						<MenuItem value={'11'}>11F</MenuItem>
 					</Select>
 				</FormControl>
 			</Stack>
