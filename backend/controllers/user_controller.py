@@ -22,7 +22,7 @@ def get_users(
     limit: int = Query(100, ge=1),
     floor: FloorType = Query(None),
     sort: str = Query("id"),
-    sort_by: crud.SortType = Query("asc"),
+    sort_by: crud.SortType = crud.SortType.ASC,
     current_user: models.User = Depends(deps.check_admin_user)
 ) -> Any:
     users = crud.user.get_users(db, skip, limit, floor, sort, sort_by)

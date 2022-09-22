@@ -21,7 +21,7 @@ def get_reviews(
     user_id: Optional[int] = Query(None),
     review_id: Optional[int] = Query(None),
     sort: str = Query("id"),
-    sort_by: crud.SortType = Query("asc"),
+    sort_by: crud.SortType = crud.SortType.ASC,
 ) -> Any:
     print(skip)
     reviews = crud.review.get_reviews(db, skip, limit, user_id, review_id, sort, sort_by)

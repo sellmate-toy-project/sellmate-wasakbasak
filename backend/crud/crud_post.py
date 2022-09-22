@@ -14,7 +14,7 @@ class CRUDPost(CRUDBase[Post, None, None, None]):
         if user_id:
             posts = db.query(self.model)\
                 .filter(Post.user_id == user_id)\
-                .order_by(text(f"{sort} {sort_by}"))\
+                .order_by(text(f"{sort} {sort_by.value}"))\
                 .offset(skip)\
                 .limit(limit)\
                 .all()
