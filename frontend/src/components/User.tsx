@@ -35,8 +35,8 @@ const User = () => {
 	];
 	return (
 		<Paper elevation={0} className={classes.Paper}>
-			<Grid>
-				<Grid xs={5}>
+			<Grid container>
+				<Grid item={true} xs={5}>
 					<Avatar
 						sx={{
 							width: '80px',
@@ -44,7 +44,7 @@ const User = () => {
 						}}
 					></Avatar>
 				</Grid>
-				<Grid xs={7}>
+				<Grid item={true} xs={7}>
 					<Grid>
 						<Typography>{UserData[0].username}</Typography>
 						<Typography>{UserData[0].email}</Typography>
