@@ -3,7 +3,7 @@ from typing import Any, Optional, Union, Sequence, TypeVar, Generic
 from pydantic import BaseModel
 from pydantic.generics import GenericModel
 
-T = TypeVar("T", bound=BaseModel)
+T = TypeVar("T")
 
 
 class Response(BaseModel):
