@@ -1,6 +1,7 @@
 import requests
 import crud
 from bs4 import BeautifulSoup
+import time
 
 
 class Ssg:
@@ -42,8 +43,15 @@ class Ssg:
                             for sub_category in sub_categories:
                                 sub_product_category = self.insert_category(product_category, sub_category)
                                 self.sub_product_categories.append(sub_product_category)
+                        else:
+                            raise Exception(f"Sub Category Request Exception: {sub_res}")
+
+                        # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
+                        time.sleep(5)
+                else:
+                    raise Exception(f"Middle Category Request Exception: {res}")
             except Exception as e:
-                print(f'Server Error: {e}')
+                print(f"Collect Category Server Error: {e}")
 
     def insert_category(self, owner_category, category):
         product_category = crud.product_category.get_by_name(
@@ -65,23 +73,56 @@ class Ssg:
 
     def collect_product(self):
         for sub_product_category in self.sub_product_categories:
-            try:
-                res = requests.get(self.base_uri + sub_product_category.get('code') + "&sort=regdt&pageSize=100")
-                if res.status_code == 200:
-                    # 상품 리스트 파싱
-                    soup = BeautifulSoup(res.text, "html.parser")
-                    products = soup.select(".cunit_thmb_lst li")
+            page = 1
 
-                    for product in products:
-                        crud.product.create(
-                            db=self.db,
-                            obj_in={
-                                "name": product.select(".cunit_info .tx_ko")[0].text,
-                                "desc": product.select(".thmb img")[0]['src'],
-                                "price": product.select(".cunit_info .ssg_price")[0].text.replace(",", "")
-                            },
-                            product_category_id=sub_product_category.get('id')
-                        )
-                        raise
+            try:
+                while True:
+                    res = requests.get(
+                        self.base_uri + sub_product_category.code + "&sort=regdt&pageSize=100&page=" + str(page)
+                    )
+                    if res.status_code == 200:
+                        # 상품 리스트 파싱
+                        soup = BeautifulSoup(res.text, "html.parser")
+                        products = soup.select(".cunit_thmb_lst li")
+                        
+                        # 조호된 상품 존재 시 수집
+                        if products:
+                            for product in products:
+                                product_dict = {
+                                    "name": product.select(".cunit_info .cunit_md a .tx_ko")[0].text,
+                                    "code": product.select(".cunit_info .cunit_md a")[0]['data-info'],
+                                    "desc": product.select(".thmb img")[0]['src'],
+                                    "price": product.select(".cunit_info .opt_price .ssg_price")[0].text.replace(",", "")
+                                }
+                                self.insert_product(product_dict, sub_product_category.id)
+    
+                            # SSG 스크래핑 연속적인 새로고침 오류 방지를 위해 대기
+                            time.sleep(5)
+                            page += 1
+                        else:
+                            break
+                    else:
+                        raise Exception(f"Request Exception: {res}, "
+                                        f"Category Code : {sub_product_category.code}")
             except Exception as e:
-                print(f'Server Error: {e}')
+                print(f"Collect Product Server Error: {e}")
+                time.sleep(5)
+
+    def insert_product(self, product_dict, product_category_id):
+        product = crud.product.duplicate_check(
+            self.db,
+            name=product_dict.get("name"),
+            code=product_dict.get("code")
+        )
+
+        if not product:
+            product = crud.product.create(
+                db=self.db,
+                obj_in=product_dict,
+                product_category_id=product_category_id
+            )
+        else:
+            # 신상품 순으로 상품 등록 중 중복 상품 존재 시 중단
+            raise Exception("Duplicate Product")
+
+        return product

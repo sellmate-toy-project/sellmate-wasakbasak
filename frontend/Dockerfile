@@ -9,7 +9,7 @@ FROM base as develop-stage
 WORKDIR /app
 EXPOSE 3000
 CMD ([ -L /app/node_modules ] && echo "Using linked node_modules" || \
-    ([ -d /app/node_modules ] && (echo "Using local node_modules" && cp -RuT /build/node_modules /app/node_modules) || ln -s /build/node_modules /app/node_modules)) && \
+    ([ -d /app/node_modules ] && echo "Using local node_modules" || ln -s /build/node_modules /app/node_modules)) && \
     npm run start    
 
 # build-stage
