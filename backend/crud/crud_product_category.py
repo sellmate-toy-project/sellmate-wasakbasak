@@ -1,9 +1,10 @@
-from typing import Optional, List
-from .base import CRUDBase
+from typing import Optional, Any
+from .base import CRUDBase, SortType
 from models.product_category import ProductCategory
 from schemas.product_category_schema import ProductCategoryCreate
 from sqlalchemy.orm import Session
 from sqlalchemy import literal
+from sqlalchemy.sql import text
 
 
 class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None, None]):
@@ -13,8 +14,11 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None,
         return db.query(self.model).filter(self.model.name == name).first()
 
     def get_multi_with_deps(
-        self, db: Session, skip: int = 0, limit: int = 100
-    ) -> List[ProductCategory]:
+        self,
+        db: Session,
+        sort: str = "id",
+        sort_by: SortType = SortType.ASC
+    ) -> Any:
         top_deps = db.query(self.model, literal(1).label('deps'))\
             .filter(self.model.owner_id == None)\
             .cte('cte', recursive=True)
@@ -25,22 +29,18 @@ class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryCreate, None,
         hierarchy_query = top_deps.union(bottom_deps)
 
         return db.query(hierarchy_query)\
-            .offset(skip)\
-            .limit(limit)\
-            .all()
+            .order_by(text(f"{sort} {sort_by.value}"))
 
     def get_multi_by_owner(
         self,
         db: Session,
         owner_id: int,
-        skip: int = 0,
-        limit: int = 100,
-    ) -> List[ProductCategory]:
+        sort: str = "id",
+        sort_by: SortType = SortType.ASC
+    ) -> Any:
         return db.query(self.model)\
                 .filter(self.model.owner_id == owner_id)\
-                .offset(skip)\
-                .limit(limit)\
-                .all()
+                .order_by(text(f"{sort} {sort_by.value}"))
 
     def create_with_owner(
         self, db: Session, obj_in: ProductCategoryCreate, owner_id: int

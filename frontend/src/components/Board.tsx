@@ -1,6 +1,6 @@
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Stack } from '@mui/material';
-import newIcon from '../icons/new.png';
+import newIcon from '../icons/new.svg';
 const useStyles = makeStyles((theme) => ({
 	paddingNone: {
 		padding: 0,
@@ -99,8 +99,8 @@ const Board = () => {
 
 	return (
 		<Stack direction='column' className={classes.stack}>
-			<Box className={classes.title}>
-				<Typography display='block' variant='button' component='div' className={[classes.mainText, classes.black].join(' ')}>
+    <Box className={classes.title}>
+      <Typography display='block' variant='button' component='div' className={[classes.mainText, classes.black].join(' ')}>
 					게시판
 				</Typography>
 				<div>
@@ -117,14 +117,14 @@ const Board = () => {
 						disablePadding
 						>
 						<ListItemAvatar className={classes.title}>
-							<span className={post.boardType == 'notice' ? classes.noticeTitle : classes.noticeSub}>{post.boardType == 'notice' ? '공지' : post.userId}</span>
+							<span className={post.boardType === 'notice' ? classes.noticeTitle : classes.noticeSub}>{post.boardType === 'notice' ? '공지' : post.userId}</span>
 							{
-								post.newFlag == true 
+								post.newFlag === true 
 								? <Avatar sx={{ width: 40, height: 20 }} src={newIcon} variant="square"/> 
 								: <span className={[classes.moreText, classes.gray].join(' ')}>{post.createDate}</span>
 							}
 						</ListItemAvatar>
-						<ListItemText className={post.boardType == 'notice' ? classes.noticeTitleText : classes.noticeSubText}
+						<ListItemText className={post.boardType === 'notice' ? classes.noticeTitleText : classes.noticeSubText}
 							primary={post.text}
 						/>
 					</ListItem>

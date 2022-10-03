@@ -13,7 +13,7 @@ class CRUDPostComment(CRUDBase[PostComment, None, None, None]):
         if post_id:
             post_comments = db.query(self.model)\
                 .filter(PostComment.post_id == post_id)\
-                .order_by(text(f"{sort} {sort_by}"))\
+                .order_by(text(f"{sort} {sort_by.value}"))\
                 .offset(skip)\
                 .limit(limit)\
                 .all()

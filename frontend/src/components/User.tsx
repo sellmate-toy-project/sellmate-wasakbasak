@@ -2,11 +2,11 @@ import { Paper, Typography, Avatar, Button, Grid } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-	Paper:{
+	Paper: {
 		height: '120px',
 		width: '400px',
 		marginBottom: '20px',
-		borderRadius: '16px !important'
+		borderRadius: '16px !important',
 	},
 	// Avatar: {
 	// 	width: '80px',
@@ -20,9 +20,8 @@ const useStyles = makeStyles((theme) => ({
 		color: '#484848',
 		fontWeight: 400,
 		fontSize: '12px',
-		lineHeight : '160%'
-
-	}
+		lineHeight: '160%',
+	},
 }));
 
 const User = () => {
@@ -36,36 +35,27 @@ const User = () => {
 	];
 	return (
 		<Paper elevation={0} className={classes.Paper}>
-			<Grid direction="row">
-				<Grid xs={5}>
+			<Grid container>
+				<Grid item={true} xs={5}>
 					<Avatar
 						sx={{
 							width: '80px',
-							height: '80px'
+							height: '80px',
 						}}
-					>
-					</Avatar>
+					></Avatar>
 				</Grid>
-				<Grid xs={7}>
+				<Grid item={true} xs={7}>
 					<Grid>
-						<Typography>
-							{UserData[0].username}
-						</Typography>
-						<Typography>
-							{UserData[0].email}
-						</Typography>
+						<Typography>{UserData[0].username}</Typography>
+						<Typography>{UserData[0].email}</Typography>
 					</Grid>
-					<Grid >
-						<Button className={classes.botton} >
-							프로필 수정
-						</Button>	
-						<Button className={classes.botton} >
-									로그아웃
-						</Button>	
+					<Grid>
+						<Button className={classes.botton}>프로필 수정</Button>
+						<Button className={classes.botton}>로그아웃</Button>
 					</Grid>
-				</Grid>		
+				</Grid>
 			</Grid>
-    	</Paper>
-	  );
-}
+		</Paper>
+	);
+};
 export default User;

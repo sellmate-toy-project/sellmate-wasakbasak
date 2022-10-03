@@ -35,19 +35,20 @@ const Home = styled.div`
 	text-align: center;
 	font-family: Pretendard;
   background-color: #F2F5F5;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
 `;
 const HeaderWrapper = styled.div`
-  padding: 0 120px;
   margin: 0 auto;
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-contant: center;
   background-color: white;
 `;
 const Werapper = styled.div`
 	margin: 24px auto 0 auto;
-  padding: 0 120px;
+  width: calc(1920px - 240px);
 	display: flex;
 	justify-contant: center;
 `;
