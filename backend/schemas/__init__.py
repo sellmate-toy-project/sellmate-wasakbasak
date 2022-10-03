@@ -7,3 +7,7 @@ from .product_like_schema import *
 from .review_schema import *
 from .review_comment_schema import *
 from .token import *
+from .product_like_schema import *
+from .review_schema import *
+from .review_comment_schema import *
+from .token import *

@@ -6,6 +6,14 @@ from sqlalchemy.sql import text
 
 import schemas
 
+        if user_id:
+            posts = db.query(self.model)\
+                .filter(Post.user_id == user_id)\
+                .order_by(text(f"{sort} {sort_by}"))\
+                .offset(skip)\
+                .limit(limit)\
+                .all()
+            return posts
 
 class CRUDPost(CRUDBase[Post, None, None, None]):
     def get_posts(self, db: Session, skip, limit, sort, sort_by, user_id) -> Post:
@@ -39,6 +47,11 @@ class CRUDPost(CRUDBase[Post, None, None, None]):
         db.flush()
         db.commit()
         return db_obj
+
+    def delete(self, db: Session, post_id: int) -> Post:
+        post = db.query(self.model)\
+        .filter(Post.id == post_id)\
+        .update({'is_deleted': 1})
 
     def delete(self, db: Session, post_id: int) -> Post:
         post = db.query(self.model)\

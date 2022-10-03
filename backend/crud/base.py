@@ -10,6 +10,9 @@ CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
 UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 DeleteSchemaType = TypeVar("DeleteSchemaType", bound=BaseModel)
 
+class SortType(enum.Enum):
+    DESC = "desc"
+    ASC = "asc"
 
 class SortType(enum.Enum):
     DESC = "desc"

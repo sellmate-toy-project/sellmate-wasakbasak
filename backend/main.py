@@ -47,3 +47,30 @@ def validation_exception_handler(request, exc):
             message=exc.errors()[0]["msg"],
         )),
     )
+
+
+# exception handling
+@app.exception_handler(StarletteHTTPException)
+def http_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content=jsonable_encoder(ResponseEntity(
+            httpStatus=exc.status_code,
+            httpMethod=request.method,
+            path=request.url.path,
+            message=exc.detail,
+        )),
+    )
+
+
+@app.exception_handler(RequestValidationError)
+def validation_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder(ResponseEntity(
+            httpStatus=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            httpMethod=request.method,
+            path=request.url.path,
+            message=exc.errors()[0]["msg"],
+        )),
+    )

@@ -14,3 +14,4 @@ class ReviewLike(Base):
 
     user = relationship("User", back_populates="review_likes")
     review = relationship("Review", back_populates="review_likes")
+    review = relationship("Review", back_populates="review_likes")

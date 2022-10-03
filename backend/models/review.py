@@ -18,3 +18,4 @@ class Review(Base):
     product = relationship("Product", back_populates="reviews")
     review_comments = relationship("ReviewComment", back_populates="review")
     review_likes = relationship("ReviewLike", back_populates="review")
+    review_likes = relationship("ReviewLike", back_populates="review")
