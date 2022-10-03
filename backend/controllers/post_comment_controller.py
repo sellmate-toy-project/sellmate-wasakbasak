@@ -11,7 +11,7 @@ import crud
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.PostComment])
+@router.get("/{post_id}/comments", response_model=List[schemas.PostComment])
 def read_post_comments(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
@@ -24,7 +24,7 @@ def read_post_comments(
     return post_comments
 
 
-@router.post("/", response_model=schemas.PostComment)
+@router.post("/comments", response_model=schemas.PostComment)
 def create(
     data: schemas.PostCommentCreate,
     db: Session = Depends(deps.get_db),
@@ -34,7 +34,7 @@ def create(
     return post_comments
 
 
-@router.put("/{post_comment_id}", response_model=ResponseEntity)
+@router.put("/comments/{post_comment_id}", response_model=ResponseEntity)
 def update(
     request: Request,
     post_comment_id: int,
@@ -46,7 +46,7 @@ def update(
     return ResponseEntity(httpMethod=request.method, path=request.url.path, body=post_comments)
 
 
-@router.delete("/{post_comment_id}", response_model=ResponseEntity)
+@router.delete("/comments/{post_comment_id}", response_model=ResponseEntity)
 def delete(
     request: Request,
     post_comment_id: int,
