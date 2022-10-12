@@ -45,7 +45,7 @@ class CRUDPost(CRUDBase[Post, None, None, None]):
             .update({'is_deleted': 1})
 
         if result == 0:
-            raise HTTPException(400, '이미 삭제된 게시글 입니다.')
+            raise HTTPException(400, '이미 삭제 됐거나 존재 하지 않는 게시글 입니다.')
 
         db.flush()
         db.commit()
