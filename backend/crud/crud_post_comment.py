@@ -40,10 +40,12 @@ class CRUDPostComment(CRUDBase[PostComment, None, None, None]):
 
     def delete(self, db: Session, post_comment_id: int) -> PostComment:
         post_comments = db.query(self.model)\
-            .filter(PostComment.id == post_comment_id)
+            .filter(PostComment.id == post_comment_id).first()
 
-        if post_comments.first():
-            post_comments.delete()
+        if post_comments:
+            db.query(self.model)\
+                .filter(PostComment.id == post_comment_id)\
+                .delete()
         else:
             raise HTTPException(400, '이미 삭제 됐거나 존재 하지 않는 댓글 입니다.')
 
