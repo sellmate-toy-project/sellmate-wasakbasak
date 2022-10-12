@@ -9,6 +9,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 
 import crud
 import schemas
+import models
 
 router = APIRouter()
 
@@ -18,6 +19,7 @@ def read_posts(
     request: Request,
     params: Params = Depends(),
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
     sort: str = "id",
     sort_by: crud.SortType = crud.SortType.ASC,
     user_id: int = None,
@@ -42,6 +44,7 @@ def read_post(
     request: Request,
     post_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     post = crud.post.get(db, id=post_id)
 
@@ -60,6 +63,7 @@ def create_item(
     request: Request,
     data: schemas.PostCreate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     obj = data.dict()
     post = crud.post.create(db, obj)
@@ -76,6 +80,7 @@ def update(
     post_id: int,
     data: schemas.PostUpdate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     obj = data.dict()
     post = crud.post.update(db, post_id, obj)
@@ -91,6 +96,7 @@ def delete(
     request: Request,
     post_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     post = crud.post.delete(db, post_id)
     return ResponseEntity(

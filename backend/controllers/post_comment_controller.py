@@ -9,6 +9,7 @@ from . import deps
 
 import schemas
 import crud
+import models
 
 router = APIRouter()
 
@@ -18,6 +19,7 @@ def read_post_comments(
     request: Request,
     params: Params = Depends(),
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
     sort: str = "id",
     sort_by: crud.SortType = crud.SortType.ASC,
     post_id: int = Query(...),
@@ -42,6 +44,7 @@ def create(
     request: Request,
     data: schemas.PostCommentCreate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     obj = data.dict()
     post_comments = crud.post_comment.create(db, obj)
@@ -59,6 +62,7 @@ def update(
     post_comment_id: int,
     data: schemas.PostCommentUpdate,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     obj = data.dict()
     post_comments = crud.post_comment.update(db, post_comment_id, obj)
@@ -75,6 +79,7 @@ def delete(
     request: Request,
     post_comment_id: int,
     db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
     post_comments = crud.post_comment.delete(db, post_comment_id)
 
