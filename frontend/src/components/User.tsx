@@ -54,7 +54,7 @@ const onClickLogout = () => {
 
 const User = () => {
 	const classes = useStyles();
-	const UserData = JSON.parse(localStorage.getItem("user") || "");
+	const UserData = JSON.parse(localStorage.getItem("user") || '{}');
 	return (
 		<Paper elevation={0} className={classes.Paper}>
 			<div className={classes.mainDiv}>

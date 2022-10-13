@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header';
 import LeftContainer from './components/LeftContainer';
@@ -6,6 +7,13 @@ import Login from './components/Login';
 import Main from './components/Main';
 import RightContainer from './components/RightContainer';
 const App = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const localData:string|null = localStorage.getItem('user')
+    if(!Object.values(JSON.parse(localData || '{}')).length) {
+      navigate('/login')
+    }
+  }, [])
 	return (
 		<div className='App'>
 			<Routes>

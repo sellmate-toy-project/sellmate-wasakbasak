@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
-  const localData:string|null = JSON.parse(String(localStorage.getItem('user'))).floor
+  const localData:string|null = JSON.parse(String(localStorage.getItem('user')))?.floor || ''
 	const [floor, setFloor] = useState<string>('3');
   useEffect(()=> {
     setFloor(localData ||'');
