@@ -1,10 +1,11 @@
-from typing import Optional, Any
+from typing import Optional, Any, List
 from .base import CRUDBase, SortType
 from models.product import Product
 from schemas.product_schema import ProductCreate
 from sqlalchemy.orm import Session
 from models.product import StatusType
 from sqlalchemy.sql import text
+from utils import convert_filter
 
 
 class CRUDProduct(CRUDBase[Product, ProductCreate, None, None]):
@@ -29,11 +30,15 @@ class CRUDProduct(CRUDBase[Product, ProductCreate, None, None]):
         self,
         db: Session,
         sort: str = "id",
-        sort_by: SortType = SortType.ASC
+        sort_by: SortType = SortType.ASC,
+        filters: List[str] = []
     ) -> Any:
+        filter_query = convert_filter.convert(self.model, filters)
+
         return db.query(self.model)\
-            .filter(self.model.status == StatusType.active)\
-            .order_by(text(f"{sort} {sort_by.value}"))
+            .filter(self.model.status == StatusType.active) \
+            .order_by(text(f"{sort} {sort_by.value}"))\
+            .filter(*filter_query)
 
 
 product = CRUDProduct(Product)

@@ -1,5 +1,5 @@
 from typing import Any
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Body
 from sqlalchemy.orm import Session
 from . import deps
 from core.security import create_access_token
@@ -11,17 +11,19 @@ router = APIRouter()
 
 @router.post("/login", response_model=schemas.Token)
 def login(
-    email: str,
-    uid: str,
+    email: str = Body(),
+    uid: str = Body(),
     db: Session = Depends(deps.get_db),
 ) -> Any:
     user = crud.user.authenticate(db, uid=uid, email=email)
     result = {
         "access_token": "",
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user": ""
     }
     if user:
         result["access_token"] = create_access_token({"id": user.id})
+        result["user"] = user
 
     return result
 

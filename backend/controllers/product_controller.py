@@ -1,5 +1,5 @@
-from typing import Any
-from fastapi import APIRouter, Depends
+from typing import Any, List
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from . import deps
 import schemas
@@ -21,11 +21,9 @@ def read_product(
     params: Params = Depends(),
     sort: str = "id",
     sort_by: crud.SortType = crud.SortType.ASC,
-    category_name: str = None
+    filters: List[str] = Query([])
 ) -> Any:
-    # TODO: 상품 카테고리 필터 추가
-    # if category_name is not None:
-    query = crud.product.get_product(db, sort=sort, sort_by=sort_by)
+    query = crud.product.get_product(db, sort=sort, sort_by=sort_by, filters=filters)
     products = paginate(query, params)
 
     return ResponseEntity(
@@ -33,6 +31,7 @@ def read_product(
         path=request.url.path,
         body=products.items,
         paging_meta={
+            'total_count': query.count(),
             'total_page': round(query.count() / params.size),
             'current_page': params.page,
             'size': params.size,

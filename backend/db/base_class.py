@@ -10,3 +10,10 @@ class Base:
     @declared_attr
     def __tablename__(cls) -> str:
         return cls.__name__.lower()
+
+    def get_class_by_module_name(module_name):
+        for mapper in Base.registry.mappers:
+            cls = mapper.class_
+
+            if module_name in cls.__module__:
+                return cls

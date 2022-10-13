@@ -19,6 +19,7 @@ class Body(GenericModel, Generic[T]):
 
 
 class PagingMeta(BaseModel):
+    total_count: int
     total_page: int
     current_page: Union[int, None]
     size: Union[int, None]
