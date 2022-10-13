@@ -18,10 +18,12 @@ def login(
     user = crud.user.authenticate(db, uid=uid, email=email)
     result = {
         "access_token": "",
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "user": ""
     }
     if user:
         result["access_token"] = create_access_token({"id": user.id})
+        result["user"] = user
 
     return result
 

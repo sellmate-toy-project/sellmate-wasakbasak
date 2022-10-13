@@ -31,6 +31,7 @@ def read_product(
         path=request.url.path,
         body=products.items,
         paging_meta={
+            'total_count': query.count(),
             'total_page': round(query.count() / params.size),
             'current_page': params.page,
             'size': params.size,

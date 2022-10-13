@@ -26,9 +26,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, DeleteSche
     def get_multi(
         self,
         db: Session,
-        skip,
-        limit,
-        sort,
-        sort_by
+        sort: str = "id",
+        sort_by: SortType = SortType.ASC,
     ) -> List[ModelType]:
-        return db.query(self.model).order_by(text(f"{sort} {sort_by.value}")).offset(skip).limit(limit).all()
+        return db.query(self.model).order_by(text(f"{sort} {sort_by.value}"))
