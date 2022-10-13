@@ -1,60 +1,89 @@
-import { Paper, Typography, Avatar, Button, Grid } from '@mui/material';
+import { Paper, Avatar, Button, } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 	Paper: {
-		height: '120px',
-		width: '400px',
 		marginBottom: '20px',
 		borderRadius: '16px !important',
 	},
-	// Avatar: {
-	// 	width: '80px',
-	// 	height: '80px',
-	// },
 	botton: {
-		width: '120px',
-		height: '38px',
-		border: '1px solid #E0E0E0',
-		borderRadius: '8px',
-		color: '#484848',
+		width: '120px !important',
+		height: '38px !important',
+		border: '1px solid #E0E0E0 !important',
+		borderRadius: '8px !important',
+		color: '#484848 !important',
 		fontWeight: 400,
-		fontSize: '12px',
-		lineHeight: '160%',
+		fontSize: '12px !important',
+		lineHeight: '160% !important',
+	},
+	mainDiv: {
+		display: 'flex',
+		height: '110px',
+		width: '400px',
+		alignItems: 'center',
+	},
+	avaDiv: {
+		marginLeft: '24px',
+	},
+	subDiv: {
+		marginLeft: '24px',
+		height: '110px',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-evenly',
+		alignItems: 'flex-start',
+	},
+	userName: {
+		aligeItem: 'left',
+		color: '#181818',
+		fontWeight: 700,
+		fontSize: '16px'
+	},
+	userEmail: {
+		aligeItem: 'left',
+		color: '#8C8C8C',
+		fontWeight: 400,
+		fontSize: '14px'
 	},
 }));
 
+const onClickLogout = () => {
+	localStorage.removeItem('user');
+	window.location.href = 'http://localhost:3000/login';
+};
+
 const User = () => {
 	const classes = useStyles();
-	const UserData = [
-		{
-			username: 'NamNaHyun',
-			email: 'namnahyun@sellmate.co.kr',
-			text: "I'll be in your neighborhood doing errands this…",
-		},
-	];
+	const UserData = JSON.parse(localStorage.getItem("user") || "");
 	return (
 		<Paper elevation={0} className={classes.Paper}>
-			<Grid container>
-				<Grid item={true} xs={5}>
+			<div className={classes.mainDiv}>
+				<div className={classes.avaDiv}>
 					<Avatar
 						sx={{
 							width: '80px',
 							height: '80px',
 						}}
+						src={UserData.picture}
 					></Avatar>
-				</Grid>
-				<Grid item={true} xs={7}>
-					<Grid>
-						<Typography>{UserData[0].username}</Typography>
-						<Typography>{UserData[0].email}</Typography>
-					</Grid>
-					<Grid>
-						<Button className={classes.botton}>프로필 수정</Button>
-						<Button className={classes.botton}>로그아웃</Button>
-					</Grid>
-				</Grid>
-			</Grid>
+				</div>
+				<div className={classes.subDiv}>
+					<div>
+						<span className={classes.userName}>
+							{UserData.name || ""}
+						</span>
+					</div>
+					<div>
+						<span className={classes.userEmail}>
+							{UserData.email || ""}
+						</span>
+					</div>
+					<div>
+						<Button className={classes.botton} sx={{marginRight:'10px'}}>프로필 수정</Button>
+						<Button className={classes.botton} onClick={onClickLogout}>로그아웃</Button>
+					</div>
+				</div>
+			</div>
 		</Paper>
 	);
 };
