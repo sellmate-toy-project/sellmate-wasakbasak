@@ -2,6 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 from models.product import StatusType
 from .product_like_schema import ProductLike
+from .product_category_schema import ProductCategory
 
 
 class ProductBase(BaseModel):
@@ -35,7 +36,7 @@ class ProductInDBBase(ProductBase):
     desc: str
     price: int
     status: StatusType
-    product_category_id: int
+    product_category: ProductCategory
     product_likes: list[ProductLike]
 
     class Config:
@@ -52,7 +53,7 @@ class Product(ProductInDBBase):
                 "desc": "상품 이미지",
                 "price": "상품 금액",
                 "status": "상품 상태",
-                "product_category_id": "상품 카테고리 일련번호",
+                "product_category": ProductCategory.Config.schema_extra.get("example"),
                 "product_likes": ProductLike.Config.schema_extra.get("example")
             }
         }
