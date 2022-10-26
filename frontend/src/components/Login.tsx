@@ -1,20 +1,22 @@
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  MenuItem,
-  TextField,
-  Typography
+	Avatar,
+	Box,
+	Button,
+	Container,
+	MenuItem,
+	TextField,
+	Typography,
 } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import jwtDecode from 'jwt-decode';
 import {
-  ChangeEvent, Fragment, KeyboardEvent,
-  useCallback,
-  useEffect,
-  useState
+	ChangeEvent,
+	Fragment,
+	KeyboardEvent,
+	useCallback,
+	useEffect,
+	useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -57,10 +59,10 @@ const Login = () => {
 
 	const navigate = useNavigate();
 	const getLoginData = () => {
-    let tokenObj: any = {};
+		let tokenObj: any = {};
 		return new Promise(() => {
 			api
-				.post(`auth/login?email=${user.email}&uid=${user.uid}`)
+				.post('auth/login', { email: user.email, uid: user.uid })
 				.then((res: any) => {
 					tokenObj = res.data;
 					// TODO: useState가 promise 안에서 바로 바뀌지 않는 문제가 있음
@@ -68,37 +70,41 @@ const Login = () => {
 					setUser(() => userDataWithToken);
 				})
 				.catch((error: any) => {
-          setError(true);
-          setErrorMsg(error.response.data.detail);
+					setError(true);
+					setErrorMsg(error.response.data.detail);
 				})
 				.finally(() => {
-          if (tokenObj.access_token) {
-            setError(() => false);
-            setErrorMsg(() => '');
-            localStorage.setItem('user', JSON.stringify({ ...user, access_token: tokenObj.access_token }));
-            navigate('/');
-          }
-        });
+					if (tokenObj.access_token) {
+						setError(() => false);
+						setErrorMsg(() => '');
+						localStorage.setItem(
+							'user',
+							JSON.stringify({ ...user, access_token: tokenObj.access_token })
+						);
+						navigate('/');
+					}
+				});
 		});
 	};
 
 	const getJoinData = () => {
 		return new Promise(() => {
 			api
-				.post('auth/join', JSON.stringify(user))
+				.post('auth/join', user)
 				.then((res: any) => {
 					setUser(() => ({ ...user, ...res.data }));
 				})
 				.catch((error) => {
-          setError(true);
-          setErrorMsg(error.response.data.detail);
+					setError(true);
+					console.log(error.response);
+					setErrorMsg(error.response.data.detail);
 				})
 				.finally(() => {
-          setTimeout(() => {
-            setError(false);
-            setErrorMsg('');
-            getLoginData();
-          }, 500)
+					setTimeout(() => {
+						setError(false);
+						setErrorMsg('');
+						getLoginData();
+					}, 500);
 				});
 		});
 	};
@@ -134,9 +140,7 @@ const Login = () => {
 	};
 
 	const checkRedirectUrl = useCallback(() => {
-		const hashedParam: any = new URLSearchParams(
-			window.location.hash.substr(1)
-		);
+		const hashedParam: any = new URLSearchParams(window.location.hash.substr(1));
 		const idToken = hashedParam.get('id_token');
 
 		if (idToken) {
@@ -145,12 +149,12 @@ const Login = () => {
 			setUser((val) => ({ ...val, email, name, picture, uid: sub }));
 		}
 	}, []);
-  
+
 	useEffect(() => {
 		checkRedirectUrl();
 	}, [checkRedirectUrl]);
 
-  const floorOptions = [
+	const floorOptions = [
 		{ name: '3층', value: '3' },
 		{ name: '5층', value: '5' },
 		{ name: '11층', value: '11' },
@@ -162,10 +166,10 @@ const Login = () => {
 			onClickLogin();
 		}
 	};
-  const onChangeFloor = (event: SelectChangeEvent<string>) => {
-    setFloorValue(event.target.value);
+	const onChangeFloor = (event: SelectChangeEvent<string>) => {
+		setFloorValue(event.target.value);
 		setUser((val) => ({ ...val, floor: event.target.value }));
-  }
+	};
 
 	return (
 		<Container
@@ -176,7 +180,8 @@ const Login = () => {
 				flexDirection: 'column',
 				alignItems: 'center',
 				justifyContent: 'space-between',
-			}}>
+			}}
+		>
 			<Box
 				sx={{
 					display: 'flex',
@@ -184,7 +189,8 @@ const Login = () => {
 					alignItems: 'center',
 					height: '100%',
 					justifyContent: 'center',
-				}}>
+				}}
+			>
 				<Avatar
 					src={loginLogo}
 					variant='rounded'
@@ -195,62 +201,71 @@ const Login = () => {
 					}}
 				/>
 				{btnText === '입장' && (
-          <Fragment>
-					<Wrapper>
-						<TextField
-							variant='outlined'
-							placeholder='닉네임을 입력해주세요!'
-							error={error}
-							defaultValue={inputVal}
-							onChange={handleInputChange}
-							onKeyPress={onEnterLogin}
-							sx={{
-								mb: !error ? '24px' : '0px',
-                mr: '15px',
-								width: '252px',
-								height: '66px',
-								justifyContent: 'center',
-								'& > .MuiOutlinedInput-root': {
-									height: '100%',
-									borderRadius: '16px',
-									borderColor: '#E0E0E0',
-									p: '20px 24px',
-									'& > .MuiOutlinedInput-input': {
-										height: '24px',
-										p: '0',
+					<Fragment>
+						<Wrapper>
+							<TextField
+								variant='outlined'
+								placeholder='닉네임을 입력해주세요!'
+								error={error}
+								defaultValue={inputVal}
+								onChange={handleInputChange}
+								onKeyPress={onEnterLogin}
+								sx={{
+									mb: !error ? '24px' : '0px',
+									mr: '15px',
+									width: '252px',
+									height: '66px',
+									justifyContent: 'center',
+									'& > .MuiOutlinedInput-root': {
+										height: '100%',
+										borderRadius: '16px',
+										borderColor: '#E0E0E0',
+										p: '20px 24px',
+										'& > .MuiOutlinedInput-input': {
+											height: '24px',
+											p: '0',
+										},
 									},
-								},
-							}}
-						/>
-            <Select
-              onChange={onChangeFloor}
-              value={floorValue}
-              sx={{ height: '66px', p: '8px 16px 8px 10px', '& > .MuiInputBase-input': { p: 0 }, border: '1px solid #E0E0E0', borderRadius: '16px', 'fieldset': { display: 'none' } }}
-              IconComponent={() => (
-                <KeyboardArrowDownRoundedIcon
-                  sx={{ color: '#8C8C8C', fontSize: '16px' }}
-                />
-              )}>
-              {floorOptions.map((floor, idx) => (
-                <MenuItem sx={{p: 0, 'ul': {p: 0}}} key={idx} value={floor.value}>
-                  {floor.name}
-                </MenuItem>
-              ))}
-            </Select>
-					</Wrapper>
-          {error && (
-            <Typography
-              variant='caption'
-              sx={{
-                color: 'red',
-                fontSize: '14px',
-                fontWeight: 400,
-                mb: '24px',
-              }}>
-              {errorMsg}
-            </Typography>
-          )}
-          </Fragment>
+								}}
+							/>
+							<Select
+								onChange={onChangeFloor}
+								value={floorValue}
+								sx={{
+									height: '66px',
+									p: '8px 16px 8px 10px',
+									'& > .MuiInputBase-input': { p: 0 },
+									border: '1px solid #E0E0E0',
+									borderRadius: '16px',
+									fieldset: { display: 'none' },
+								}}
+								IconComponent={() => (
+									<KeyboardArrowDownRoundedIcon
+										sx={{ color: '#8C8C8C', fontSize: '16px' }}
+									/>
+								)}
+							>
+								{floorOptions.map((floor, idx) => (
+									<MenuItem sx={{ p: 0, ul: { p: 0 } }} key={idx} value={floor.value}>
+										{floor.name}
+									</MenuItem>
+								))}
+							</Select>
+						</Wrapper>
+						{error && (
+							<Typography
+								variant='caption'
+								sx={{
+									color: 'red',
+									fontSize: '14px',
+									fontWeight: 400,
+									mb: '24px',
+								}}
+							>
+								{errorMsg}
+							</Typography>
+						)}
+					</Fragment>
 				)}
 				<Button
 					variant='contained'
@@ -270,7 +285,8 @@ const Login = () => {
 						'&:hover': {
 							backgroundColor: '#9CE2F8',
 						},
-					}}>
+					}}
+				>
 					{btnText}
 				</Button>
 			</Box>
@@ -279,7 +295,8 @@ const Login = () => {
 				display='block'
 				align='center'
 				noWrap
-				sx={{ color: '#C8C8C8', marginBottom: '85px' }}>
+				sx={{ color: '#C8C8C8', marginBottom: '85px' }}
+			>
 				Copyright © Since 2022 Sellmate Ltd. All right reserved.
 			</Typography>
 		</Container>
@@ -287,6 +304,5 @@ const Login = () => {
 };
 export default Login;
 const Wrapper = styled.div`
-display: flex;
-
-`
+	display: flex;
+`;
