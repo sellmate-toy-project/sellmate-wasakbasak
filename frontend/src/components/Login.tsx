@@ -74,38 +74,44 @@ const Login = () => {
 					setErrorMsg(error.response.data.detail);
 				})
 				.finally(() => {
-					if (tokenObj.access_token) {
-						setError(() => false);
-						setErrorMsg(() => '');
-						localStorage.setItem(
-							'user',
-							JSON.stringify({ ...user, access_token: tokenObj.access_token })
-						);
-						navigate('/');
-					}
+          console.log('tokenObj',tokenObj)
+					// if (tokenObj.access_token) {
+					// 	setError(() => false);
+					// 	setErrorMsg(() => '');
+					// 	localStorage.setItem(
+					// 		'user',
+					// 		JSON.stringify({ ...user, access_token: tokenObj.access_token })
+					// 	);
+					// 	navigate('/');
+					// }
 				});
 		});
 	};
 
 	const getJoinData = () => {
-		return new Promise(() => {
+		return new Promise((res, rej) => {
 			api
 				.post('auth/join', user)
 				.then((res: any) => {
-					setUser(() => ({ ...user, ...res.data }));
+          setUser(() => ({ ...user, ...res.data }));
+          res(user);
 				})
 				.catch((error) => {
-					setError(true);
-					console.log(error.response);
-					setErrorMsg(error.response.data.detail);
+          if(!error.response.data.message.includes('이미 가입된 회원정보입니다.')) {
+            setError(true);
+            setErrorMsg(error.response.data.message);
+            return;
+          }
+          const alreadyExistsUserInfo = JSON.parse(error.response.config.data);
+          setUser(() => ({...user, ...alreadyExistsUserInfo}))
 				})
-				.finally(() => {
-					setTimeout(() => {
-						setError(false);
-						setErrorMsg('');
-						getLoginData();
-					}, 500);
-				});
+				// .finally(() => {
+				// 	setTimeout(() => {
+				// 		setError(false);
+				// 		setErrorMsg('');
+				// 		getLoginData();
+				// 	}, 500);
+				// });
 		});
 	};
 
@@ -129,13 +135,20 @@ const Login = () => {
 			return;
 		}
 		// 구글 로그인 되면 입장으로 바꾸고 닉 + 층수 선택 후 입장 클릭 시 메인 이동
+    // TODO: 먼저 로그인 정보가 있는지 확인 필요
+    // 로그인 정보 있을 때 > input에 기존 닉네임 
+    // 로그인 정보 없을 때 input 비었을 때 > error
+    // 로그인 정보 없을 때 input 값이 있을 때 > 다시 로그인 api
+
+    getJoinData().then((res) => {
+      console.log(res)
+    });
 		if (!inputVal) {
 			setError(true);
 			setErrorMsg('닉네임을 입력해주세요');
 		} else {
 			// TODO: redux 사용 필요
 			// api 메서드 컴포넌트 필요
-			getJoinData();
 		}
 	};
 
