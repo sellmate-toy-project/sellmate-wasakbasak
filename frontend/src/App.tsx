@@ -1,9 +1,9 @@
-import { Route, Routes,useNavigate } from 'react-router-dom';
+import LoginPage from 'pages/LoginPage';
 import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
 import LeftContainer from './components/LeftContainer';
-import Login from './components/Login';
 import Main from './components/Main';
 import RightContainer from './components/RightContainer';
 const App = () => {
@@ -32,7 +32,7 @@ const App = () => {
 						</Home>
 					}
 				/>
-				<Route path='login' element={<Login />} />
+				<Route path='login' element={<LoginPage />} />
 			</Routes>
 		</div>
 	);
