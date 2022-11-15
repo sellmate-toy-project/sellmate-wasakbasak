@@ -39,7 +39,7 @@ def upgrade() -> None:
     sa.Column('email', sa.String(length=50), nullable=False),
     sa.Column('hashed_password', sa.String(length=100), nullable=False),
     sa.Column('nick_name', sa.String(length=100), nullable=False),
-    sa.Column('floor', sa.Enum('thirdFloor', 'fiveFloor', 'ElevenFloor', name='floortype'), nullable=False),
+    sa.Column('floor', sa.Enum('ThirdFloor', 'FiveFloor', 'ElevenFloor', name='floortype'), nullable=False),
     sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
     sa.PrimaryKeyConstraint('id')
