@@ -6,8 +6,8 @@ from db.base_class import Base
 
 
 class FloorType(enum.Enum):
-    thirdFloor = "3"
-    fiveFloor = "5"
+    ThirdFloor = "3"
+    FiveFloor = "5"
     ElevenFloor = "11"
 
 
