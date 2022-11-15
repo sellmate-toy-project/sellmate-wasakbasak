@@ -39,7 +39,7 @@ class CRUDUser(CRUDBase[User, None, None, None]):
             email=obj_in.email,
             nick_name=obj_in.nick_name,
             picture=obj_in.picture,
-            floor=obj_in.floor.value,
+            floor=obj_in.floor,
             type=obj_in.type.value
         )
         db.add(db_obj)
