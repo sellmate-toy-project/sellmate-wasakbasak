@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 from models.product import StatusType
@@ -36,6 +37,8 @@ class ProductInDBBase(ProductBase):
     desc: str
     price: int
     status: StatusType
+    created_at: datetime
+    updated_at: datetime
     product_category: ProductCategory
     product_likes: list[ProductLike]
 
@@ -53,6 +56,8 @@ class Product(ProductInDBBase):
                 "desc": "상품 이미지",
                 "price": "상품 금액",
                 "status": "상품 상태",
+                "created_at": "상품 등록 일자",
+                "updated_at": "상품 수정 일자",
                 "product_category": ProductCategory.Config.schema_extra.get("example"),
                 "product_likes": ProductLike.Config.schema_extra.get("example")
             }
