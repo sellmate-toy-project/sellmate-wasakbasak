@@ -1,4 +1,3 @@
-from typing import Optional
 from fastapi import FastAPI, HTTPException
 from .base import CRUDBase
 from models.post_comment import PostComment
@@ -9,16 +8,10 @@ import schemas
 
 
 class CRUDPostComment(CRUDBase[PostComment, None, None, None]):
-    def get_post_comments(self, db: Session, skip, limit, sort, sort_by, post_id) -> PostComment:
-        if post_id:
-            post_comments = db.query(self.model)\
-                .filter(PostComment.post_id == post_id)\
-                .order_by(text(f"{sort} {sort_by.value}"))\
-                .offset(skip)\
-                .limit(limit)\
-                .all()
-        else:
-            raise HTTPException(status_code=500, detail="Post Not Exist.")
+    def get_post_comments(self, db: Session, sort, sort_by, post_id) -> PostComment:
+        post_comments = db.query(self.model)\
+            .filter(PostComment.post_id == post_id)\
+            .order_by(text(f"{sort} {sort_by.value}"))
 
         return post_comments
 
@@ -27,26 +20,39 @@ class CRUDPostComment(CRUDBase[PostComment, None, None, None]):
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
+
         return db_obj
 
     def update(self, db: Session, post_comment_id, obj_in: schemas.PostCommentUpdate) -> PostComment:
-        db_obj = self.model(**obj_in)
-        db.query(self.model)\
-            .filter(PostComment.id == post_comment_id)\
-            .update({'body': obj_in['body']})
+        post_comments = db.query(self.model)\
+            .filter(PostComment.id == post_comment_id)
+
+        if post_comments.first():
+            post_comments.update({'body': obj_in['body']})
+        else:
+            raise HTTPException(400, '찾을 수 없는 댓글 입니다.')
 
         db.flush()
         db.commit()
-        return db_obj
+
+        return db.query(self.model)\
+            .filter(PostComment.id == post_comment_id).first()
 
     def delete(self, db: Session, post_comment_id: int) -> PostComment:
-        post = db.query(self.model)\
-            .filter(PostComment.id == post_comment_id)\
-            .delete()
+        post_comments = db.query(self.model)\
+            .filter(PostComment.id == post_comment_id).first()
+
+        if post_comments:
+            db.query(self.model)\
+                .filter(PostComment.id == post_comment_id)\
+                .delete()
+        else:
+            raise HTTPException(400, '이미 삭제 됐거나 존재 하지 않는 댓글 입니다.')
 
         db.flush()
         db.commit()
-        return post
+
+        return post_comments
 
 
 post_comment = CRUDPostComment(PostComment)
