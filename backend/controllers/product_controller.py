@@ -13,7 +13,7 @@ from fastapi_pagination.ext.sqlalchemy import paginate
 router = APIRouter()
 
 
-@router.get("/", response_model=ResponseEntity[schemas.Product])
+@router.get("/", response_model=ResponseEntity[schemas.ProductView])
 def read_product(
     request: Request,
     db: Session = Depends(deps.get_db),
@@ -23,7 +23,7 @@ def read_product(
     sort_by: crud.SortType = crud.SortType.ASC,
     filters: List[str] = Query([])
 ) -> Any:
-    query = crud.product.get_product(db, sort=sort, sort_by=sort_by, filters=filters)
+    query = crud.product_view.get_product(db, sort=sort, sort_by=sort_by, filters=filters)
     products = paginate(query, params)
 
     return ResponseEntity(

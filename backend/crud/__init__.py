@@ -8,3 +8,4 @@ from .base import SortType
 from .crud_review import review
 from .crud_review_comment import review_comment
 from .crud_review_like import review_like
+from .crud_product_view import product_view
