@@ -15,8 +15,9 @@ import {
 import { SelectChangeEvent } from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { MouseEvent, ReactNode, useState } from 'react';
-import { Comment } from '../icons/Comment';
-import { Active, Inactive } from '../icons/Heart';
+import comment from '../icons/comment.svg';
+import heartActive from '../icons/heartActive.svg';
+import heartInactive from '../icons/heartInactive.svg';
 import ModalLayout from './ModalLayout';
 import { RankingActionItem, RankingTitleItem } from './RankingItem';
 interface PropsData {
@@ -187,7 +188,7 @@ const RankingModal = ({ open, onClose }: PropsData) => {
 										height: '20px',
 										p: 0,
 									}}>
-									{iconValue === 'active' ? <Active /> : <Inactive />}
+									{iconValue === 'active' ? heartActive : heartInactive}
 								</IconButton>
 								<Typography
 									sx={{
@@ -213,7 +214,7 @@ const RankingModal = ({ open, onClose }: PropsData) => {
 									disableFocusRipple
 									disableRipple
 									disableElevation
-									startIcon={<Comment />}
+									startIcon={comment}
 									className='transparent'
 									sx={{
 										p: 0,

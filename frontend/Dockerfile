@@ -2,7 +2,7 @@ FROM node:16-alpine3.14 as base
 WORKDIR /build
 COPY ./package*.json ./
 
-RUN npm install --force
+RUN yarn install
 
 # develop-stage
 FROM base as develop-stage
@@ -16,7 +16,7 @@ CMD ([ -L /app/node_modules ] && echo "Using linked node_modules" || \
 FROM base as build-stage
 WORKDIR /build
 COPY . .
-RUN npm run build
+RUN yarn build
 
 FROM nginx:1.19-alpine as production-stage
 COPY --from=build-stage /build/build /var/www/html/public

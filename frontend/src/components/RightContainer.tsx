@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@mui/material/Container';
+import { Container } from '@mui/material';
 import Alert from './Alert';
 import Board from './Board';
 import NewArrival from './NewArrival';

@@ -1,4 +1,4 @@
-from typing import Optional
+from fastapi import HTTPException
 from .base import CRUDBase
 from models.post import Post
 from sqlalchemy.orm import Session
@@ -8,17 +8,14 @@ import schemas
 
 
 class CRUDPost(CRUDBase[Post, None, None, None]):
-    def get_posts(self, db: Session, skip, limit, sort, sort_by, user_id) -> Post:
-        posts = post.get_multi(db, skip, limit, sort, sort_by)
-
+    def get_posts(self, db: Session, sort, sort_by, user_id) -> Post:
         if user_id:
             posts = db.query(self.model)\
                 .filter(Post.user_id == user_id)\
-                .order_by(text(f"{sort} {sort_by.value}"))\
-                .offset(skip)\
-                .limit(limit)\
-                .all()
-            return posts
+                .order_by(text(f"{sort} {sort_by.value}"))
+        else:
+            posts = db.query(self.model) \
+                .order_by(text(f"{sort} {sort_by.value}"))
 
         return posts
 
@@ -30,7 +27,6 @@ class CRUDPost(CRUDBase[Post, None, None, None]):
         return db_obj
 
     def update(self, db: Session, post_id, obj_in: schemas.PostUpdate) -> Post:
-        db_obj = self.model(**obj_in)
         db.query(self.model)\
             .filter(Post.id == post_id)\
             .filter(Post.is_deleted == 0)\
@@ -38,16 +34,24 @@ class CRUDPost(CRUDBase[Post, None, None, None]):
 
         db.flush()
         db.commit()
-        return db_obj
+
+        return db.query(self.model) \
+            .filter(Post.id == post_id).first()
 
     def delete(self, db: Session, post_id: int) -> Post:
-        post = db.query(self.model)\
-        .filter(Post.id == post_id)\
-        .update({'is_deleted': 1})
+        result = db.query(self.model)\
+            .filter(Post.id == post_id)\
+            .filter(Post.is_deleted == 0)\
+            .update({'is_deleted': 1})
+
+        if result == 0:
+            raise HTTPException(400, '이미 삭제 됐거나 존재 하지 않는 게시글 입니다.')
 
         db.flush()
         db.commit()
-        return post
+
+        return db.query(self.model)\
+            .filter(Post.id == post_id).first()
 
 
 post = CRUDPost(Post)

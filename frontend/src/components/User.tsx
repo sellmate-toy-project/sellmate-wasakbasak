@@ -70,7 +70,7 @@ const User = () => {
 				<div className={classes.subDiv}>
 					<div>
 						<span className={classes.userName}>
-							{UserData.name || ""}
+							{UserData.nick_name || ""}
 						</span>
 					</div>
 					<div>

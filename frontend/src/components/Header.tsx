@@ -4,7 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Stack from '@mui/material/Stack';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import logo from '../logo.png';
 
@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
 	const classes = useStyles();
-  const localData:string|null = JSON.parse(String(localStorage.getItem('user')))?.floor || ''
+  const localData:string|null = JSON.parse(String(localStorage.getItem('user')))?.floor || '3층'
 	const [floor, setFloor] = useState<string>('3');
   useEffect(()=> {
-    setFloor(localData ||'');
-  }, [])
+    setFloor(localData || '3층');
+  })
   const handleChange = (event: SelectChangeEvent) => {
     setFloor(event.target.value as string);
 	};
