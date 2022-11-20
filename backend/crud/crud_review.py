@@ -10,27 +10,22 @@ from sqlalchemy.sql import text
 
 
 class CRUDReview(CRUDBase[Review, None, None, None]):
-    def get_reviews(self, db: Session, skip, limit, user_id, product_id, sort, sort_by) -> list[Review]:
+    def get_reviews(self, db: Session, user_id, product_id, sort, sort_by) -> list[Review]:
         if user_id:
             reviews = db.query(self.model)\
                 .filter(Review.user_id == user_id)\
-                .order_by(text(f"{sort} {sort_by.value}"))\
-                .offset(skip)\
-                .limit(limit)\
-                .all()
+                .order_by(text(f"{sort} {sort_by.value}"))
             return reviews
 
         elif product_id:
             reviews = db.query(self.model)\
                 .filter(Review.product_id == product_id)\
-                .order_by(text(f"{sort} {sort_by.value}"))\
-                .offset(skip)\
-                .limit(limit)\
-                .all()
+                .order_by(text(f"{sort} {sort_by.value}"))
             return reviews
 
         else:
-            reviews = crud.review.get_multi(db, skip, limit, sort, sort_by)
+            reviews = db.query(self.model)\
+                .order_by(text(f"{sort} {sort_by.value}"))
 
         return reviews
 

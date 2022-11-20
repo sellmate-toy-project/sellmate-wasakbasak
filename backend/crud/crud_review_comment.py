@@ -10,26 +10,23 @@ from sqlalchemy.sql import text
 
 
 class CRUDReviewComment(CRUDBase[ReviewComment, None, None, None]):
-    def get_review_comments(self, db: Session, skip, limit, user_id, review_id, sort, sort_by) -> list[ReviewComment]:
-        review_comments = crud.review.get_multi(db, skip, limit, sort, sort_by)
+    def get_review_comments(self, db: Session, user_id, review_id, sort, sort_by) -> list[ReviewComment]:
 
         if user_id:
             review_comments = db.query(self.model)\
                 .filter(ReviewComment.user_id == user_id) \
-                .order_by(text(f"{sort} {sort_by.value}")) \
-                .offset(skip)\
-                .limit(limit)\
-                .all()
+                .order_by(text(f"{sort} {sort_by.value}"))
             return review_comments
 
-        if review_id:
+        elif review_id:
             review_comments = db.query(self.model)\
                 .filter(ReviewComment.review_id == review_id) \
-                .order_by(text(f"{sort} {sort_by.value}")) \
-                .offset(skip)\
-                .limit(limit)\
-                .all()
+                .order_by(text(f"{sort} {sort_by.value}"))
             return review_comments
+
+        else:
+            review_comments = db.query(self.model)\
+                .order_by(text(f"{sort} {sort_by.value}"))
 
         return review_comments
 
@@ -49,7 +46,8 @@ class CRUDReviewComment(CRUDBase[ReviewComment, None, None, None]):
         return db_obj
 
     def delete(self, db: Session, review_comment_id) -> ReviewComment:
-        review_comment = db.query(self.model).filter(ReviewComment.id == review_comment_id).first()
+        review_comment = db.query(self.model).filter(
+            ReviewComment.id == review_comment_id).first()
         if not review_comment:
             raise HTTPException(400, '댓글이 존재하지 않습니다.')
         else:
