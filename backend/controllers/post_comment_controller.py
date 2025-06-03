@@ -17,12 +17,12 @@ router = APIRouter()
 @router.get("/{post_id}/comments", response_model=ResponseEntity[schemas.PostComment])
 def read_post_comments(
     request: Request,
+    post_id: int,
     params: Params = Depends(),
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_user),
     sort: str = "id",
     sort_by: crud.SortType = crud.SortType.ASC,
-    post_id: int = Query(...),
 ) -> Any:
     query = crud.post_comment.get_post_comments(db, sort, sort_by, post_id)
     post_comments = paginate(query, params)
