@@ -10,10 +10,10 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
 
     # Database
-    DB_HOST: str = "db"
-    DB_PORT: str = "3306"
+    DB_HOST: str = "172.30.1.20"
+    DB_PORT: str = "3300"
     DB_DATABASE: str = "wasakbasak"
-    DB_USERNAME: str = "root"
+    DB_USERNAME: str = "wasakbasak"
     DB_PASSWORD: str = "password1!"
 
     def get_db_url(self):
